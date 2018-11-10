@@ -9,6 +9,9 @@ if (isset($_POST['signup-submit']))
     $email = $_POST['mail'];
     $password = $_POST['pwd'];
     $passwordRepeat  = $_POST['pwd-repeat'];
+    $gender = $_POST['gender'];
+    $headline = $_POST['headline'];
+    $bio = $_POST['bio'];
     
     if (empty($userName) || empty($email) || empty($password) || empty($passwordRepeat))
     {
@@ -60,7 +63,8 @@ if (isset($_POST['signup-submit']))
             }
             else
             {
-                $sql = "insert into users(uidUsers, emailUsers, pwdUsers) values (?,?,?)";
+                $sql = "insert into users(uidUsers, emailUsers, pwdUsers, gender, headline, bio) "
+                        . "values (?,?,?,?,?,?)";
                 $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql))
                 {
@@ -71,7 +75,8 @@ if (isset($_POST['signup-submit']))
                 {
                     $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
                     
-                    mysqli_stmt_bind_param($stmt, "sss", $userName, $email, $hashedPwd);
+                    mysqli_stmt_bind_param($stmt, "ssssss", $userName, $email, $hashedPwd, $gender,
+                            $headline, $bio);
                     mysqli_stmt_execute($stmt);
                     mysqli_stmt_store_result($stmt);
                     

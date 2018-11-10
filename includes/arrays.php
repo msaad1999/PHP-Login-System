@@ -8,15 +8,22 @@
                         ),
                         array(
                             slug => "team.php",
-                            title => "Team"
+                            title => "Our Team"
                         ),
                         array(
                             slug => "menu.php",
-                            title => "Menu"
+                            title => "Our Menu"
                         ),
                         array(
                             slug => "contact.php",
-                            title => "Contact"
+                            title => "Contact Us"
+                        ),
+                    );
+    
+    $navItems_signedin = array(
+                        array(
+                            slug => "edit-profile.php",
+                            title => "Edit Profile"
                         ),
                     );
     

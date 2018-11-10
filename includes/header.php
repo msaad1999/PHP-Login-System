@@ -12,11 +12,7 @@
 ?>  
 
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
     <head>
         <title><?php echo TITLE; ?></title>
@@ -34,7 +30,9 @@ and open the template in the editor.
             if(isset($_SESSION['userId']))
             {
                 echo 
-                '<form method="post" action="includes/logout.inc.php" id="login-form">
+                '<h3>USER:</h3><h5>'.$_SESSION['userUid'].'</h5>
+                <a href="profile.php" class="button previous">My Profile</a>
+                <form method="post" action="includes/logout.inc.php" id="login-form">
                     <input type="submit" class="button next login" name="logout-submit" value="Logout">
                 </form>';
             }
@@ -48,14 +46,14 @@ and open the template in the editor.
                     <input type="submit" class="button next login" name="login-submit" value="Login">
                 </form>
                 <a href="signup.php" class="button previous">Signup</a>';
+                
             }
         ?>
         
         <?php
             if (isset($_SESSION['userId']))
             {
-                echo '<p class="open"> you are logged in</p><br>'
-                . '<h3>USER: '.$_SESSION['userUid']."</h3>";
+                echo '<h5 class="open"> you are logged in</h5><br>';
             }
             else
             {
@@ -75,6 +73,8 @@ and open the template in the editor.
             
             <div id="nav">
                     <?php include 'includes/nav.php'; ?>
+                
+                
             </div>
             
             

@@ -1,17 +1,24 @@
 <?php
-    define('TITLE',"Menu | Franklin's Fine Dining");
+    define('TITLE',"Signup | Franklin's Fine Dining");
     include 'includes/header.php';
 ?>
 
 <div id="contact">
     
+    <hr>
     <h1>Signup</h1>
     <?php
+    
+        $userName = '';
+        $email = '';
+    
         if(isset($_GET['error']))
         {
             if($_GET['error'] == 'emptyfields')
             {
                 echo '<p class="closed">Fill In All The Fields</p>';
+                $userName = $_GET['uid'];
+                $email = $_GET['mail'];
             }
             else if ($_GET['error'] == 'invalidmailuid')
             {
@@ -45,14 +52,30 @@
     ?>
     <form action="includes/signup.inc.php" method='post' id="contact-form">
 
-        <input type="text" id="name" name="uid" placeholder="Username">
-        <input type="email" id="email" name="mail" placeholder="email">
-        <input type="password" id="name" name="pwd" placeholder="password">
-        <input type="password" id="name" name="pwd-repeat" placeholder="repeat password">
+        <input type="text" id="name" name="uid" placeholder="Username" value=<?php echo $userName; ?>>
+        <input type="email" id="email" name="mail" placeholder="email" value=<?php echo $email; ?>>
+        <input type="password" id="pwd" name="pwd" placeholder="password">
+        <input type="password" id="pwd-repeat" name="pwd-repeat" placeholder="repeat password">
+        
+        <h5>Gender</h5>
+        <label class="container" for="gender-m">Male
+          <input type="radio" checked="checked" name="gender" value="m" id="gender-m">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container" for="gender-f">Female
+          <input type="radio" name="gender" value="f" id="gender-f">
+          <span class="checkmark"></span>
+        </label>
 
-        <input type="submit" class="button next" name="signup-submit" value="Signup">
-
+        <h5>Optional</h5>
+        <input type="text" id="headline" name="headline" placeholder="Your Profile Headline">
+        <textarea id="bio" name="bio" placeholder="What you want to tell people about yourself"></textarea>
+        
+        <input type="submit" class="button next" name="signup-submit" value="signup">
+        
     </form>
+    
+    <hr>
 
 </div>
 
