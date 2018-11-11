@@ -1,6 +1,7 @@
 <?php
 
     session_start();
+    include_once 'dbh.inc.php';
 
     $companyName = "Franklin's Fine Dining";
     include 'includes/arrays.php';
@@ -27,37 +28,52 @@
     
         
         <?php 
+            
             if(isset($_SESSION['userId']))
             {
-                echo 
-                '<h3>USER:</h3><h5>'.$_SESSION['userUid'].'</h5>
-                <a href="profile.php" class="button previous">My Profile</a>
+                echo'<img id="userDp" src=./uploads/'.$_SESSION["userImg"].'>
+                <h3>' . strtoupper($_SESSION['userUid']) . '</h3>
+                <a href="profile.php" class="button login">My Profile</a>
                 <form method="post" action="includes/logout.inc.php" id="login-form">
                     <input type="submit" class="button next login" name="logout-submit" value="Logout">
                 </form>';
+                
+                echo '<h5 class="open"> you are logged in</h5><br>';
             }
             else
             {
-                echo 
-                '<h1>login</h1>
-                <form method="post" action="includes/login.inc.php" id="login-form">
+                echo '<h1>Login</h1>';
+                
+                
+                if(isset($_GET['error']))
+                {
+                    if($_GET['error'] == 'emptyfields')
+                    {
+                        echo '<p class="closed">*please fill in all the fields</p>';
+                    }
+                    else if($_GET['error'] == 'nouser')
+                    {
+                        echo '<p class="closed">*username does not exist</p>';
+                    }
+                    else if ($_GET['error'] == 'wrongpwd')
+                    {
+                        echo '<p class="closed">*wrong password</p>';
+                    }
+                    else if ($_GET['error'] == 'sqlerror')
+                    {
+                        echo '<p class="closed">*website error. contact admint to have it fixed</p>';
+                    }
+                }
+
+                echo '<form method="post" action="includes/login.inc.php" id="login-form">
                     <input type="text" id="name" name="mailuid" placeholder="Username...">
                     <input type="password" id="password" name="pwd" placeholder="Password...">
                     <input type="submit" class="button next login" name="login-submit" value="Login">
                 </form>
                 <a href="signup.php" class="button previous">Signup</a>';
                 
-            }
-        ?>
-        
-        <?php
-            if (isset($_SESSION['userId']))
-            {
-                echo '<h5 class="open"> you are logged in</h5><br>';
-            }
-            else
-            {
                 echo '<p class="closed"> you are logged out</p>';
+                
             }
         ?>
 

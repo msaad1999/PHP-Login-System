@@ -13,13 +13,13 @@
     // If closed for the day, leave blank (ex. sunday)
     // If open multiple times in one day, enter time ranges separated by a comma
     $hours = array(
-        'mon' => array('00:00-00:00'),
+        'mon' => array(''),
         'tue' => array('13:00-21:00'),
         'wed' => array('13:00-21:00'),
         'thu' => array('13:00-21:00'), // Open late
         'fri' => array('16:00-23:00'),
         'sat' => array('16:00-23:00'),
-        'sun' => array('00:00-00:00')
+        'sun' => array('')
     );
 
     // OPTIONAL
@@ -43,10 +43,16 @@
     
     // Display open / closed message
     
-    if($store_hours->is_open()) {
+    if ($store_hours->hours_today() == '')
+    {
+        echo "<strong class='closed'>"
+        . "Sorry, we're closed for today" . $store_hours->hours_today() . ".</strong>";
+    }
+    else if($store_hours->is_open()) {
         echo "<strong class='open'>"
         . "Yes, we're open! Today's hours are " . $store_hours->hours_today() . ".</strong>";
-    } else {
+    } 
+    else {
         echo "<strong class='closed'>"
         . "Sorry, we're closed. Today's hours are " . $store_hours->hours_today() . ".</strong>";
     }

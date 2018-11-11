@@ -464,6 +464,13 @@ input.button.next {
 	background: #D4D4D4 ;
 }
 
+#userDp {
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
 
 /* ---------------------- */
 
@@ -530,3 +537,6 @@ input.button.next {
 	border-radius: 50%;
 	background: white;
 }
+
+
+

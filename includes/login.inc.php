@@ -47,6 +47,7 @@ if (isset($_POST['login-submit']))
                     $_SESSION['gender'] = $row['gender'];
                     $_SESSION['headline'] = $row['headline'];
                     $_SESSION['bio'] = $row['bio'];
+                    $_SESSION['userImg'] = $row['userImg'];
                     
                     
                     header("Location: ../index.php?login=success");
