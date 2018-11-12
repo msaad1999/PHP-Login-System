@@ -12,7 +12,9 @@ if (isset($_POST['signup-submit']))
     $passwordRepeat  = $_POST['pwd-repeat'];
     $gender = $_POST['gender'];
     $headline = $_POST['headline'];
-    $bio = wordwrap($_POST['bio'], 70);
+    $bio = $_POST['bio'];
+    $f_name = $_POST['f-name'];
+    $l_name = $_POST['l-name'];
     
     if (empty($userName) || empty($email) || empty($password) || empty($passwordRepeat))
     {
@@ -67,8 +69,9 @@ if (isset($_POST['signup-submit']))
                 
                 require 'upload.inc.php';
                 
-                $sql = "insert into users(uidUsers, emailUsers, pwdUsers, gender, headline, bio, userImg) "
-                        . "values (?,?,?,?,?,?,?)";
+                $sql = "insert into users(uidUsers, emailUsers, f_name, l_name, pwdUsers, gender, "
+                        . "headline, bio, userImg) "
+                        . "values (?,?,?,?,?,?,?,?,?)";
                 $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql))
                 {
@@ -79,7 +82,8 @@ if (isset($_POST['signup-submit']))
                 {
                     $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
                     
-                    mysqli_stmt_bind_param($stmt, "sssssss", $userName, $email, $hashedPwd, $gender,
+                    mysqli_stmt_bind_param($stmt, "sssssssss", $userName, $email, $f_name, $l_name,
+                            $hashedPwd, $gender,
                             $headline, $bio, $FileNameNew);
                     mysqli_stmt_execute($stmt);
                     mysqli_stmt_store_result($stmt);

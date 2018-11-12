@@ -70,7 +70,11 @@
         <input type="password" id="pwd-repeat" name="pwd-repeat" placeholder="repeat password">
         
         <h5>Profile Picture</h5>
-        <input type="file" name='dp'>
+        <div class="upload-btn-wrapper">
+            <button class="btn">Upload a file</button>
+            <input type="file" name='dp'>
+        </div>
+        <!-- <img id="userDp" src="" >-->
         
         <h5>Gender</h5>
         <label class="container" for="gender-m">Male
@@ -83,6 +87,8 @@
         </label>
 
         <h5>Optional</h5>
+        <input type="text" id="f-name" name="f-name" placeholder="First Name" >
+        <input type="text" id="l-name" name="l-name" placeholder="Last Name" >
         <input type="text" id="headline" name="headline" placeholder="Your Profile Headline">
         <textarea id="bio" name="bio" placeholder="What you want to tell people about yourself"></textarea>
         
