@@ -66,7 +66,7 @@ if (isset($_POST['signup-submit']))
             }
             else
             {
-                
+                $FileNameNew = 'default.png';
                 require 'upload.inc.php';
                 
                 $sql = "insert into users(uidUsers, emailUsers, f_name, l_name, pwdUsers, gender, "

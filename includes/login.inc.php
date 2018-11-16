@@ -44,6 +44,7 @@ if (isset($_POST['login-submit']))
                     session_start();
                     $_SESSION['userId'] = $row['idUsers'];
                     $_SESSION['userUid'] = $row['uidUsers'];
+                    $_SESSION['emailUsers'] = $row['emailUsers'];
                     $_SESSION['f_name'] = $row['f_name'];
                     $_SESSION['l_name'] = $row['l_name'];
                     $_SESSION['gender'] = $row['gender'];

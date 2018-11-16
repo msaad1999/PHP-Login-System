@@ -1,7 +1,6 @@
 <?php
 
 $file = $_FILES['dp'];
-$FileNameNew = 'default.png';
 
 if (!empty($_FILES['dp']['name']))
 {
@@ -19,7 +18,7 @@ if (!empty($_FILES['dp']['name']))
     {
         if ($fileError === 0)
         {
-            if ($fileSize < 1000000)
+            if ($fileSize < 10000000)
             {
                 $FileNameNew = uniqid('', true) . "." . $fileActualExt;
                 $fileDestination = '../uploads/' . $FileNameNew;
@@ -44,4 +43,3 @@ if (!empty($_FILES['dp']['name']))
         exit();
     }
 }
-

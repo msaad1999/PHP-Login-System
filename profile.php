@@ -10,14 +10,15 @@
 ?>
 
 
-<hr>
-
-<img id="userDp" src=<?php echo "./uploads/".$_SESSION['userImg']; ?> >
+<div style="text-align: center">
+    <img id="userDp" src=<?php echo "./uploads/".$_SESSION['userImg']; ?> >
  
-<h1><?php echo strtoupper($_SESSION['userUid']); ?></h1>
-<h1><?php echo strtoupper($_SESSION['f_name']) . " " . strtoupper($_SESSION['l_name']); ?></h1>
+    <h1><?php echo strtoupper($_SESSION['userUid']); ?></h1>
+    <hr>
+</div>
 
-                
+
+<h3><?php echo strtoupper($_SESSION['f_name']) . " " . strtoupper($_SESSION['l_name']); ?></h3>                
 <p>
 <?php 
     if ($_SESSION['gender'] == 'm')
@@ -34,7 +35,6 @@
 <h3><?php echo $_SESSION['headline']; ?></h3>
 <p><?php echo $_SESSION['bio'];?></p> 
 
-<hr>
 
 
                 
