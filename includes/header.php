@@ -1,9 +1,9 @@
 <?php
 
     session_start();
-    include_once 'dbh.inc.php';
+    require 'dbh.inc.php';
 
-    $companyName = "Franklin's Fine Dining";
+    $companyName = "PHP Login/Registration System";
     include 'includes/arrays.php';
     
     function strip_bad_chars( $input ){
@@ -18,11 +18,24 @@
     <head>
         <title><?php echo TITLE; ?></title>
         <link href="includes/styles.css" rel="stylesheet"> 
-        <link rel="shortcut icon" href="img/logo.ico" />
+        <link rel="shortcut icon" href="img/favicon.png" />
     </head>
     <body id="final-example">
         
     <!-------     LOGIN / LOGOUT FORM               --------->
+    
+    <?php 
+    
+    if(isset($_SESSION['userId']))
+    {
+        echo '<img id="status" src="img/login.png">';
+    }
+    else
+    {
+        echo '<img id="status" src="img/logout.png">';
+    }
+    
+    ?>
         
     <div id="login">
     
@@ -31,20 +44,15 @@
             
             if(isset($_SESSION['userId']))
             {
-                echo'<img id="userDp" src=./uploads/'.$_SESSION["userImg"].'>
-                <h3>' . strtoupper($_SESSION['userUid']) . '</h3>
-                <a href="profile.php" class="button login">My Profile</a>
-                <form method="post" action="includes/logout.inc.php" id="login-form">
-                    <input type="submit" class="button next login" name="logout-submit" value="Logout">
-                </form>';
-                
-                echo '<h5 class="open"> you are logged in</h5><br>';
+                echo'<div style="text-align: center;">
+                        <img id="userDp" src=./uploads/'.$_SESSION["userImg"].'>
+                        <h3>' . strtoupper($_SESSION['userUid']) . '</h3>
+                        <a href="profile.php" class="button login">Profile</a>  
+                        <a href="includes/logout.inc.php" class="button login">Logout</a>
+                    </div>';
             }
             else
             {
-                echo '<h1>Login</h1>';
-                
-                
                 if(isset($_GET['error']))
                 {
                     if($_GET['error'] == 'emptyfields')
@@ -72,8 +80,6 @@
                 </form>
                 <a href="signup.php" class="button previous">Signup</a>';
                 
-                echo '<p class="closed"> you are logged out</p>';
-                
             }
         ?>
 
@@ -84,7 +90,7 @@
         
         <div class="wrapper">
             <div id="banner">
-                <img src="img/banner.png">
+                <img id='banner' src="img/banner.png">
             </div>
             
             <div id="nav">

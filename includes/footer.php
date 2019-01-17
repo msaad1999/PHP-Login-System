@@ -8,8 +8,8 @@
                     
                     <div class="column three"> 
                         <strong>Location</strong><br>
-                        Isalamabad Asia<br>
-                        honululu, IS 
+                        ThePizzaVillage, PizzaTown<br>
+                        Jupiter, Milky Way 
                     </div>
                     
                     <div class="column three last"> 
@@ -22,8 +22,6 @@
                         
                         <em>Sunday - Monday</em><br>
                         Closed<br><br>
-                     
-                        <?php include 'includes/store-hours.php'; ?>
                     </div>
                     
                 </div>

@@ -1,6 +1,8 @@
+
 <?php
-    define('TITLE',"Menu | Franklin's Fine Dining");
+    define('TITLE',"Contact Us | KLiK Prototype");
     include 'includes/header.php';
+    require 'includes/email-server.php'
 ?>
 
 <div id="contact">
@@ -18,7 +20,6 @@
         require 'PHPMailer/src/SMTP.php';
         
         
-        // check for header injection
         function has_header_injection($str){
             return preg_match('/[\r\n]/',$str);
         }
@@ -30,9 +31,8 @@
             $msg = $_POST['message'];
             
             
-            // check if name / mail (fields) have header injection
             if (has_header_injection($name) || has_header_injection($email)){
-                die(); // kill the script immediately
+                die();
             }
             
             if (! $name || ! $email || ! $msg){
@@ -41,70 +41,49 @@
                 exit;
             }
             
-            
-            
-            // add the recipient email to a variable
-            $to = "saad01.1999@gmail.com";
-            
-            // create a subject
             $subject = "$name sent you a message via your contact form";
             
-            // create message
             $message = "<strong>Name:</strong> $name<br>" # \r\n is a line break
                     . "<strong>Email:</strong> <i>$email</i><br><br>"
                     . "<strong>Message:</strong><br><br>$msg";
             
-            // check if subscribe checkbox was checked
             if (isset($_POST['subscribe'])){
                 
-                // add new line to message variable
                 $message .= "<br><br><br>"
                         . "<strong>IMPORTANT:</strong> Please add <i>$email</i> "
                         . "to your mailing list.<br>";
             }
             
-            // send the email (used PHPMailer since mail() does not send email on localhost in WIINDOWS
             $mail = new PHPMailer(true);            
             
             try {
-                //Server settings
-                //$mail->SMTPDebug = 2;                                 // Enable verbose debug output
+                $mail->isSMTP();                                      
+                $mail->Host = 'smtp.gmail.com';                      
+                $mail->SMTPAuth = true;                               
+                $mail->Username = $SMTPuser;                                
+                $mail->Password = $SMTPpwd;                           
+                $mail->SMTPSecure = 'tls';                            
+                $mail->Port = 587;                                    
                 
-                $mail->isSMTP();                                      // Set mailer to use SMTP
-                $mail->Host = 'smtp.gmail.com';                      // Specify main and backup SMTP servers
-                $mail->SMTPAuth = true;                               // Enable SMTP authentication
-                $mail->Username = $to;                                // SMTP username
-                $mail->Password = 'test123';                           // SMTP password
-                $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-                $mail->Port = 587;                                    // TCP port to connect to
-                
-                //Recipients
-                $mail->setFrom($to, "Franklin's Fine Dining");
-                $mail->addAddress($to, "Franklin's Fine Dining");     // Add a recipient
+                $mail->setFrom($SMTPuser, $SMTPtitle);
+                $mail->addAddress($SMTPuser, $SMTPtitle);     
 
-                //Content
-                $mail->isHTML(true);                                  // Set email format to HTML
+                $mail->isHTML(true);                                 
                 $mail->Subject = $subject;
                 $mail->Body    = $message;
  
                 $mail->send();
             } 
             catch (Exception $e) {
-                echo '<h4 class="error">Message could not be sent. Mailer Error: '. $mail->ErrorInfo
-                        .'</h4>';
+                echo '<p class="error">Message could not be sent. Mailer Error: '. $mail->ErrorInfo
+                        .'</p>';
             }
-        
+            
+            echo "<h6> Thanks for contacting Franklin's!</h6>
+                <h6>Please Allow 24 hours for a response</h6>";
+        }
     ?>
     
-    <!-- Show success message after email is sent -->
-    <h5> Thanks for contacting Franklin's!</h5>
-    <p>Please Allow 24 hours for a response</p>
-    <p><a href='index.php' class='button block'>&laquo; Go To Home Page</a></p>
-    
-    
-    <?php } else{ ?>
-     
-  
     
     <form method="post" action="" id="contact-form">
         
@@ -123,8 +102,6 @@
         <input type="submit" class="button next" name="contact_submit" value="Send Message">
         
     </form>
-    
-    <?php } ?>   
     
     <hr>
 

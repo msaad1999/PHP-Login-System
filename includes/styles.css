@@ -445,7 +445,7 @@ input.button.next {
 #login {
         position: fixed;
         right: 30px;
-        top: 30px;
+        top: 70px;
 	width: 200px;
 }
 
@@ -472,10 +472,10 @@ input.button.next {
 }
 
 #userDp {
-    border: 1px solid #ddd;
     border-radius: 50%;
     width: 150px;
     height: 150px;
+    object-fit: cover;
 }
 
 
@@ -571,7 +571,16 @@ input.button.next {
   opacity: 0;
 }
 
+#banner {
+    width: 800px;
+    height: 337px;
+}
 
+#status {
+        position: fixed;
+        left: 30px;
+        top: 30px;
+}
 
 
 

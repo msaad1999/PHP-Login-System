@@ -1,6 +1,12 @@
 <?php
     define('TITLE',"Signup | Franklin's Fine Dining");
     include 'includes/header.php';
+    
+    if(isset($_SESSION['userId']))
+    {
+        header("Location: index.php");
+        exit();
+    }
 ?>
 
 <div id="contact">

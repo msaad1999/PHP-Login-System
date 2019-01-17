@@ -32,10 +32,10 @@
 ?>
 </p>
 
-<h3><?php echo $_SESSION['headline']; ?></h3>
+<h6><?php echo $_SESSION['headline']; ?></h6>
 <p><?php echo $_SESSION['bio'];?></p> 
 
-
+<br><br><br><br>
 
                 
                 
