@@ -1,6 +1,6 @@
 <?php
 
-    define(TITLE, "Edit Profile | Franklin's Fine Dining");
+    define('TITLE', "Edit Profile | Franklin's Fine Dining");
     include 'includes/header.php';
     
     if (!isset($_SESSION['userId']))

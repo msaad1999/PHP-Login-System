@@ -3,22 +3,22 @@
     // nav items   
     $navItems = array(
                         array(
-                            slug => "index.php",
-                            title => "Home"
+                            'slug' => "index.php",
+                            'title' => "Home"
                         ),
                         array(
-                            slug => "contact.php",
-                            title => "Contact Us"
+                            'slug' => "contact.php",
+                            'title' => "Contact Us"
                         ),
                     );
     
     $navItems_signedin = array(
                         array(
-                            slug => "profile.php",
-                            title => "My Profile"
+                            'slug' => "profile.php",
+                            'title' => "My Profile"
                         ),
                         array(
-                            slug => "edit-profile.php",
-                            title => "Edit Profile"
+                            'slug' => "edit-profile.php",
+                            'title' => "Edit Profile"
                         ),
                     );
