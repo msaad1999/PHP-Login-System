@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+
 require '..\assets\setup\db.inc.php';
 
 $companyName = "PHP Login/Registration System";
@@ -19,7 +20,7 @@ $companyName = "PHP Login/Registration System";
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title><?php echo TITLE; ?></title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 

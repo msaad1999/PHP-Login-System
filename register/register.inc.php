@@ -1,54 +1,54 @@
 <?php
 
-if (isset($_POST['signup-submit']))
+if (isset($_POST['register']))
 {
     
     require 'dbh.inc.php';
     
     
-    $userName = $_POST['uid'];
+    $userName = $_POST['username'];
     $email = $_POST['mail'];
-    $password = $_POST['pwd'];
-    $passwordRepeat  = $_POST['pwd-repeat'];
+    $password = $_POST['password'];
+    $passwordRepeat  = $_POST['confirmpassword'];
     $gender = $_POST['gender'];
     $headline = $_POST['headline'];
     $bio = $_POST['bio'];
-    $f_name = $_POST['f-name'];
-    $l_name = $_POST['l-name'];
+    $f_name = $_POST['full-name'];
+    $l_name = $_POST['last-name'];
     
     if (empty($userName) || empty($email) || empty($password) || empty($passwordRepeat))
     {
-        header("Location: ../signup.php?error=emptyfields&uid=".$userName."&mail=".$email);
+        header("Location: ../register/?error=emptyfields&uid=".$userName."&mail=".$email);
         exit();
     }
     else if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $userName))
     {
-        header("Location: ../signup.php?error=invalidmailuid");
+        header("Location: ../register/?error=invalidmailuid");
         exit();
     }
     else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
     {
-        header("Location: ../signup.php?error=invalidmail&uid=".$userName);
+        header("Location: ../register/?error=invalidmail&uid=".$userName);
         exit();
     }
     else if (!preg_match("/^[a-zA-Z0-9]*$/", $userName))
     {
-        header("Location: ../signup.php?error=invaliduid&mail=".$email);
+        header("Location: ../register/?error=invaliduid&mail=".$email);
         exit();
     }
     else if ($password !== $passwordRepeat)
     {
-        header("Location: ../signup.php?error=passwordcheck&uid=".$userName."&mail=".$email);
+        header("Location: ../register/?error=passwordcheck&uid=".$userName."&mail=".$email);
         exit();
     }
     else
     {
         // checking if a user already exists with the given username
-        $sql = "select uidUsers from users where uidUsers=?;";
+        $sql = "select username from users where username=?;";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql))
         {
-            header("Location: ../signup.php?error=sqlerror");
+            header("Location: ../register/?error=sqlerror");
             exit();
         }
         else
@@ -61,7 +61,7 @@ if (isset($_POST['signup-submit']))
             
             if ($resultCheck > 0)
             {
-                header("Location: ../signup.php?error=usertaken&mail=".$email);
+                header("Location: ../register/?error=usertaken&mail=".$email);
                 exit();
             }
             else
@@ -75,7 +75,7 @@ if (isset($_POST['signup-submit']))
                 $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql))
                 {
-                    header("Location: ../signup.php?error=sqlerror");
+                    header("Location: ../register/?error=sqlerror");
                     exit();
                 }
                 else
@@ -88,7 +88,7 @@ if (isset($_POST['signup-submit']))
                     mysqli_stmt_execute($stmt);
                     mysqli_stmt_store_result($stmt);
                     
-                    header("Location: ../signup.php?signup=success");
+                    header("Location: ../home/?signup=success");
                     exit();
                 }
             }
@@ -102,6 +102,6 @@ if (isset($_POST['signup-submit']))
 
 else
 {
-    header("Location: ../signup.php");
+    header("Location: ../register/");
     exit();
 }

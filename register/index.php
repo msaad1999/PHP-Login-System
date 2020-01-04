@@ -1,6 +1,6 @@
 <?php
 
-define('TITLE', "Login | PHP Login System");
+define('TITLE', "Signup | PHP Login System");
 include '../assets/layouts/header.php';
 
 ?>
@@ -13,7 +13,7 @@ include '../assets/layouts/header.php';
         </div>
         <div class="col-lg-4">
 
-            <form class="form-auth ">
+            <form class="form-auth" action="register.inc.php" method="post" enctype="multipart/form-data">
 
                 <div class="picCard text-center">
                     <div class="avatar-upload">
@@ -27,25 +27,25 @@ include '../assets/layouts/header.php';
                     </div>
                 </div>
 
-                <h6 class="h3 mb-3 font-weight-normal text-muted text-center">Create an Account</h6>
+                <h6 class="h3 mt-3 mb-3 font-weight-normal text-muted text-center">Create an Account</h6>
 
                 <div class="form-group">
-                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <label for="username" class="sr-only">Username</label>
                     <input type="text" id="username" class="form-control" placeholder="Username" required autofocus>
                 </div>
 
                 <div class="form-group">
-                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <label for="email" class="sr-only">Email address</label>
                     <input type="email" id="email" class="form-control" placeholder="Email address" required autofocus>
                 </div>
 
                 <div class="form-group">
-                    <label for="inputPassword" class="sr-only">Password</label>
+                    <label for="password" class="sr-only">Password</label>
                     <input type="password" id="password" class="form-control" placeholder="Password" required>
                 </div>
 
                 <div class="form-group mb-4">
-                    <label for="inputPassword" class="sr-only">Confirm Password</label>
+                    <label for="confirmpassword" class="sr-only">Confirm Password</label>
                     <input type="password" id="confirmpassword" class="form-control" placeholder="Password" required>
                 </div>
 
@@ -53,44 +53,40 @@ include '../assets/layouts/header.php';
                 <span class="h5 mb-3 font-weight-normal text-muted text-center">Optional</span>
 
                 <div class="form-group mt-4">
-                    <label for="inputPassword" class="sr-only">Headline</label>
+                    <label for="headline" class="sr-only">Headline</label>
                     <input type="text" id="headline" class="form-control" placeholder="headline" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="inputPassword" class="sr-only">Profile Details</label>
+                    <label for="bio" class="sr-only">Profile Details</label>
                     <textarea type="text" id="bio" class="form-control" required>Tell us about yourself...</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label class="sr-only">Gender</label>
+                    <label>Gender</label>
                     <div class="custom-control custom-radio custom-control">
-                        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadioInline1">Male</label>
+                        <input type="radio" id="male" name="gender" class="custom-control-input" value="m">
+                        <label class="custom-control-label" for="male">Male</label>
                     </div>
                     <div class="custom-control custom-radio custom-control">
-                        <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadioInline2">Female</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control">
-                        <input type="radio" id="Other" name="customRadioInline1" class="custom-control-input">
-                        <label class="custom-control-label" for="Other">Other</label>
+                        <input type="radio" id="female" name="gender" class="custom-control-input" value="f">
+                        <label class="custom-control-label" for="female">Female</label>
                     </div>
                 </div>
 
                 <div class="col-auto my-1 mb-4">
                     <div class="custom-control custom-checkbox mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                        <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
+                        <input type="checkbox" class="custom-control-input" id="rememberme">
+                        <label class="custom-control-label" for="rememberme">Remember me</label>
                     </div>
                 </div>
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" value="register">Signup</button>
 
                 <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
 
             </form>
-            
+
         </div>
         <div class="col-md-4">
 

@@ -92,3 +92,8 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.navbar-img {
+    width: 30px;
+    height: 30px;
+}
