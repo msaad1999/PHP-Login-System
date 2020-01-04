@@ -3,7 +3,7 @@
 $serverName = "localhost";
 $dBUsername = "root";
 $dBPassword = "";
-$dBName = "loginsystem";
+$dBName = "klik_loginsystem";
 
 $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
 

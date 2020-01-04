@@ -24,8 +24,8 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
-create schema loginsystem;
-use loginsystem;
+create schema klik_loginsystem;
+use klik_loginsystem;
 
 --
 -- Table structure for table `users`
