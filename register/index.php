@@ -1,109 +1,128 @@
 <?php
-    define('TITLE',"Signup | Franklin's Fine Dining");
-    include 'includes/header.php';
-    
-    if(isset($_SESSION['userId']))
-    {
-        header("Location: index.php");
-        exit();
-    }
+
+define('TITLE', "Login | PHP Login System");
+include '../assets/layouts/header.php';
+
 ?>
 
-<div id="contact">
-    
-    <hr>
-    <h1>Signup</h1>
-    <?php
-    
-        $userName = '';
-        $email = '';
-    
-        if(isset($_GET['error']))
-        {
-            if($_GET['error'] == 'emptyfields')
-            {
-                echo '<p class="closed">*Fill In All The Fields</p>';
-                $userName = $_GET['uid'];
-                $email = $_GET['mail'];
-            }
-            else if ($_GET['error'] == 'invalidmailuid')
-            {
-                echo '<p class="closed">*Please enter a valid email and user name</p>';
-            }
-            else if ($_GET['error'] == 'invalidmail')
-            {
-                echo '<p class="closed">*Please enter a valid email</p>';
-            }
-            else if ($_GET['error'] == 'invaliduid')
-            {
-                echo '<p class="closed">*Please enter a valid user name</p>';
-            }
-            else if ($_GET['error'] == 'passwordcheck')
-            {
-                echo '<p class="closed">*Passwords donot match</p>';
-            }
-            else if ($_GET['error'] == 'usertaken')
-            {
-                echo '<p class="closed">*This User name is already taken</p>';
-            }
-            else if ($_GET['error'] == 'invalidimagetype')
-            {
-                echo '<p class="closed">*Invalid image type. Profile image must be a .jpg or .png file</p>';
-            }
-            else if ($_GET['error'] == 'imguploaderror')
-            {
-                echo '<p class="closed">*Image upload error</p>';
-            }
-            else if ($_GET['error'] == 'imgsizeexceeded')
-            {
-                echo '<p class="closed">*Image too large</p>';
-            }
-            else if ($_GET['error'] == 'sqlerror')
-            {
-                echo '<p class="closed">*Website Error: Contact admin to have the issue fixed</p>';
-            }
-        }
-        else if (isset($_GET['signup']) == 'success')
-        {
-            echo '<p class="open">*Signup Successful. Please login from the Login menu on the right</p>';
-        }
-    ?>
-    <form action="includes/signup.inc.php" method='post' id="contact-form" enctype="multipart/form-data">
 
-        <input type="text" id="name" name="uid" placeholder="Username" value=<?php echo $userName; ?>>
-        <input type="email" id="email" name="mail" placeholder="email" value=<?php echo $email; ?>>
-        <input type="password" id="pwd" name="pwd" placeholder="password">
-        <input type="password" id="pwd-repeat" name="pwd-repeat" placeholder="repeat password">
-        
-        <h5>Profile Picture</h5>
-        <div class="upload-btn-wrapper">
-            <button class="btn">Upload a file</button>
-            <input type="file" name='dp'>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+
         </div>
-        <!-- <img id="userDp" src="" >-->
-        
-        <h5>Gender</h5>
-        <label class="container" for="gender-m">Male
-          <input type="radio" checked="checked" name="gender" value="m" id="gender-m">
-          <span class="checkmark"></span>
-        </label>
-        <label class="container" for="gender-f">Female
-          <input type="radio" name="gender" value="f" id="gender-f">
-          <span class="checkmark"></span>
-        </label>
+        <div class="col-lg-4">
 
-        <h5>Optional</h5>
-        <input type="text" id="f-name" name="f-name" placeholder="First Name" >
-        <input type="text" id="l-name" name="l-name" placeholder="Last Name" >
-        <input type="text" id="headline" name="headline" placeholder="Your Profile Headline">
-        <textarea id="bio" name="bio" placeholder="What you want to tell people about yourself"></textarea>
-        
-        <input type="submit" class="button next" name="signup-submit" value="signup">
-        
-    </form>
-    
-    <hr>
+            <form class="form-auth ">
 
+                <div class="picCard text-center">
+                    <div class="avatar-upload">
+                        <div class="avatar-preview text-center">
+                            <div id="imagePreview" style="background-image: url( ../assets/uploads/default.png );"></div>
+                        </div>
+                        <div class="avatar-edit">
+                            <input name='avatar' id="avatar" class="fas fa-pencil" type='file' />
+                            <label for="avatar"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <h6 class="h3 mb-3 font-weight-normal text-muted text-center">Create an Account</h6>
+
+                <div class="form-group">
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="text" id="username" class="form-control" placeholder="Username" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="email" id="email" class="form-control" placeholder="Email address" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Password" required>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="inputPassword" class="sr-only">Confirm Password</label>
+                    <input type="password" id="confirmpassword" class="form-control" placeholder="Password" required>
+                </div>
+
+                <hr>
+                <span class="h5 mb-3 font-weight-normal text-muted text-center">Optional</span>
+
+                <div class="form-group mt-4">
+                    <label for="inputPassword" class="sr-only">Headline</label>
+                    <input type="text" id="headline" class="form-control" placeholder="headline" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword" class="sr-only">Profile Details</label>
+                    <textarea type="text" id="bio" class="form-control" required>Tell us about yourself...</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="sr-only">Gender</label>
+                    <div class="custom-control custom-radio custom-control">
+                        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+                        <label class="custom-control-label" for="customRadioInline1">Male</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control">
+                        <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                        <label class="custom-control-label" for="customRadioInline2">Female</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control">
+                        <input type="radio" id="Other" name="customRadioInline1" class="custom-control-input">
+                        <label class="custom-control-label" for="Other">Other</label>
+                    </div>
+                </div>
+
+                <div class="col-auto my-1 mb-4">
+                    <div class="custom-control custom-checkbox mr-sm-2">
+                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                        <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
+                    </div>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+
+                <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+
+            </form>
+            
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
 </div>
 
-<?php include 'includes/footer.php'; ?> 
+
+
+<?php
+
+include '../assets/layouts/footer.php'
+
+?>
+
+<script type="text/javascript">
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
+
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#avatar").change(function() {
+        console.log("here");
+        readURL(this);
+    });
+</script>

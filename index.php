@@ -2,13 +2,13 @@
 
 include 'assets/setup/db.inc.php';
 
-if (!isset($_SESSION['userId'])) {
+if (isset($_SESSION['userId'])) {
 
-    header("Location: /home");
+    header("Location: ./home");
     exit();
 }
 else {
 
-    header("Location: /login");
+    header("Location: ./login");
     exit();
 }
