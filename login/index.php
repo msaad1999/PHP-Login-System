@@ -12,7 +12,7 @@ include '../assets/layouts/header.php';
 
         </div>
         <div class="col-sm-4">
-            <form class="form-auth" action="login.inc.php" method="post">
+            <form class="form-auth" action="includes/login.inc.php" method="post">
 
                 <div class="text-center">
                     <img class="mb-4" src="../assets/images/logo.png" alt="" width="92" height="92">
@@ -37,7 +37,7 @@ include '../assets/layouts/header.php';
                     </div>
                 </div>
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit" value="login">Login in</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" value="login">Login</button>
 
                 <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
             </form>

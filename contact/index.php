@@ -1,110 +1,61 @@
-
 <?php
-    define('TITLE',"Contact Us | KLiK Prototype");
-    include 'includes/header.php';
-    require 'includes/email-server.php'
+
+define('TITLE', "Home | PHP Login System");
+include '../assets/layouts/header.php';
+
+// if (!isset($_SESSION['userId'])) {
+
+//     header("Location: ../login");
+//     exit();
+// } 
+
 ?>
 
-<div id="contact">
-    
-    <hr>
-    <h1>Contact Us!</h1>
-    
+
+<main role="main" class="container">
+
+    <div class="row">
+        <div class="col-sm-3">
+
+            <?php include('../assets/layouts/profile-card.php'); ?>
+
+        </div>
+        <div class="col-sm-9 px-5">
+
+            <form class="form-auth" action="includes/contact.inc.php" method="post">
+
+                <h6 class="h3 mb-3 font-weight-normal text-muted  text-center">Contact Us</h6>
+
+                <div class="form-group">
+                    <label for="name" class="sr-only">Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Name" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="sr-only">Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="Email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="sr-only">Email</label>
+                    <textarea type="password" id="message" class="form-control message" placeholder="Message" required></textarea>
+                </div>
+
+                <div class="text-center mx-5 px-5">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" value="contact-submit">Submit</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+
+
+
+
     <?php
-        
-        use PHPMailer\PHPMailer\PHPMailer;
-        use PHPMailer\PHPMailer\Exception; 
-        
-        require 'PHPMailer/src/Exception.php';
-        require 'PHPMailer/src/PHPMailer.php';  
-        require 'PHPMailer/src/SMTP.php';
-        
-        
-        function has_header_injection($str){
-            return preg_match('/[\r\n]/',$str);
-        }
-    
-        if (isset($_POST['contact_submit'])){
-            
-            $name = trim($_POST['name']);
-            $email = trim($_POST['email']);
-            $msg = $_POST['message'];
-            
-            
-            if (has_header_injection($name) || has_header_injection($email)){
-                die();
-            }
-            
-            if (! $name || ! $email || ! $msg){
-                echo '<h4 class="error">All Fields Required.</h4>'
-                . '<a href="contact.php" class="button block">go back and try again</a>';
-                exit;
-            }
-            
-            $subject = "$name sent you a message via your contact form";
-            
-            $message = "<strong>Name:</strong> $name<br>" # \r\n is a line break
-                    . "<strong>Email:</strong> <i>$email</i><br><br>"
-                    . "<strong>Message:</strong><br><br>$msg";
-            
-            if (isset($_POST['subscribe'])){
-                
-                $message .= "<br><br><br>"
-                        . "<strong>IMPORTANT:</strong> Please add <i>$email</i> "
-                        . "to your mailing list.<br>";
-            }
-            
-            $mail = new PHPMailer(true);            
-            
-            try {
-                $mail->isSMTP();                                      
-                $mail->Host = 'smtp.gmail.com';                      
-                $mail->SMTPAuth = true;                               
-                $mail->Username = $SMTPuser;                                
-                $mail->Password = $SMTPpwd;                           
-                $mail->SMTPSecure = 'tls';                            
-                $mail->Port = 587;                                    
-                
-                $mail->setFrom($SMTPuser, $SMTPtitle);
-                $mail->addAddress($SMTPuser, $SMTPtitle);     
 
-                $mail->isHTML(true);                                 
-                $mail->Subject = $subject;
-                $mail->Body    = $message;
- 
-                $mail->send();
-            } 
-            catch (Exception $e) {
-                echo '<p class="error">Message could not be sent. Mailer Error: '. $mail->ErrorInfo
-                        .'</p>';
-            }
-            
-            echo "<h6> Thanks for contacting Franklin's!</h6>
-                <h6>Please Allow 24 hours for a response</h6>";
-        }
+    include '../assets/layouts/footer.php'
+
     ?>
-    
-    
-    <form method="post" action="" id="contact-form">
-        
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name">
-        
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email">
-        
-        <label for="message">Message</label>
-        <textarea id="message" name="message"></textarea>
-        
-        <input type="checkbox" id="subscribe" name="subscribe" value="subscribe">
-        <label for="subscribe">Subscribe to newsletter</label>
-        
-        <input type="submit" class="button next" name="contact_submit" value="Send Message">
-        
-    </form>
-    
-    <hr>
-
-</div>
-
-<?php include 'includes/footer.php'; ?> 

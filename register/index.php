@@ -13,7 +13,7 @@ include '../assets/layouts/header.php';
         </div>
         <div class="col-lg-4">
 
-            <form class="form-auth" action="register.inc.php" method="post" enctype="multipart/form-data">
+            <form class="form-auth" action="includes/register.inc.php" method="post" enctype="multipart/form-data">
 
                 <div class="picCard text-center">
                     <div class="avatar-upload">

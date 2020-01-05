@@ -1,4 +1,4 @@
-    <?php if (!isset($_SESSION['id'])) { ?>
+    <?php if (isset($_SESSION['id'])) { ?>
 
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm p-3">
 
@@ -29,8 +29,11 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
 
+                            <li class="nav-item">
+                                <a class="nav-link" href="../welcome">Welcome</a>
+                            </li>
 
-                        <?php if (!isset($_SESSION['id'])) { ?>
+                        <?php if (isset($_SESSION['id'])) { ?>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="../login">Login</a>

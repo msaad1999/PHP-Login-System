@@ -1,3 +1,7 @@
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
 .form-auth {
     margin-top: 10%;
     width: 100%;
@@ -27,6 +31,9 @@
 .form-auth input[type="password"] {
     margin-bottom: 10px;
 }
+
+
+/* --------------User Image Upload---------------------- */
 
 .avatar-upload {
     text-align: center;
@@ -96,4 +103,64 @@
 .navbar-img {
     width: 30px;
     height: 30px;
+}
+
+
+/* --------------Profile card---------------------- */
+
+.card-profile {
+    width: 230px;
+    height: 330px;
+    margin: 50px auto;
+    /* background-color: #e6e5e1; */
+    border-radius: 0;
+    border: 0;
+}
+
+.card-profile .card-img-top {
+    border-radius: 0;
+}
+
+.card-img-profile {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: -45px;
+    margin-bottom: 35px;
+    border: 2px solid #ffffff;
+}
+
+.edit-profile {
+    position: absolute;
+    right: 10px;
+    top: 110px;
+}
+
+.card-img-profile {
+    transition: transform .2s;
+}
+
+.card-img-profile:hover {
+    transform: scale(1.02);
+}
+
+.card-profile .card-title {
+    margin-bottom: 50px;
+}
+
+.card-profile .card-title small {
+    display: block;
+    font-size: .6em;
+    margin-top: .2em;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.card-profile .fa {
+    color: grey;
+}
+
+.card-profile .fa:hover {
+    color: blue;
 }
