@@ -1,45 +1,50 @@
-<?php 
-    define('TITLE',"My Profile | Franklin's Fine Dining");
-    include 'includes/header.php';
-    
-    if(!isset($_SESSION['userId']))
-    {
-        header("Location: index.php");
-        exit();
-    }
+<?php
+
+define('TITLE', "Home | PHP Login System");
+include '../assets/layouts/header.php';
+
+// if (!isset($_SESSION['userId'])) {
+
+//     header("Location: ../login");
+//     exit();
+// } 
+
 ?>
 
 
-<div style="text-align: center">
-    <img id="userDp" src=<?php echo "./uploads/".$_SESSION['userImg']; ?> >
- 
-    <h1><?php echo strtoupper($_SESSION['userUid']); ?></h1>
-    <hr>
+
+
+<div class="row py-5 px-4 ">
+    <div class="col-xl-12 col-md-12 col-sm-12 mx-auto ">
+
+        <!-- Profile widget -->
+        <div class="bg-white shadow rounded overflow-hidden">
+            <div class="px-4 pt-5 pb-5 bg-dark profile-cover">
+                <div class="media align-items-end profile-header">
+                    <div class="profile mr-3">
+                        <img src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-4.jpg" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                        <a href="#" class="btn btn-dark btn-sm btn-block">Edit profile</a>
+                    </div>
+                    <div class="media-body mb-5 text-white">
+                        <h4 class="mt-0 mb-0">Manuella Tarly</h4>
+                        <p class="small mb-4">
+                            <i class="fa fa-map-marker mr-2"></i>San Farcisco <br>
+                            <i class="fa fa-map-marker mr-2"></i>San aaaaaaa
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div><!-- End profile widget -->
+
+    </div>
 </div>
 
 
-<h3><?php echo strtoupper($_SESSION['f_name']) . " " . strtoupper($_SESSION['l_name']); ?></h3>                
-<p>
-<?php 
-    if ($_SESSION['gender'] == 'm')
-    {
-        echo 'Male';
-    }
-    else if ($_SESSION['gender'] == 'f')
-    {
-        echo 'Female';
-    }
+
+<?php
+
+include '../assets/layouts/footer.php'
+
 ?>
-</p>
-
-<h6><?php echo $_SESSION['headline']; ?></h6>
-<p><?php echo $_SESSION['bio'];?></p> 
-
-<br><br><br><br>
-
-                
-                
-<?php include 'includes/footer.php'; ?> 
-
-
-                

@@ -1,0 +1,8 @@
+.profile-header {
+    transform: translateY(6rem);
+}
+
+.profile-cover {
+    /* background-image: src('../assets/images/banner.png'); */
+    background-color: red;
+}
