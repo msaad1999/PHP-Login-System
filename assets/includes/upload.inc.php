@@ -1,14 +1,14 @@
 <?php
 
-$file = $_FILES['dp'];
+$file = $_FILES['avatar'];
 
-if (!empty($_FILES['dp']['name']))
+if (!empty($_FILES['avatar']['name']))
 {
-    $fileName = $_FILES['dp']['name'];
-    $fileTmpName = $_FILES['dp']['tmp_name'];
-    $fileSize = $_FILES['dp']['size'];
-    $fileError = $_FILES['dp']['error'];
-    $fileType = $_FILES['dp']['type']; 
+    $fileName = $_FILES['avatar']['name'];
+    $fileTmpName = $_FILES['avatar']['tmp_name'];
+    $fileSize = $_FILES['avatar']['size'];
+    $fileError = $_FILES['avatar']['error'];
+    $fileType = $_FILES['avatar']['type']; 
 
     $fileExt = explode('.', $fileName);
     $fileActualExt = strtolower(end($fileExt));
@@ -21,7 +21,7 @@ if (!empty($_FILES['dp']['name']))
             if ($fileSize < 10000000)
             {
                 $FileNameNew = uniqid('', true) . "." . $fileActualExt;
-                $fileDestination = '../uploads/' . $FileNameNew;
+                $fileDestination = '../uploads/users/' . $FileNameNew;
                 move_uploaded_file($fileTmpName, $fileDestination);
 
             }

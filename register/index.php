@@ -31,35 +31,46 @@ include '../assets/layouts/header.php';
 
                 <div class="form-group">
                     <label for="username" class="sr-only">Username</label>
-                    <input type="text" id="username" class="form-control" placeholder="Username" required autofocus>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
                 </div>
 
                 <div class="form-group">
                     <label for="email" class="sr-only">Email address</label>
-                    <input type="email" id="email" class="form-control" placeholder="Email address" required autofocus>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
                 </div>
 
                 <div class="form-group">
                     <label for="password" class="sr-only">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Password" required>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
                 </div>
 
                 <div class="form-group mb-4">
                     <label for="confirmpassword" class="sr-only">Confirm Password</label>
-                    <input type="password" id="confirmpassword" class="form-control" placeholder="Password" required>
+                    <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="Confirm Password" required>
                 </div>
 
                 <hr>
                 <span class="h5 mb-3 font-weight-normal text-muted text-center">Optional</span>
+                <br><br>
+
+                <div class="form-group">
+                    <label for="first_name" class="sr-only">First Name</label>
+                    <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name" class="sr-only">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name">
+                </div>
 
                 <div class="form-group mt-4">
                     <label for="headline" class="sr-only">Headline</label>
-                    <input type="text" id="headline" class="form-control" placeholder="headline" required>
+                    <input type="text" id="headline" name="headline" class="form-control" placeholder="headline">
                 </div>
 
                 <div class="form-group">
                     <label for="bio" class="sr-only">Profile Details</label>
-                    <textarea type="text" id="bio" class="form-control" required>Tell us about yourself...</textarea>
+                    <textarea type="text" id="bio" name="bio" class="form-control" placeholder="Tell us about yourself..."></textarea>
                 </div>
 
                 <div class="form-group">
@@ -74,16 +85,9 @@ include '../assets/layouts/header.php';
                     </div>
                 </div>
 
-                <div class="col-auto my-1 mb-4">
-                    <div class="custom-control custom-checkbox mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="rememberme">
-                        <label class="custom-control-label" for="rememberme">Remember me</label>
-                    </div>
-                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name='submit'>Signup</button>
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit" value="register">Signup</button>
-
-                <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+                <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
 
             </form>
 
