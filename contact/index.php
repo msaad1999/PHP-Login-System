@@ -3,12 +3,11 @@
 define('TITLE', "Home | PHP Login System");
 include '../assets/layouts/header.php';
 
-// if (!isset($_SESSION['userId'])) {
+if (!isset($_SESSION['id'])) {
 
-//     header("Location: ../login");
-//     exit();
-// } 
-
+    header("Location: ../login/");
+    exit();
+}
 ?>
 
 
@@ -28,21 +27,21 @@ include '../assets/layouts/header.php';
 
                 <div class="form-group">
                     <label for="name" class="sr-only">Name</label>
-                    <input type="text" id="name" class="form-control" placeholder="Name" required autofocus>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Name" required autofocus>
                 </div>
 
                 <div class="form-group">
                     <label for="email" class="sr-only">Email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Email" required>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="message" class="sr-only">Email</label>
-                    <textarea type="password" id="message" class="form-control message" placeholder="Message" required></textarea>
+                    <label for="message" class="sr-only">Message</label>
+                    <textarea type="password" id="message" name="message" class="form-control message" placeholder="Message" required></textarea>
                 </div>
 
                 <div class="text-center mx-5 px-5">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" value="contact-submit">Submit</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" name="contact-submit" value="contact-submit">Submit</button>
                 </div>
 
             </form>

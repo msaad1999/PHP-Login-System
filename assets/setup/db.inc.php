@@ -1,11 +1,9 @@
 <?php
 
-$serverName = "localhost";
-$dBUsername = "root";
-$dBPassword = "";
-$dBName = "klik_loginsystem";
+require 'env.php';
 
-$conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
+
+$conn = mysqli_connect($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
 
 if (!$conn)
 {

@@ -36,10 +36,6 @@
                         <?php if (!isset($_SESSION['id'])) { ?>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="../contact">Contact Us</a>
-                            </li>
-
-                            <li class="nav-item">
                                 <a class="nav-link" href="../login">Login</a>
                             </li>
 
