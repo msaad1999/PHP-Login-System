@@ -50,7 +50,7 @@ else {
                     $_SESSION['id'] = $row['id'];
                     $_SESSION['username'] = $row['username'];
                     $_SESSION['email'] = $row['email'];
-                    $_SESSION['full_name'] = $row['first_name'];
+                    $_SESSION['first_name'] = $row['first_name'];
                     $_SESSION['last_name'] = $row['last_name'];
                     $_SESSION['gender'] = $row['gender'];
                     $_SESSION['headline'] = $row['headline'];
@@ -62,6 +62,7 @@ else {
                     $_SESSION['created_at'] = $row['created_at'];
                     $_SESSION['updated_at'] = $row['updated_at'];
                     $_SESSION['deleted_at'] = $row['deleted_at'];
+                    $_SESSION['last_login_at'] = $row['last_login_at'];
 
                     // var_dump($_SESSION);
                     // exit();

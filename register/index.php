@@ -1,6 +1,6 @@
 <?php
 
-define('TITLE', "Signup | PHP Login System");
+define('TITLE', "Signup");
 include '../assets/layouts/header.php';
 
 ?>

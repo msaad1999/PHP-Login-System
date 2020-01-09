@@ -12,7 +12,7 @@
 
             <div class="container">
                 <a class="navbar-brand" href="../home">
-                    Login System
+                    <?php echo $APP_NAME; ?>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -65,7 +65,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="imgdropdown">
                                     <a class="dropdown-item" href="../profile">Profile</a>
-                                    <a class="dropdown-item" href="../profile/edit">Edit Profile</a>
+                                    <a class="dropdown-item" href="../profile-edit">Edit Profile</a>
                                     <a class="dropdown-item" href="../logout">Logout</a>
                                 </div>
                             </div>

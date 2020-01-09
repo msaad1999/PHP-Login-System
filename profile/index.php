@@ -1,18 +1,15 @@
 <?php
 
-define('TITLE', "Home | PHP Login System");
+define('TITLE', "Profile");
 include '../assets/layouts/header.php';
 
-// if (!isset($_SESSION['userId'])) {
+if (!isset($_SESSION['id'])) {
 
-//     header("Location: ../login");
-//     exit();
-// } 
+    header("Location: ../login");
+    exit();
+}
 
 ?>
-
-
-
 
 <div class="row py-5 px-4 ">
     <div class="col-xl-12 col-md-12 col-sm-12 mx-auto ">
@@ -22,14 +19,29 @@ include '../assets/layouts/header.php';
             <div class="px-4 pt-5 pb-5 bg-dark profile-cover">
                 <div class="media align-items-end profile-header">
                     <div class="profile mr-3">
-                        <img src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-4.jpg" alt="..." width="130" class="rounded mb-2 img-thumbnail">
-                        <a href="#" class="btn btn-dark btn-sm btn-block">Edit profile</a>
+                        <img src="../assets/uploads/users/<?php echo $_SESSION['profile_image']; ?>" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                        <a href="../profile-edit" class="btn btn-dark btn-sm btn-block">Edit profile</a>
                     </div>
                     <div class="media-body mb-5 text-white">
-                        <h4 class="mt-0 mb-0">Manuella Tarly</h4>
-                        <p class="small mb-4">
-                            <i class="fa fa-map-marker mr-2"></i>San Farcisco <br>
-                            <i class="fa fa-map-marker mr-2"></i>San aaaaaaa
+                        <h4 class="mt-0 mb-0"><?php echo $_SESSION['username']; ?></h4>
+                        <p class="small">
+
+                            <?php if ($_SESSION['gender'] == 'm'){ ?>
+
+                            <i class="fa fa-male"></i>    
+                            
+
+                            <?php } elseif ($_SESSION['gender'] == 'f'){ ?>
+
+                            <i class="fa fa-female"></i>
+
+                            <?php } ?>
+
+                            <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?>
+                        </p>
+
+                        <p class="mb-4">
+                            <?php echo $_SESSION['headline']; ?>
                         </p>
                     </div>
                 </div>
@@ -39,6 +51,16 @@ include '../assets/layouts/header.php';
         </div><!-- End profile widget -->
 
     </div>
+</div>
+
+<div class="row mt-5">
+
+    <div class="col-xl-6 col-md-9 col-sm-12 mx-auto">
+    
+    <?php echo $_SESSION['bio']; ?> 
+
+    </div>
+
 </div>
 
 

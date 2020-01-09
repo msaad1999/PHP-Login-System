@@ -1,6 +1,6 @@
 <?php
 
-define('TITLE', "Login | PHP Login System");
+define('TITLE', "Login");
 include '../assets/layouts/header.php';
 
 if (isset($_SESSION['id'])) {

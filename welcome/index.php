@@ -1,6 +1,6 @@
 <?php
 
-define('TITLE', "Home | PHP Login System");
+define('TITLE', "Welcome");
 include '../assets/layouts/header.php';
 
 ?>
