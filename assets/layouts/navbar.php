@@ -29,11 +29,15 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="../welcome">Welcome</a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../welcome">Welcome</a>
+                        </li>
 
                         <?php if (!isset($_SESSION['id'])) { ?>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="../contact">Contact Us</a>
+                            </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="../login">Login</a>
@@ -42,6 +46,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="../register">Signup</a>
                             </li>
+                            
 
                         <?php } else { ?>
 
@@ -54,18 +59,18 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="">Contact Us</a>
+                                <a class="nav-link" href="../contact">Contact Us</a>
                             </li>
 
                             <div class="dropdown">
                                 <button class="btn btn-dark dropdown-toggle" type="button" id="imgdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img class="navbar-img" src="../assets/uploads/default.png">
+                                    <img class="navbar-img" src="../assets/uploads/users/<?php echo $_SESSION['profile_image'] ?>">
                                     <span class="caret"></span>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="imgdropdown">
                                     <a class="dropdown-item" href="../profile">Profile</a>
                                     <a class="dropdown-item" href="../profile/edit">Edit Profile</a>
-                                    <a class="dropdown-item" href="../contact">Logout</a>
+                                    <a class="dropdown-item" href="../logout">Logout</a>
                                 </div>
                             </div>
 

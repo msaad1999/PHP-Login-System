@@ -3,6 +3,12 @@
 define('TITLE', "Login | PHP Login System");
 include '../assets/layouts/header.php';
 
+if (isset($_SESSION['id'])) {
+
+    header("Location: ../home");
+    exit();
+} 
+
 ?>
 
 
@@ -22,24 +28,25 @@ include '../assets/layouts/header.php';
 
                 <div class="form-group">
                     <label for="inputEmail" class="sr-only">Username</label>
-                    <input type="text" id="username" class="form-control" placeholder="Email address" required autofocus>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
                 </div>
 
                 <div class="form-group">
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Password" required>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
                 </div>
 
                 <div class="col-auto my-1 mb-4">
                     <div class="custom-control custom-checkbox mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                        <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
+                        <input type="checkbox" class="custom-control-input" id="rememberme" name="rememberme">
+                        <label class="custom-control-label" for="rememberme">Remember me</label>
                     </div>
                 </div>
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit" value="login">Login</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" value="loginsubmit" name="loginsubmit">Login</button>
 
-                <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+                <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+                
             </form>
         </div>
         <div class="col-sm-4">

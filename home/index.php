@@ -3,11 +3,11 @@
 define('TITLE', "Home | PHP Login System");
 include '../assets/layouts/header.php';
 
-// if (!isset($_SESSION['userId'])) {
+if (!isset($_SESSION['id'])) {
 
-//     header("Location: ../login");
-//     exit();
-// } 
+    header("Location: ../login");
+    exit();
+} 
 
 ?>
 

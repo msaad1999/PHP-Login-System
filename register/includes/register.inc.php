@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
                 * -------------------------------------------------------------------------------
                 */
 
-                $FileNameNew = 'default.png';
+                $FileNameNew = '_defaultUser.png';
                 $file = $_FILES['avatar'];
 
                 if (!empty($_FILES['avatar']['name']))

@@ -18,7 +18,7 @@ include '../assets/layouts/header.php';
                 <div class="picCard text-center">
                     <div class="avatar-upload">
                         <div class="avatar-preview text-center">
-                            <div id="imagePreview" style="background-image: url( ../assets/uploads/default.png );"></div>
+                            <div id="imagePreview" style="background-image: url( ../assets/uploads/users/_defaultUser.png );"></div>
                         </div>
                         <div class="avatar-edit">
                             <input name='avatar' id="avatar" class="fas fa-pencil" type='file' />
