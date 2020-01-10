@@ -15,8 +15,8 @@ if (isset($_POST['update-profile'])) {
     $bio = $_POST['bio'];
 
     $oldPassword = $_POST['password'];
-    $password = $_POST['newpassword'];
-    $passwordRepeat  = $_POST['confirmpassword'];
+    $newpassword = $_POST['newpassword'];
+    $passwordrepeat  = $_POST['confirmpassword'];
 
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -24,20 +24,29 @@ if (isset($_POST['update-profile'])) {
         header("Location: ../?error=invalidmail");
         exit();
     } 
-    elseif ($_SESSION['email'] != $email && !availableEmail($conn, $email)) {
+    if ($_SESSION['email'] != $email && !availableEmail($conn, $email)) {
 
         header("Location: ../?error=emailtaken");
         exit();
     }
-    elseif ( $_SESSION['username'] != $username && !availableUsername($conn, $username)) {
+    if ( $_SESSION['username'] != $username && !availableUsername($conn, $username)) {
 
         header("Location: ../?error=usernametaken");
         exit();
     }
     else {
 
-        // $FileNameNew = $_SESSION['profile-image'];
-        // require 'upload.inc.php';
+        /*
+        * -------------------------------------------------------------------------------
+        *   Password Updation
+        * -------------------------------------------------------------------------------
+        */
+
+        if( !empty($oldPassword) || !empty($newpassword) || !empty($passwordRepeat)){
+
+            require 'password-edit.inc.php';
+        }  
+
 
         /*
         * -------------------------------------------------------------------------------
@@ -97,8 +106,6 @@ if (isset($_POST['update-profile'])) {
         * -------------------------------------------------------------------------------
         */
 
-
-
         $sql = "UPDATE users 
             SET username=?,
             email=?, 
@@ -107,8 +114,17 @@ if (isset($_POST['update-profile'])) {
             gender=?, 
             headline=?, 
             bio=?, 
-            profile_image=? 
-            WHERE id=?";
+            profile_image=?,";
+
+        if ($pwdChange){
+
+            $sql .= "password=? 
+                    WHERE id=?;";
+        }
+        else{
+
+            $sql .= "WHERE id=?;";
+        }
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -117,19 +133,36 @@ if (isset($_POST['update-profile'])) {
             exit();
         } else {
 
-            mysqli_stmt_bind_param(
-                $stmt,
-                "sssssssss",
-                $username,
-                $email,
-                $first_name,
-                $last_name,
-                $gender,
-                $headline,
-                $bio,
-                $FileNameNew,
-                $_SESSION['id']
-            );
+            if ($pwdChange){
+
+                $hashedPwd = password_hash($newpassword, PASSWORD_DEFAULT);
+                mysqli_stmt_bind_param($stmt, "ssssssssss", 
+                    $username,
+                    $email,
+                    $first_name,
+                    $last_name,
+                    $gender,
+                    $headline,
+                    $bio,
+                    $FileNameNew,
+                    $hashedPwd,
+                    $_SESSION['id']
+                );
+            }
+            else{
+
+                mysqli_stmt_bind_param($stmt, "sssssssss", 
+                    $username,
+                    $email,
+                    $first_name,
+                    $last_name,
+                    $gender,
+                    $headline,
+                    $bio,
+                    $FileNameNew,
+                    $_SESSION['id']
+                );
+            }
 
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
