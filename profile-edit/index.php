@@ -72,34 +72,31 @@ if (!isset($_SESSION['id'])) {
                 <div class="form-group mb-5">
                     <label>Gender</label>
                     <div class="custom-control custom-radio custom-control">
-                        <input type="radio" id="male" name="gender" class="custom-control-input" value="m"
-                            <?php if($_SESSION['gender'] == 'm') echo 'checked' ?>>
+                        <input type="radio" id="male" name="gender" class="custom-control-input" value="m" <?php if ($_SESSION['gender'] == 'm') echo 'checked' ?>>
                         <label class="custom-control-label" for="male">Male</label>
                     </div>
                     <div class="custom-control custom-radio custom-control">
-                        <input type="radio" id="female" name="gender" class="custom-control-input" value="f"
-                            <?php if($_SESSION['gender'] == 'f') echo 'checked' ?>>
+                        <input type="radio" id="female" name="gender" class="custom-control-input" value="f" <?php if ($_SESSION['gender'] == 'f') echo 'checked' ?>>
                         <label class="custom-control-label" for="female">Female</label>
                     </div>
-                </div>
-                
-                <hr>
-                <span class="h5 font-weight-normal text-muted">Password Edit</span>
-                <br><br><br>
 
-                <div class="form-group">
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Current Password" autocomplete="new-password">
-                </div>
+                    <hr>
+                    <span class="h5 font-weight-normal text-muted">Password Edit</span>
+                    <br><br><br>
 
-                <div class=" form-group">
-                    <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="New Password" autocomplete="new-password">
-                </div>
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Current Password" autocomplete="new-password">
+                    </div>
 
-                <div class=" form-group mb-5">
-                    <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="Confirm Password" autocomplete="new-password">
-                </div>
+                    <div class=" form-group">
+                        <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="New Password" autocomplete="new-password">
+                    </div>
 
-                <button class="btn btn-lg btn-primary btn-block mb-5" type="submit" name='submit'>Confirm Changes</button>
+                    <div class=" form-group mb-5">
+                        <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="Confirm Password" autocomplete="new-password">
+                    </div>
+
+                    <button class="btn btn-lg btn-primary btn-block mb-5" type="submit" name='update-profile'>Confirm Changes</button>
 
             </form>
 
