@@ -26,18 +26,23 @@ if (isset($_SESSION['id'])) {
 
                 <h6 class="h3 mb-3 font-weight-normal text-muted  text-center">Login to your Account</h6>
 
+                <div class="text-center mb-3">
+                    <small class="text-success font-weight-bold">
+                        <?php
+                            if (isset($_SESSION['STATUS']['signupsuccess']))
+                                echo $_SESSION['STATUS']['signupsuccess'];
+
+                        ?>
+                    </small>
+                </div>
+
                 <div class="form-group">
                     <label for="inputEmail" class="sr-only">Username</label>
                     <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
                     <sub class="text-danger">
                         <?php
-
-                        if (isset($_SESSION['ERRORS']['nouser'])){
-
-                            // echo 'aaaa';
-                            echo $_SESSION['ERRORS']['nouser'];
-                        }
-
+                            if (isset($_SESSION['ERRORS']['nouser']))
+                                echo $_SESSION['ERRORS']['nouser'];
                         ?>
                     </sub>
                 </div>
@@ -47,13 +52,8 @@ if (isset($_SESSION['id'])) {
                     <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
                     <sub class="text-danger">
                         <?php
-
-                        if (isset($_SESSION['ERRORS']['wrongpassword'])){
-
-                            // echo 'aaaa';
-                            echo $_SESSION['ERRORS']['wrongpassword'];
-                        }
-
+                            if (isset($_SESSION['ERRORS']['wrongpassword']))
+                                echo $_SESSION['ERRORS']['wrongpassword'];
                         ?>
                     </sub>
                 </div>

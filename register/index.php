@@ -26,17 +26,40 @@ include '../assets/layouts/header.php';
                         </div>
                     </div>
                 </div>
+                <div class="text-center">
+                    <sub class="text-danger">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['imageerror']))
+                                echo $_SESSION['ERRORS']['imageerror'];
+
+                        ?>
+                    </sub>
+                </div>
 
                 <h6 class="h3 mt-3 mb-3 font-weight-normal text-muted text-center">Create an Account</h6>
 
                 <div class="form-group">
                     <label for="username" class="sr-only">Username</label>
                     <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                    <sub class="text-danger">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['usernameerror']))
+                                echo $_SESSION['ERRORS']['usernameerror'];
+
+                        ?>
+                    </sub>
                 </div>
 
                 <div class="form-group">
                     <label for="email" class="sr-only">Email address</label>
                     <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+                    <sub class="text-danger">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['emailerror']))
+                                echo $_SESSION['ERRORS']['emailerror'];
+
+                        ?>
+                    </sub>
                 </div>
 
                 <div class="form-group">
@@ -47,6 +70,13 @@ include '../assets/layouts/header.php';
                 <div class="form-group mb-4">
                     <label for="confirmpassword" class="sr-only">Confirm Password</label>
                     <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="Confirm Password" required>
+                    <sub class="text-danger mb-4">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['passworderror']))
+                                echo $_SESSION['ERRORS']['passworderror'];
+
+                        ?>
+                    </sub>
                 </div>
 
                 <hr>

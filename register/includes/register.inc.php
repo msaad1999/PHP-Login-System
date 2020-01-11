@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 
 if (isset($_POST['submit'])) {
 
@@ -9,7 +10,7 @@ if (isset($_POST['submit'])) {
     // var_dump( $_FILES['avatar']['name']);
     // exit();
 
-    $userName = $_POST['username'];
+    $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $passwordRepeat  = $_POST['confirmpassword'];
@@ -26,37 +27,44 @@ if (isset($_POST['submit'])) {
     * -------------------------------------------------------------------------------
     */
 
-    if (empty($userName) || empty($email) || empty($password) || empty($passwordRepeat)) {
-        header("Location: ../?error=emptyfields&uid=" . $userName . "&mail=" . $email);
+    if (empty($username) || empty($email) || empty($password) || empty($passwordRepeat)) {
+
+        $_SESSION['ERRORS']['formerror'] = 'required fields cannot be empty, try again';
+        header("Location: ../");
         exit();
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $userName)) {
-        header("Location: ../?error=invalidmailuid");
+    } else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+
+        $_SESSION['ERRORS']['usernameerror'] = 'invalid username';
+        header("Location: ../");
         exit();
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        header("Location: ../?error=invalidmail&uid=" . $userName);
-        exit();
-    } else if (!preg_match("/^[a-zA-Z0-9]*$/", $userName)) {
-        header("Location: ../?error=invaliduid&mail=" . $email);
+
+        $_SESSION['ERRORS']['emailerror'] = 'invalid email';
+        header("Location: ../");
         exit();
     } else if ($password !== $passwordRepeat) {
-        header("Location: ../?error=passwordcheck&uid=" . $userName . "&mail=" . $email);
+
+        $_SESSION['ERRORS']['passworderror'] = 'passwords donot match';
+        header("Location: ../");
         exit();
     } else {
-        // checking if a user already exists with the given username
+
         $sql = "select id from users where username=?;";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             header("Location: ../?error=sqlerror");
             exit();
         } else {
-            mysqli_stmt_bind_param($stmt, "s", $userName);
+            mysqli_stmt_bind_param($stmt, "s", $username);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
 
             $resultCheck = mysqli_stmt_num_rows($stmt);
 
             if ($resultCheck > 0) {
-                header("Location: ../?error=usertaken&mail=" . $email);
+
+                $_SESSION['ERRORS']['usernameerror'] = 'username already taken';
+                header("Location: ../");
                 exit();
             } else {
 
@@ -69,8 +77,8 @@ if (isset($_POST['submit'])) {
                 $FileNameNew = '_defaultUser.png';
                 $file = $_FILES['avatar'];
 
-                if (!empty($_FILES['avatar']['name']))
-                {
+                if (!empty($_FILES['avatar']['name'])){
+
                     $fileName = $_FILES['avatar']['name'];
                     $fileTmpName = $_FILES['avatar']['tmp_name'];
                     $fileSize = $_FILES['avatar']['size'];
@@ -81,32 +89,35 @@ if (isset($_POST['submit'])) {
                     $fileActualExt = strtolower(end($fileExt));
 
                     $allowed = array('jpg', 'jpeg', 'png', 'gif');
-                    if (in_array($fileActualExt, $allowed))
-                    {
-                        if ($fileError === 0)
-                        {
-                            if ($fileSize < 10000000)
-                            {
+                    if (in_array($fileActualExt, $allowed)){
+
+                        if ($fileError === 0){
+
+                            if ($fileSize < 10000000){
+
                                 $FileNameNew = uniqid('', true) . "." . $fileActualExt;
                                 $fileDestination = '../../assets/uploads/users/' . $FileNameNew;
                                 move_uploaded_file($fileTmpName, $fileDestination);
 
                             }
-                            else
-                            {
-                                header("Location: ..?error=imgsizeexceeded");
+                            else {
+
+                                $_SESSION['ERRORS']['imageerror'] = 'image size should be less than 10MB';
+                                header("Location: ../");
                                 exit(); 
                             }
                         }
-                        else
-                        {
-                            header("Location: ../?error=imguploaderror");
+                        else {
+
+                            $_SESSION['ERRORS']['imageerror'] = 'image upload failed, try again';
+                            header("Location: ../");
                             exit();
                         }
                     }
-                    else
-                    {
-                        header("Location: ../?error=invalidimagetype");
+                    else {
+
+                        $_SESSION['ERRORS']['imageerror'] = 'invalid image type, try again';
+                        header("Location: ../");
                         exit();
                     }
                 }
@@ -123,16 +134,19 @@ if (isset($_POST['submit'])) {
                         values ( ?,?,?,?,?,?,?,?,?, NOW() )";
                 $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
+
                     header("Location: ../?error=sqlerror");
                     exit();
                 } else {
+
                     $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
 
-                    mysqli_stmt_bind_param($stmt, "sssssssss", $userName, $email, $hashedPwd, $full_name, $last_name, $gender, $headline, $bio, $FileNameNew);
+                    mysqli_stmt_bind_param($stmt, "sssssssss", $username, $email, $hashedPwd, $full_name, $last_name, $gender, $headline, $bio, $FileNameNew);
                     mysqli_stmt_execute($stmt);
                     mysqli_stmt_store_result($stmt);
 
-                    header("Location: ../../login/?signup=success");
+                    $_SESSION['STATUS']['signupsuccess'] = 'Account Created, please Login';
+                    header("Location: ../../login/");
                     exit();
                 }
             }
