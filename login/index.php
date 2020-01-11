@@ -29,11 +29,33 @@ if (isset($_SESSION['id'])) {
                 <div class="form-group">
                     <label for="inputEmail" class="sr-only">Username</label>
                     <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                    <sub class="text-danger">
+                        <?php
+
+                        if (isset($_SESSION['ERRORS']['nouser'])){
+
+                            // echo 'aaaa';
+                            echo $_SESSION['ERRORS']['nouser'];
+                        }
+
+                        ?>
+                    </sub>
                 </div>
 
                 <div class="form-group">
                     <label for="inputPassword" class="sr-only">Password</label>
                     <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                    <sub class="text-danger">
+                        <?php
+
+                        if (isset($_SESSION['ERRORS']['wrongpassword'])){
+
+                            // echo 'aaaa';
+                            echo $_SESSION['ERRORS']['wrongpassword'];
+                        }
+
+                        ?>
+                    </sub>
                 </div>
 
                 <div class="col-auto my-1 mb-4">

@@ -25,6 +25,16 @@ if (!isset($_SESSION['id'])) {
 
                 <h6 class="h3 mb-3 font-weight-normal text-muted  text-center">Contact Us</h6>
 
+                <div class="text-center mb-3">
+                    <small class="text-success font-weight-bold">
+                        <?php
+                            if (isset($_SESSION['STATUS']['mailstatus']))
+                                echo $_SESSION['STATUS']['mailstatus'];
+
+                        ?>
+                    </small>
+                </div>
+
                 <div class="form-group">
                     <label for="name" class="sr-only">Name</label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Name" required autofocus>
@@ -48,13 +58,13 @@ if (!isset($_SESSION['id'])) {
 
         </div>
     </div>
+</main>
 
 
 
 
+<?php
 
-    <?php
+include '../assets/layouts/footer.php'
 
-    include '../assets/layouts/footer.php'
-
-    ?>
+?>

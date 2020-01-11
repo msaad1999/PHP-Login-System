@@ -2,6 +2,7 @@ html,
 body {
     overflow-x: hidden;
     /* Prevent scroll on narrow devices */
+    height: 100%;
 }
 
 .box-shadow {

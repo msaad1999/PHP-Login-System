@@ -21,32 +21,23 @@ if (isset($_POST['update-profile'])) {
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-        header("Location: ../?error=invalidmail");
+        $_SESSION['ERRORS']['emailerror'] = 'invalid email, try again';
+        header("Location: ../");
         exit();
     } 
     if ($_SESSION['email'] != $email && !availableEmail($conn, $email)) {
 
-        header("Location: ../?error=emailtaken");
+        $_SESSION['ERRORS']['emailerror'] = 'email already taken';
+        header("Location: ../");
         exit();
     }
     if ( $_SESSION['username'] != $username && !availableUsername($conn, $username)) {
 
-        header("Location: ../?error=usernametaken");
+        $_SESSION['ERRORS']['usernameerror'] = 'username already taken';
+        header("Location: ../");
         exit();
     }
     else {
-
-        /*
-        * -------------------------------------------------------------------------------
-        *   Password Updation
-        * -------------------------------------------------------------------------------
-        */
-
-        if( !empty($oldPassword) || !empty($newpassword) || !empty($passwordRepeat)){
-
-            require 'password-edit.inc.php';
-        }  
-
 
         /*
         * -------------------------------------------------------------------------------
@@ -82,22 +73,37 @@ if (isset($_POST['update-profile'])) {
                     }
                     else
                     {
-                        header("Location: ..?error=imgsizeexceeded");
+                        $_SESSION['ERRORS']['imageerror'] = 'image size should be less than 10MB';
+                        header("Location: ../");
                         exit(); 
                     }
                 }
                 else
                 {
-                    header("Location: ../?error=imguploaderror");
+                    $_SESSION['ERRORS']['imageerror'] = 'image upload failed, try again';
+                    header("Location: ../");
                     exit();
                 }
             }
             else
             {
-                header("Location: ../?error=invalidimagetype");
+                $_SESSION['ERRORS']['imageerror'] = 'invalid image type, try again';
+                header("Location: ../");
                 exit();
             }
         }
+
+
+        /*
+        * -------------------------------------------------------------------------------
+        *   Password Updation
+        * -------------------------------------------------------------------------------
+        */
+
+        if( !empty($oldPassword) || !empty($newpassword) || !empty($passwordRepeat)){
+
+            require 'password-edit.inc.php';
+        }  
 
 
         /*
@@ -114,16 +120,16 @@ if (isset($_POST['update-profile'])) {
             gender=?, 
             headline=?, 
             bio=?, 
-            profile_image=?,";
+            profile_image=?";
 
         if ($pwdChange){
 
-            $sql .= "password=? 
+            $sql .= ", password=? 
                     WHERE id=?;";
         }
         else{
 
-            $sql .= "WHERE id=?;";
+            $sql .= " WHERE id=?;";
         }
 
         $stmt = mysqli_stmt_init($conn);
@@ -176,7 +182,8 @@ if (isset($_POST['update-profile'])) {
             $_SESSION['bio'] = $bio;
             $_SESSION['profile_image'] = $FileNameNew;
 
-            header("Location: ../?edit=success");
+            $_SESSION['STATUS']['editsuccess'] = 'profile successfully updated';
+            header("Location: ../");
             exit();
         }
     }

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 if (!isset($_POST['loginsubmit'])){
 
     header("Location: ../");
@@ -40,12 +42,22 @@ else {
 
                 if ($pwdCheck == false) {
 
-                    header("Location: ../?error=wrongpwd");
+                    $_SESSION['ERRORS']['wrongpassword'] = 'wrong password';
+                    header("Location: ../");
                     exit();
                 } 
                 else if ($pwdCheck == true) {
 
                     session_start();
+
+                    
+                    if($row['verified_at'] != NULL){
+
+                        $_SESSION['auth'] = 'verified';
+                    } else{
+
+                        $_SESSION['auth'] = 'auth';
+                    }
 
                     $_SESSION['id'] = $row['id'];
                     $_SESSION['username'] = $row['username'];
@@ -64,16 +76,14 @@ else {
                     $_SESSION['deleted_at'] = $row['deleted_at'];
                     $_SESSION['last_login_at'] = $row['last_login_at'];
 
-                    // var_dump($_SESSION);
-                    // exit();
-
-                    header("Location: ../../home/?login=success");
+                    header("Location: ../../home/");
                     exit();
                 } 
             } 
             else {
 
-                header("Location: ../?error=nouser");
+                $_SESSION['ERRORS']['nouser'] = 'username does not exist';
+                header("Location: ../");
                 exit();
             }
         }

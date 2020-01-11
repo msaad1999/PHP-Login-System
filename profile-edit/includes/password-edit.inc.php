@@ -21,19 +21,23 @@ if (isset($_POST['update-profile'])) {
             if($row = mysqli_fetch_assoc($result)){
 
                 $pwdCheck = password_verify($oldPassword, $row['password']);
-                if ($pwdCheck == false)
-                {
-                    header("Location: ../?error=wrongpwd");
+
+                if ($pwdCheck == false){
+
+                    $_SESSION['ERRORS']['passworderror'] = 'incorrect current password';
+                    header("Location: ../");
                     exit();
                 }
-                if ($oldPassword == $newpassword)
-                {
-                    header("Location: ../?error=samepwd");
+                if ($oldPassword == $newpassword){
+
+                    $_SESSION['ERRORS']['passworderror'] = 'new password cannot be same as old password';
+                    header("Location: ../");
                     exit();
                 }
-                if ($newpassword !== $passwordrepeat)
-                {
-                    header("Location: ../?error=wrongconfirmpassword");
+                if ($newpassword !== $passwordrepeat){
+
+                    $_SESSION['ERRORS']['passworderror'] = 'confirmed password does not match new password';
+                    header("Location: ../");
                     exit();
                 }
 
@@ -43,7 +47,8 @@ if (isset($_POST['update-profile'])) {
     }
     else{
 
-        header("Location: ../?error=emptypwdfields");
+        $_SESSION['ERRORS']['passworderror'] = 'password fields cannot be empty for password updation';
+        header("Location: ../");
         exit();
     }  
 } 

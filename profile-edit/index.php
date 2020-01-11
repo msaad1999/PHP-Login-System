@@ -36,17 +36,49 @@ if (!isset($_SESSION['id'])) {
                         </div>
                     </div>
                 </div>
+                <div class="text-center">
+                    <sub class="text-danger">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['imageerror']))
+                                echo $_SESSION['ERRORS']['imageerror'];
+
+                        ?>
+                    </sub>
+                </div>
+                <div class="text-center">
+                    <small class="text-success font-weight-bold">
+                        <?php
+                            if (isset($_SESSION['STATUS']['editsuccess']))
+                                echo $_SESSION['STATUS']['editsuccess'];
+
+                        ?>
+                    </small>
+                </div>
 
                 <h6 class="h3 mt-3 mb-3 font-weight-normal text-muted text-center">Edit Your Profile</h6>
 
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" class="form-control" placeholder="Username" value="<?php echo $_SESSION['username']; ?>" autocomplete="off">
+                    <sub class="text-danger">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['usernameerror']))
+                                echo $_SESSION['ERRORS']['usernameerror'];
+
+                        ?>
+                    </sub>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email address</label>
                     <input type="email" id="email" name="email" class="form-control" placeholder="Email address" value="<?php echo $_SESSION['email']; ?>">
+                    <sub class="text-danger">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['emailerror']))
+                                echo $_SESSION['ERRORS']['emailerror'];
+
+                        ?>
+                    </sub>
                 </div>
 
                 <div class="form-group">
@@ -81,8 +113,16 @@ if (!isset($_SESSION['id'])) {
                     </div>
 
                     <hr>
-                    <span class="h5 font-weight-normal text-muted">Password Edit</span>
-                    <br><br><br>
+                    <span class="h5 font-weight-normal text-muted mb-4">Password Edit</span>
+                    <br><br>
+                    <sub class="text-danger mb-4">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['passworderror']))
+                                echo $_SESSION['ERRORS']['passworderror'];
+
+                        ?>
+                    </sub>
+                    <br><br>
 
                     <div class="form-group">
                         <input type="password" id="password" name="password" class="form-control" placeholder="Current Password" autocomplete="new-password">

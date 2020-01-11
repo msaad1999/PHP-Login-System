@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require '../../assets/setup/env.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -46,15 +48,15 @@ if (isset($_POST['contact-submit'])) {
     try {
 
         $mail->isSMTP();
-        $mail->Host = $MAIL_HOST;
+        $mail->Host = MAIL_HOST;
         $mail->SMTPAuth = true;
-        $mail->Username = $MAIL_USERNAME;
-        $mail->Password = $MAIL_PASSWORD;
-        $mail->SMTPSecure = $MAIL_ENCRYPTION;
-        $mail->Port = $MAIL_PORT;
+        $mail->Username = MAIL_USERNAME;
+        $mail->Password = MAIL_PASSWORD;
+        $mail->SMTPSecure = MAIL_ENCRYPTION;
+        $mail->Port = MAIL_PORT;
 
-        $mail->setFrom($MAIL_USERNAME, $APP_NAME);
-        $mail->addAddress($MAIL_USERNAME, $APP_NAME);
+        $mail->setFrom(MAIL_USERNAME, APP_NAME);
+        $mail->addAddress(MAIL_USERNAME, APP_NAME);
 
         $mail->isHTML(true);
         $mail->Subject = $subject;
@@ -64,10 +66,17 @@ if (isset($_POST['contact-submit'])) {
     } 
     catch (Exception $e) {
 
-        echo '<p class="error">Message could not be sent. Mailer Error: ' . $mail->ErrorInfo
-            . '</p>';
+        // for public use
+        $_SESSION['STATUS']['mailstatus'] = 'message could not be sent, try again later';
+
+        // for development use
+        // $_SESSION['STATUS']['mailstatus'] = 'message could not be sent. ERROR: ' . $mail->ErrorInfo;
+
+        header("Location: ../");
+        exit();
     }
 
-    echo "<h6> Thanks for contacting Franklin's!</h6>
-            <h6>Please Allow 24 hours for a response</h6>";
+    $_SESSION['STATUS']['mailstatus'] = 'Thanks for contacting! Please Allow 24 hrs for a response';
+    header("Location: ../");
+    exit();
 }
