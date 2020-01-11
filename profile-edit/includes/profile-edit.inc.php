@@ -96,6 +96,20 @@ if (isset($_POST['update-profile'])) {
 
         /*
         * -------------------------------------------------------------------------------
+        *   Deleting old profile photo
+        * -------------------------------------------------------------------------------
+        */
+
+        if (!unlink('../../assets/uploads/users/' . $_SESSION['profile_image'])) {  
+
+            $_SESSION['ERRORS']['imageerror'] = 'old image could not be deleted';
+            header("Location: ../");
+            exit();
+        }  
+
+
+        /*
+        * -------------------------------------------------------------------------------
         *   Password Updation
         * -------------------------------------------------------------------------------
         */
@@ -172,6 +186,7 @@ if (isset($_POST['update-profile'])) {
 
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
+
 
             $_SESSION['username'] = $username;
             $_SESSION['email'] = $email;
