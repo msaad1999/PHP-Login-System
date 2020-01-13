@@ -8,7 +8,7 @@ if (isset($_POST['update-profile'])) {
 
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $first_name = $_POST['firstl_name'];
+    $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $gender = $_POST['gender'];
     $headline = $_POST['headline'];
@@ -70,6 +70,17 @@ if (isset($_POST['update-profile'])) {
                         $fileDestination = '../../assets/uploads/users/' . $FileNameNew;
                         move_uploaded_file($fileTmpName, $fileDestination);
 
+                        /*
+                        * -------------------------------------------------------------------------------
+                        *   Deleting old profile photo
+                        * -------------------------------------------------------------------------------
+                        */
+                        if (!unlink('../../assets/uploads/users/' . $_SESSION['profile_image'])) {  
+
+                            $_SESSION['ERRORS']['imageerror'] = 'old image could not be deleted';
+                            header("Location: ../");
+                            exit();
+                        } 
                     }
                     else
                     {
@@ -92,20 +103,6 @@ if (isset($_POST['update-profile'])) {
                 exit();
             }
         }
-
-
-        /*
-        * -------------------------------------------------------------------------------
-        *   Deleting old profile photo
-        * -------------------------------------------------------------------------------
-        */
-
-        if (!unlink('../../assets/uploads/users/' . $_SESSION['profile_image'])) {  
-
-            $_SESSION['ERRORS']['imageerror'] = 'old image could not be deleted';
-            header("Location: ../");
-            exit();
-        }  
 
 
         /*
