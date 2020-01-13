@@ -2,12 +2,7 @@
 
 define('TITLE', "Home");
 include '../assets/layouts/header.php';
-
-if (!isset($_SESSION['id'])) {
-
-    header("Location: ../login");
-    exit();
-} 
+check_verified();
 
 ?>
 

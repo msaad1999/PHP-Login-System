@@ -1,7 +1,13 @@
 .profile-header {
-    transform: translateY(6rem);
+    transform: translateY(7rem);
 }
 
 .profile-header {
     z-index: 100;
+}
+
+.img-thumbnail {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
 }

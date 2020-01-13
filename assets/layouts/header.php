@@ -4,6 +4,7 @@ session_start();
 
 require '..\assets\setup\env.php';
 require '..\assets\setup\db.inc.php';
+require '..\assets\includes\auth_functions.php';
 
 ?>
 
@@ -20,8 +21,8 @@ require '..\assets\setup\db.inc.php';
     <title><?php echo TITLE . ' | ' . APP_NAME; ?></title>
 
     <link rel="stylesheet" href="../assets/vendor/bootstrap-4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/vendor/fontawesome-5.12.0/css/fontawesome.min.css">
-
+    <link rel="stylesheet" href="../assets/vendor/fontawesome-5.12.0/css/all.min.css">
+ 
     <!-- Custom styles -->
     <link rel="stylesheet" href="../assets/css/app.css">
     <link rel="stylesheet" href="custom.css" >

@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+require '../../assets/includes/auth_functions.php';
+check_verified();
+
 if (isset($_POST['update-profile'])) {
 
     require '../../assets/setup/db.inc.php';
@@ -146,9 +149,12 @@ if (isset($_POST['update-profile'])) {
         $stmt = mysqli_stmt_init($conn);
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
-            header("Location: ../?error=sqlerror");
+
+            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+            header("Location: ../");
             exit();
-        } else {
+        } 
+        else {
 
             if ($pwdChange){
 

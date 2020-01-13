@@ -2,6 +2,7 @@
 
 define('TITLE', "Signup");
 include '../assets/layouts/header.php';
+check_logged_out();
 
 ?>
 
@@ -105,6 +106,7 @@ include '../assets/layouts/header.php';
 
                 <div class="form-group">
                     <label>Gender</label>
+
                     <div class="custom-control custom-radio custom-control">
                         <input type="radio" id="male" name="gender" class="custom-control-input" value="m">
                         <label class="custom-control-label" for="male">Male</label>
@@ -115,7 +117,7 @@ include '../assets/layouts/header.php';
                     </div>
                 </div>
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit" name='submit'>Signup</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name='signupsubmit'>Signup</button>
 
                 <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
 

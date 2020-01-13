@@ -2,6 +2,9 @@
 
 session_start();
 
+require '../../assets/includes/auth_functions.php';
+check_logged_in();
+
 require '../../assets/setup/env.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -16,7 +19,7 @@ require '../../assets/includes/functions.php';
 if (isset($_POST['contact-submit'])) {
 
     $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
+    $email = $_SESSION['email'];
     $msg = $_POST['message'];
 
 
@@ -24,7 +27,7 @@ if (isset($_POST['contact-submit'])) {
         die();
     }
 
-    if (!$name || !$email || !$msg) {
+    if (!$name || !$msg) {
         echo '<h4 class="error">All Fields Required.</h4>'
             . '<a href="contact.php" class="button block">go back and try again</a>';
         exit;

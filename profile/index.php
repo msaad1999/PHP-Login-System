@@ -2,12 +2,7 @@
 
 define('TITLE', "Profile");
 include '../assets/layouts/header.php';
-
-if (!isset($_SESSION['id'])) {
-
-    header("Location: ../login");
-    exit();
-}
+check_verified();
 
 ?>
 
@@ -28,7 +23,7 @@ if (!isset($_SESSION['id'])) {
 
                             <?php if ($_SESSION['gender'] == 'm'){ ?>
 
-                            <i class="fa fa-male"></i>    
+                            <i class="fa fa-male"></i>
                             
 
                             <?php } elseif ($_SESSION['gender'] == 'f'){ ?>

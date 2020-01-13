@@ -2,12 +2,8 @@
 
 define('TITLE', "Contact Us");
 include '../assets/layouts/header.php';
+check_logged_in();
 
-if (!isset($_SESSION['id'])) {
-
-    header("Location: ../login/");
-    exit();
-}
 ?>
 
 

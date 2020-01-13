@@ -7,12 +7,13 @@ if (isset($_POST['update-profile'])) {
         $sql = "SELECT password FROM users WHERE id=?;";
         $stmt = mysqli_stmt_init($conn);
         
-        if (!mysqli_stmt_prepare($stmt, $sql)){
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-            header("Location: ../?error=sqlerror");
+            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+            header("Location: ../");
             exit();
         }
-        else{
+        else {
 
             mysqli_stmt_bind_param($stmt, "s", $_SESSION['id']);
             mysqli_stmt_execute($stmt);

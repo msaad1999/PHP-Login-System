@@ -2,6 +2,9 @@
 
 session_start();
 
+require '../../assets/includes/auth_functions.php';
+check_logged_out();
+
 if (!isset($_POST['loginsubmit'])){
 
     header("Location: ../");
@@ -16,6 +19,7 @@ else {
 
     if (empty($username) || empty($password)) {
 
+        $_SESSION['STATUS']['loginstatus'] = 'fields cannot be empty';
         header("Location: ../?error=emptyfields");
         exit();
     } 
@@ -26,7 +30,8 @@ else {
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-            header("Location: ../?error=sqlerror");
+            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+            header("Location: ../");
             exit();
         } 
         else {
@@ -56,7 +61,7 @@ else {
                         $_SESSION['auth'] = 'verified';
                     } else{
 
-                        $_SESSION['auth'] = 'auth';
+                        $_SESSION['auth'] = 'loggedin';
                     }
 
                     $_SESSION['id'] = $row['id'];

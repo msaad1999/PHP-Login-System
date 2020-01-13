@@ -2,23 +2,27 @@
 
 session_start();
 
-if (isset($_POST['submit'])) {
+require '../../assets/includes/auth_functions.php';
+check_logged_out();
+
+
+if (isset($_POST['signupsubmit'])) {
 
     require '../../assets/setup/db.inc.php';
-
-    // var_dump($_POST);
-    // var_dump( $_FILES['avatar']['name']);
-    // exit();
 
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $passwordRepeat  = $_POST['confirmpassword'];
-    $gender = $_POST['gender'];
     $headline = $_POST['headline'];
     $bio = $_POST['bio'];
     $full_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
+
+    if (isset($_POST['gender'])) 
+        $gender = $_POST['gender'];
+    else
+        $gender = NULL;
 
 
     /*
@@ -51,10 +55,15 @@ if (isset($_POST['submit'])) {
 
         $sql = "select id from users where username=?;";
         $stmt = mysqli_stmt_init($conn);
+
         if (!mysqli_stmt_prepare($stmt, $sql)) {
-            header("Location: ../?error=sqlerror");
+
+            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+            header("Location: ../");
             exit();
-        } else {
+        } 
+        else {
+
             mysqli_stmt_bind_param($stmt, "s", $username);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
@@ -66,7 +75,8 @@ if (isset($_POST['submit'])) {
                 $_SESSION['ERRORS']['usernameerror'] = 'username already taken';
                 header("Location: ../");
                 exit();
-            } else {
+            } 
+            else {
 
                 /*
                 * -------------------------------------------------------------------------------
@@ -135,15 +145,25 @@ if (isset($_POST['submit'])) {
                 $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-                    header("Location: ../?error=sqlerror");
+                    $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+                    header("Location: ../");
                     exit();
-                } else {
+                } 
+                else {
 
                     $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
 
                     mysqli_stmt_bind_param($stmt, "sssssssss", $username, $email, $hashedPwd, $full_name, $last_name, $gender, $headline, $bio, $FileNameNew);
                     mysqli_stmt_execute($stmt);
                     mysqli_stmt_store_result($stmt);
+
+                    /*
+                    * -------------------------------------------------------------------------------
+                    *   Sending Verification Email for Account Activation
+                    * -------------------------------------------------------------------------------
+                    */
+                    
+                    require 'sendverificationemail.inc.php';
 
                     $_SESSION['STATUS']['loginstatus'] = 'Account Created, please Login';
                     header("Location: ../../login/");
