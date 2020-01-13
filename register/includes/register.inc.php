@@ -145,7 +145,7 @@ if (isset($_POST['submit'])) {
                     mysqli_stmt_execute($stmt);
                     mysqli_stmt_store_result($stmt);
 
-                    $_SESSION['STATUS']['signupsuccess'] = 'Account Created, please Login';
+                    $_SESSION['STATUS']['loginstatus'] = 'Account Created, please Login';
                     header("Location: ../../login/");
                     exit();
                 }

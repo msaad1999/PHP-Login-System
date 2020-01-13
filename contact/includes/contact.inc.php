@@ -80,3 +80,8 @@ if (isset($_POST['contact-submit'])) {
     header("Location: ../");
     exit();
 }
+else {
+
+    header("Location: ../");
+    exit();
+}

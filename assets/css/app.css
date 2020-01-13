@@ -1,7 +1,6 @@
 html,
 body {
     overflow-x: hidden;
-    /* Prevent scroll on narrow devices */
     height: 100%;
 }
 
@@ -44,14 +43,10 @@ body {
 
 .avatar-upload {
     text-align: center;
-    /* position: relative; */
-    /* max-width: 205px; */
-    /* margin: 0 25% 50px 25%; */
     display: inline-block;
 }
 
 .avatar-edit {
-    /* position: absolute; */
     top: 150px;
     margin-right: -125px;
     margin-top: -40px;
@@ -62,7 +57,6 @@ body {
 }
 
 .avatar-upload .avatar-edit input+label {
-    /* display: inline-block; */
     width: 34px;
     height: 34px;
     margin-bottom: 0;

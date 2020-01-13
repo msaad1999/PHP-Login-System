@@ -29,15 +29,15 @@ if (isset($_SESSION['id'])) {
                 <div class="text-center mb-3">
                     <small class="text-success font-weight-bold">
                         <?php
-                            if (isset($_SESSION['STATUS']['signupsuccess']))
-                                echo $_SESSION['STATUS']['signupsuccess'];
+                            if (isset($_SESSION['STATUS']['loginstatus']))
+                                echo $_SESSION['STATUS']['loginstatus'];
 
                         ?>
                     </small>
                 </div>
 
                 <div class="form-group">
-                    <label for="inputEmail" class="sr-only">Username</label>
+                    <label for="username" class="sr-only">Username</label>
                     <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
                     <sub class="text-danger">
                         <?php
@@ -48,7 +48,7 @@ if (isset($_SESSION['id'])) {
                 </div>
 
                 <div class="form-group">
-                    <label for="inputPassword" class="sr-only">Password</label>
+                    <label for="password" class="sr-only">Password</label>
                     <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
                     <sub class="text-danger">
                         <?php
@@ -67,7 +67,9 @@ if (isset($_SESSION['id'])) {
 
                 <button class="btn btn-lg btn-primary btn-block" type="submit" value="loginsubmit" name="loginsubmit">Login</button>
 
-                <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+                <p class="mt-3 text-muted text-center"><a href="../reset-password/">forgot password?</a></p>
+
+                <p class="mt-4 mb-3 text-muted text-center">&copy; 2017-2018</p>
                 
             </form>
         </div>
