@@ -2,9 +2,6 @@
 
 session_start();
 
-require '../../assets/includes/auth_functions.php';
-check_logged_in();
-
 require '../../assets/setup/env.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -17,9 +14,18 @@ require '../../assets/vendor/PHPMailer/src/SMTP.php';
 require '../../assets/includes/functions.php';
 
 if (isset($_POST['contact-submit'])) {
+    
+    if (isset($_SESSION['auth'])){
 
-    $name = trim($_POST['name']);
-    $email = $_SESSION['email'];
+        $name = $_SESSION['username'];
+        $email = $_SESSION['email'];
+    }
+    else {
+
+        $name = trim($_POST['name']);
+        $email = trim($_POST['email']);
+    }
+
     $msg = $_POST['message'];
 
 
@@ -27,15 +33,16 @@ if (isset($_POST['contact-submit'])) {
         die();
     }
 
-    if (!$name || !$msg) {
-        echo '<h4 class="error">All Fields Required.</h4>'
-            . '<a href="contact.php" class="button block">go back and try again</a>';
-        exit;
+    if (!isset($_SESSION['auth']) && (!$name || !$msg)) {
+
+        $_SESSION['ERRORS']['mailstatus'] = 'Fields cannot be empty';
+        header("Location: ../");
+        exit();
     }
 
     $subject = "$name sent you a message via your contact form";
 
-    $message = "<strong>Name:</strong> $name<br>" # \r\n is a line break
+    $message = "<strong>Name:</strong> $name<br>" 
         . "<strong>Email:</strong> <i>$email</i><br><br>"
         . "<strong>Message:</strong><br><br>$msg";
 

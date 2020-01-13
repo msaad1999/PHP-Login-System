@@ -2,7 +2,6 @@
 
 define('TITLE', "Contact Us");
 include '../assets/layouts/header.php';
-check_logged_in();
 
 ?>
 
@@ -31,6 +30,8 @@ check_logged_in();
                     </small>
                 </div>
 
+                <?php if(!isset($_SESSION['auth'])) { ?>
+
                 <div class="form-group">
                     <label for="name" class="sr-only">Name</label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Name" required autofocus>
@@ -40,6 +41,8 @@ check_logged_in();
                     <label for="email" class="sr-only">Email</label>
                     <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
                 </div>
+
+                <?php } ?>
 
                 <div class="form-group">
                     <label for="message" class="sr-only">Message</label>
@@ -61,6 +64,6 @@ check_logged_in();
 
 <?php
 
-include '../assets/layouts/footer.php'
+include '../assets/layouts/footer.php';
 
 ?>

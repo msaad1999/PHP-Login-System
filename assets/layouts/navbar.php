@@ -1,4 +1,4 @@
-    <?php if (!isset($_SESSION['id'])) { ?>
+    <?php if (!isset($_SESSION['auth'])) { ?>
 
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm p-3">
 
@@ -33,8 +33,12 @@
                             <a class="nav-link" href="../welcome">Welcome</a>
                         </li>
 
-                        <?php if (!isset($_SESSION['id'])) { ?>
+                        <?php if (!isset($_SESSION['auth'])) { ?>
 
+                            <li class="nav-item">
+                                <a class="nav-link" href="../contact">Contact Us</a>
+                            </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="../login">Login</a>
                             </li>
@@ -42,7 +46,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="../register">Signup</a>
                             </li>
-                            
 
                         <?php } else { ?>
 
