@@ -16,10 +16,10 @@ check_logged_out();
             <form class="form-auth" action="includes/login.inc.php" method="post">
 
                 <div class="text-center">
-                    <img class="mb-4" src="../assets/images/logo.png" alt="" width="92" height="92">
+                    <img class="mb-1" src="../assets/images/logo.png" alt="" width="130" height="130">
                 </div>
 
-                <h6 class="h3 mb-3 font-weight-normal text-muted  text-center">Login to your Account</h6>
+                <h6 class="h3 mb-3 font-weight-normal text-muted text-center">Login to your Account</h6>
 
                 <div class="text-center mb-3">
                     <small class="text-success font-weight-bold">
@@ -64,7 +64,12 @@ check_logged_out();
 
                 <p class="mt-3 text-muted text-center"><a href="../reset-password/">forgot password?</a></p>
 
-                <p class="mt-4 mb-3 text-muted text-center">&copy; 2017-2018</p>
+                <p class="mt-4 mb-3 text-muted text-center">
+                    Login System | 
+                    <a href="https://github.com/msaad1999/PHP-Login-System/blob/master/LICENSE" target="_blank">
+                        MIT License
+                    </a>
+                </p>
                 
             </form>
         </div>

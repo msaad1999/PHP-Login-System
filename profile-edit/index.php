@@ -23,7 +23,8 @@ check_verified();
                 <div class="picCard text-center">
                     <div class="avatar-upload">
                         <div class="avatar-preview text-center">
-                            <div id="imagePreview" style="background-image: url( ../assets/uploads/users/<?php echo $_SESSION['profile_image'] ?> );"></div>
+                            <div id="imagePreview" style="background-image: url( ../assets/uploads/users/<?php echo $_SESSION['profile_image'] ?> );">
+                            </div>
                         </div>
                         <div class="avatar-edit">
                             <input name='avatar' id="avatar" class="fas fa-pencil" type='file' />
@@ -106,10 +107,11 @@ check_verified();
                         <input type="radio" id="female" name="gender" class="custom-control-input" value="f" <?php if ($_SESSION['gender'] == 'f') echo 'checked' ?>>
                         <label class="custom-control-label" for="female">Female</label>
                     </div>
+                </div>
 
-                    <hr>
+                <hr>
                     <span class="h5 font-weight-normal text-muted mb-4">Password Edit</span>
-                    <br><br>
+                    <br>
                     <sub class="text-danger mb-4">
                         <?php
                             if (isset($_SESSION['ERRORS']['passworderror']))
@@ -132,7 +134,7 @@ check_verified();
                     </div>
 
                     <button class="btn btn-lg btn-primary btn-block mb-5" type="submit" name='update-profile'>Confirm Changes</button>
-
+                
             </form>
 
         </div>

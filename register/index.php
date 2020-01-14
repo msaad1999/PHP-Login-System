@@ -119,7 +119,12 @@ check_logged_out();
 
                 <button class="btn btn-lg btn-primary btn-block" type="submit" name='signupsubmit'>Signup</button>
 
-                <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+                <p class="mt-4 mb-3 text-muted text-center">
+                    Login System | 
+                    <a href="https://github.com/msaad1999/PHP-Login-System/blob/master/LICENSE" target="_blank">
+                        MIT License
+                    </a>
+                </p>
 
             </form>
 

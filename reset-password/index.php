@@ -27,7 +27,7 @@ check_logged_out();
                         <input type="hidden" name="validator" value="<?php echo $validator; ?>">
 
                         <div class="text-center">
-                            <img class="mb-4" src="../assets/images/logo.png" alt="" width="92" height="92">
+                            <img class="mb-1" src="../assets/images/logo.png" alt="" width="130" height="130">
                         </div>
 
                         <h6 class="h5 mb-3 font-weight-normal text-muted text-center">Reset password</h6>
@@ -70,7 +70,7 @@ check_logged_out();
                     <form class="form-auth" action="includes/sendtoken.inc.php" method="post">
 
                         <div class="text-center">
-                            <img class="mb-4" src="../assets/images/logo.png" alt="" width="92" height="92">
+                            <img class="mb-1" src="../assets/images/logo.png" alt="" width="130" height="130">
                         </div>
 
                         <h6 class="h5 mb-3 font-weight-normal text-muted text-center">Reset password</h6>
@@ -99,6 +99,13 @@ check_logged_out();
                         <button class="btn btn-lg btn-primary btn-block mb-5 mt-4" type="submit" value="resentsend" name="resentsend">
                             Send Password Reset Link
                         </button>
+
+                        <p class="mt-4 mb-3 text-muted text-center">
+                            Login System | 
+                            <a href="https://github.com/msaad1999/PHP-Login-System/blob/master/LICENSE" target="_blank">
+                                MIT License
+                            </a>
+                        </p>
 
                     </form>
 

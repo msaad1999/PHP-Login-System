@@ -5,23 +5,24 @@
 
     <?php if (isset($_SESSION['auth'])) { ?>
 
-    <img alt='' class='card-img-top card-user-cover' src='../assets/uploads/users/<?php echo $_SESSION['banner_image'] ?>'>
+    <img alt='' class='card-img-top card-user-cover' src='../assets/images/banner.png'>
     <div class='card-block'>
         <a href='../profile'>
             <img src='../assets/uploads/users/<?php echo $_SESSION['profile_image'] ?>' class='card-img-profile'>
         </a>
-        <a href="../profile/edit">
+        <a href="../profile-edit">
             <i class="fa fa-pencil-alt fa-1x edit-profile" aria-hidden="true"></i>
             <!-- <i class="fa fa-female"></i> -->
         </a>
         <h4 class='card-title'>
-            username
+            <?php echo $_SESSION['username'] ?>
             <small class="text-muted">
-                full name hoolala
+                <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] ?>
             </small>
             <br>
-            <small class="text-muted">My headline</small>
-            <br><br><br>
+            <small class="text-muted mb-2">
+                <?php echo $_SESSION['headline'] ?>
+            </small>
         </h4>
     </div>
     
@@ -29,8 +30,8 @@
 
     <img alt='' class='card-img-top card-user-cover' src='../assets/images/banner.png'>
     <div class='card-block'>
-        <a href='#'>
-            <img src='../assets/images/logo.png' class='card-img-profile'>
+        <a href='https://github.com/msaad1999/PHP-Login-System'>
+            <img src='../assets/images/logo_blackbg.png' class='card-img-profile'>
         </a>
         <h5  class='card-title'>
             PHP Login System
