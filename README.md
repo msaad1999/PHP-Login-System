@@ -1,26 +1,34 @@
 <p align="center">
-  <img src="_git%20assets/cover.png" width="800" align="center"/>
-</p>
+  <img src="assets/README&#32;assets/readmecover.png" width="300" align="center"/>
+</p><br>
 
-> A complete PHP Login and Registration System with Profile editing & authentication System
+> Embeddable and Secure Authentication System in PHP with User Profiles, Profile Editing, Login, Signup, Account Verification via Email, Password Reset System and Remember Me Feature.
 
 # Table of Contents
 
-* [Installation](#installation)
-  * [Requirements](#requirements)
-  * [Installation Steps](#installation-steps)
-  * [Getting Started](#getting-started)
-* [Features](#Features)
-* [Components](#Components)
-  * [Languages](#Languages)
-  * [Development Environment](#Development-Environment)
-  * [Database](#database)
-  * [DBMS](#DBMS)
-  * [API](#api)
-  * [Frameworks and Libraries](#Frameworks-and-Libraries)
-  * [External PLugins](#external-plugins)
-* [Details](#details)
-* [View KLiK, The Complete Project](#klik-social-media-website)
+- [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+      - [Requirements](#requirements)
+      - [Installation Steps](#installation-steps)
+      - [Getting started](#getting-started)
+        - [Existing Accounts:](#existing-accounts)
+  - [Features](#features)
+  - [Components](#components)
+      - [Languages](#languages)
+      - [Development Environment](#development-environment)
+      - [Database](#database)
+      - [DBMS](#dbms)
+      - [API](#api)
+      - [Frameworks and Libraries](#frameworks-and-libraries)
+      - [External Plugins](#external-plugins)
+  - [Details](#details)
+    - [Registration / Signup System](#registration--signup-system)
+    - [Login System](#login-system)
+    - [Profile System](#profile-system)
+    - [Profile Editing System](#profile-editing-system)
+    - [Contact System](#contact-system)
+    - [Security](#security)
+    - [KLiK - Social Media Website](#klik---social-media-website)
 
 
 
@@ -29,10 +37,9 @@
 #### Requirements
 * PHP
 * Apache server
-* MySQL Database
-* SQL
+* MySQL 
 
-> All of these requirements can be completed at once by simply installing a server stack like `Wamp` or `Xampp`
+> All of these requirements can be collectively completed by simply installing a server stack like `Wamp` or `Xampp`
 
 #### Installation Steps
 1. Import the `DBcreation.sql` file in the `includes` folder into phpMyAdmin. There is no need for any change in the .sql file. This will create the database required for the application to function.
