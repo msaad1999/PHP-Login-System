@@ -29,7 +29,8 @@ if (isset($_POST['verifysubmit'])) {
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-        echo "sql error";
+        $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+        header("Location: ../");
         exit();
     }
     else {
@@ -44,7 +45,8 @@ if (isset($_POST['verifysubmit'])) {
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-        echo "sql error";
+        $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+        header("Location: ../");
         exit();
     }
     else {

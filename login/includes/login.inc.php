@@ -81,6 +81,59 @@ else {
                     $_SESSION['deleted_at'] = $row['deleted_at'];
                     $_SESSION['last_login_at'] = $row['last_login_at'];
 
+
+                    /*
+                    * -------------------------------------------------------------------------------
+                    *   Setting rememberme cookie
+                    * -------------------------------------------------------------------------------
+                    */
+
+                    if (isset($_POST['rememberme'])){
+
+                        $selector = bin2hex(random_bytes(8));
+                        $token = random_bytes(32);
+
+                        $sql = "DELETE FROM auth_tokens WHERE user_email=? AND auth_type='remember_me';";
+                        $stmt = mysqli_stmt_init($conn);
+                        if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+                            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+                            header("Location: ../");
+                            exit();
+                        }
+                        else {
+
+                            mysqli_stmt_bind_param($stmt, "s", $_SESSION['email']);
+                            mysqli_stmt_execute($stmt);
+                        }
+
+                        setcookie(
+                            'rememberme',
+                            $selector.':'.bin2hex($token),
+                            time() + 864000,
+                            '/',
+                            NULL,
+                            false, // TLS-only
+                            true  // http-only
+                        );
+
+                        $sql = "INSERT INTO auth_tokens (user_email, auth_type, selector, token, expires_at) 
+                                VALUES (?, 'remember_me', ?, ?, ?);";
+                        $stmt = mysqli_stmt_init($conn);
+                        if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+                            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+                            header("Location: ../");
+                            exit();
+                        }
+                        else {
+                            
+                            $hashedToken = password_hash($token, PASSWORD_DEFAULT);
+                            mysqli_stmt_bind_param($stmt, "ssss", $_SESSION['email'], $selector, $hashedToken, date('Y-m-d\TH:i:s', time() + 864000));
+                            mysqli_stmt_execute($stmt);
+                        }
+                    }
+
                     header("Location: ../../home/");
                     exit();
                 } 

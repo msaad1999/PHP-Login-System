@@ -6,6 +6,8 @@ require '..\assets\setup\env.php';
 require '..\assets\setup\db.inc.php';
 require '..\assets\includes\auth_functions.php';
 
+check_remember_me();
+
 ?>
 
 <!DOCTYPE html>
