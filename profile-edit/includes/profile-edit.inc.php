@@ -4,6 +4,13 @@ session_start();
 require '../../assets/includes/auth_functions.php';
 check_verified();
 
+require '../../assets/vendor/PHPMailer/src/Exception.php';
+require '../../assets/vendor/PHPMailer/src/PHPMailer.php';
+require '../../assets/vendor/PHPMailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 if (isset($_POST['update-profile'])) {
 
     require '../../assets/setup/db.inc.php';
@@ -13,9 +20,14 @@ if (isset($_POST['update-profile'])) {
     $email = $_POST['email'];
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
-    $gender = $_POST['gender'];
     $headline = $_POST['headline'];
     $bio = $_POST['bio'];
+
+    if (isset($_POST['gender'])) 
+        $gender = $_POST['gender'];
+    else
+        $gender = NULL;
+
 
     $oldPassword = $_POST['password'];
     $newpassword = $_POST['newpassword'];
@@ -116,8 +128,64 @@ if (isset($_POST['update-profile'])) {
 
         if( !empty($oldPassword) || !empty($newpassword) || !empty($passwordRepeat)){
 
-            require 'password-edit.inc.php';
-        }  
+            include 'password-edit.inc.php';
+        }
+        
+        if ($passwordUpdated) {
+
+            /*
+            * -------------------------------------------------------------------------------
+            *   Sending notification email on password update
+            * -------------------------------------------------------------------------------
+            */
+
+            $to = $_SESSION['email'];
+            $subject = 'Password Updated';
+            
+            /*
+            * -------------------------------------------------------------------------------
+            *   Using email template
+            * -------------------------------------------------------------------------------
+            */
+
+            $mail_variables = array();
+
+            $mail_variables['APP_NAME'] = APP_NAME;
+            $mail_variables['email'] = $_SESSION['email'];
+
+            $message = file_get_contents("./template_notificationemail.php");
+
+            foreach($mail_variables as $key => $value) {
+                
+                $message = str_replace('{{ '.$key.' }}', $value, $message);
+            }
+        
+            $mail = new PHPMailer(true);
+        
+            try {
+        
+                $mail->isSMTP();
+                $mail->Host = MAIL_HOST;
+                $mail->SMTPAuth = true;
+                $mail->Username = MAIL_USERNAME;
+                $mail->Password = MAIL_PASSWORD;
+                $mail->SMTPSecure = MAIL_ENCRYPTION;
+                $mail->Port = MAIL_PORT;
+        
+                $mail->setFrom(MAIL_USERNAME, APP_NAME);
+                $mail->addAddress($to, APP_NAME);
+        
+                $mail->isHTML(true);
+                $mail->Subject = $subject;
+                $mail->Body    = $message;
+        
+                $mail->send();
+            } 
+            catch (Exception $e) {
+        
+                
+            }
+        }
 
 
         /*
@@ -136,7 +204,7 @@ if (isset($_POST['update-profile'])) {
             bio=?, 
             profile_image=?";
 
-        if ($pwdChange){
+        if ($passwordUpdated){
 
             $sql .= ", password=? 
                     WHERE id=?;";
@@ -156,7 +224,7 @@ if (isset($_POST['update-profile'])) {
         } 
         else {
 
-            if ($pwdChange){
+            if ($passwordUpdated){
 
                 $hashedPwd = password_hash($newpassword, PASSWORD_DEFAULT);
                 mysqli_stmt_bind_param($stmt, "ssssssssss", 

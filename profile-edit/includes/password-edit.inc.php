@@ -42,7 +42,9 @@ if (isset($_POST['update-profile'])) {
                     exit();
                 }
 
-                $pwdChange = true;
+                $passwordUpdated = true;
+
+                // script endpoint --------->>
             }
         }
     }
@@ -58,3 +60,4 @@ else {
     header("Location: ../");
     exit();
 }
+
