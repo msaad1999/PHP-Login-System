@@ -63,10 +63,26 @@ if (isset($_POST['verifysubmit'])) {
 
     $to = $email;
     $subject = 'Verify Your Account';
-    $message = '<p>You just signed up with this account. Please use below link to 
-            verify and unlock your account.</p></br>
-            <p>Here is your account verification link: </br>
-            <a href="' . $url . '">' .  $url . '</a></p>';
+    
+    /*
+    * -------------------------------------------------------------------------------
+    *   Using email template
+    * -------------------------------------------------------------------------------
+    */
+
+    $mail_variables = array();
+
+    $mail_variables['APP_NAME'] = APP_NAME;
+    $mail_variables['email'] = $email;
+    $mail_variables['url'] = $url;
+
+    $message = file_get_contents("./template_verificationemail.php");
+
+    foreach($mail_variables as $key => $value) {
+        
+        $message = str_replace('{{ '.$key.' }}', $value, $message);
+    }
+    
 
     $mail = new PHPMailer(true);
 
