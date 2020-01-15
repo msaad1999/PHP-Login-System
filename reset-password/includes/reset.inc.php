@@ -2,6 +2,7 @@
 
 session_start();
 
+require '../../assets/includes/security_functions.php';
 require '../../assets/includes/auth_functions.php';
 check_logged_out();
 
@@ -9,6 +10,31 @@ require '../../assets/setup/env.php';
 require '../../assets/setup/db.inc.php';
 
 if (isset($_POST['resetsubmit'])) {
+
+    /*
+    * -------------------------------------------------------------------------------
+    *   Securing against Header Injection
+    * -------------------------------------------------------------------------------
+    */
+
+    foreach($_POST as $key => $value){
+
+        $_POST[$key] = _cleaninjections(trim($value));
+    }
+
+    /*
+    * -------------------------------------------------------------------------------
+    *   Verifying CSRF token
+    * -------------------------------------------------------------------------------
+    */
+
+    if (!verify_csrf_token()){
+
+        $_SESSION['STATUS']['resetsubmit'] = 'Request could not be validated';
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+        exit();
+    }
+
 
     $selector = $_POST['selector'];
     $validator = $_POST['validator'];
@@ -39,7 +65,7 @@ if (isset($_POST['resetsubmit'])) {
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-        $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+        $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
         header("Location: " . $_SERVER['HTTP_REFERER']);
         exit();
     }
@@ -75,7 +101,7 @@ if (isset($_POST['resetsubmit'])) {
 
                 if (!mysqli_stmt_prepare($stmt, $sql)){
 
-                    $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+                    $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                     header("Location: " . $_SERVER['HTTP_REFERER']);
                     exit();
                 }
@@ -97,7 +123,7 @@ if (isset($_POST['resetsubmit'])) {
                         $stmt = mysqli_stmt_init($conn);
                         if (!mysqli_stmt_prepare($stmt, $sql))
                         {
-                            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+                            $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                             header("Location: " . $_SERVER['HTTP_REFERER']);
                             exit();
                         }
@@ -111,7 +137,7 @@ if (isset($_POST['resetsubmit'])) {
                             $stmt = mysqli_stmt_init($conn);
                             if (!mysqli_stmt_prepare($stmt, $sql)){
 
-                                $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+                                $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                                 header("Location: " . $_SERVER['HTTP_REFERER']);
                                 exit();
                             }

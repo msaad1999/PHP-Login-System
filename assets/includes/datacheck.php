@@ -6,7 +6,7 @@ function availableUsername($conn, $username){
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-        die('SQL error');
+        return $_SESSION['ERRORS']['scripterror'] = 'SQL error';
     } 
     else {
 
@@ -31,7 +31,7 @@ function availableEmail($conn, $email){
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-        die('SQL error');
+        return $_SESSION['ERRORS']['scripterror'] = 'SQL error';
     } 
     else {
 

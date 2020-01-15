@@ -3,10 +3,39 @@
 session_start();
 
 require '../../assets/includes/auth_functions.php';
+require '../../assets/includes/datacheck.php';
+require '../../assets/includes/security_functions.php';
+
 check_logged_out();
 
 
 if (isset($_POST['signupsubmit'])) {
+
+    /*
+    * -------------------------------------------------------------------------------
+    *   Securing against Header Injection
+    * -------------------------------------------------------------------------------
+    */
+
+    foreach($_POST as $key => $value){
+
+        $_POST[$key] = _cleaninjections(trim($value));
+    }
+
+    /*
+    * -------------------------------------------------------------------------------
+    *   Verifying CSRF token
+    * -------------------------------------------------------------------------------
+    */
+
+    if (!verify_csrf_token()){
+
+        $_SESSION['STATUS']['signupstatus'] = 'Request could not be validated';
+        header("Location: ../");
+        exit();
+    }
+
+
 
     require '../../assets/setup/db.inc.php';
 
@@ -53,123 +82,109 @@ if (isset($_POST['signupsubmit'])) {
         exit();
     } else {
 
-        $sql = "select id from users where username=?;";
-        $stmt = mysqli_stmt_init($conn);
+        if (!availableUsername($conn, $username)){
 
+            $_SESSION['ERRORS']['usernameerror'] = 'username already taken';
+            header("Location: ../");
+            exit();
+        }
+        if (!availableEmail($conn, $email)){
+
+            $_SESSION['ERRORS']['emailerror'] = 'email already taken';
+            header("Location: ../");
+            exit();
+        }
+
+        /*
+        * -------------------------------------------------------------------------------
+        *   Image Upload
+        * -------------------------------------------------------------------------------
+        */
+
+        $FileNameNew = '_defaultUser.png';
+        $file = $_FILES['avatar'];
+
+        if (!empty($_FILES['avatar']['name'])){
+
+            $fileName = $_FILES['avatar']['name'];
+            $fileTmpName = $_FILES['avatar']['tmp_name'];
+            $fileSize = $_FILES['avatar']['size'];
+            $fileError = $_FILES['avatar']['error'];
+            $fileType = $_FILES['avatar']['type']; 
+
+            $fileExt = explode('.', $fileName);
+            $fileActualExt = strtolower(end($fileExt));
+
+            $allowed = array('jpg', 'jpeg', 'png', 'gif');
+            if (in_array($fileActualExt, $allowed)){
+
+                if ($fileError === 0){
+
+                    if ($fileSize < 10000000){
+
+                        $FileNameNew = uniqid('', true) . "." . $fileActualExt;
+                        $fileDestination = '../../assets/uploads/users/' . $FileNameNew;
+                        move_uploaded_file($fileTmpName, $fileDestination);
+
+                    }
+                    else {
+
+                        $_SESSION['ERRORS']['imageerror'] = 'image size should be less than 10MB';
+                        header("Location: ../");
+                        exit(); 
+                    }
+                }
+                else {
+
+                    $_SESSION['ERRORS']['imageerror'] = 'image upload failed, try again';
+                    header("Location: ../");
+                    exit();
+                }
+            }
+            else {
+
+                $_SESSION['ERRORS']['imageerror'] = 'invalid image type, try again';
+                header("Location: ../");
+                exit();
+            }
+        }
+
+
+        /*
+        * -------------------------------------------------------------------------------
+        *   User Creation
+        * -------------------------------------------------------------------------------
+        */
+
+        $sql = "insert into users(username, email, password, first_name, last_name, gender, 
+                headline, bio, profile_image, created_at) 
+                values ( ?,?,?,?,?,?,?,?,?, NOW() )";
+        $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+            $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
             header("Location: ../");
             exit();
         } 
         else {
 
-            mysqli_stmt_bind_param($stmt, "s", $username);
+            $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+
+            mysqli_stmt_bind_param($stmt, "sssssssss", $username, $email, $hashedPwd, $full_name, $last_name, $gender, $headline, $bio, $FileNameNew);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
 
-            $resultCheck = mysqli_stmt_num_rows($stmt);
+            /*
+            * -------------------------------------------------------------------------------
+            *   Sending Verification Email for Account Activation
+            * -------------------------------------------------------------------------------
+            */
+            
+            require 'sendverificationemail.inc.php';
 
-            if ($resultCheck > 0) {
-
-                $_SESSION['ERRORS']['usernameerror'] = 'username already taken';
-                header("Location: ../");
-                exit();
-            } 
-            else {
-
-                /*
-                * -------------------------------------------------------------------------------
-                *   Image Upload
-                * -------------------------------------------------------------------------------
-                */
-
-                $FileNameNew = '_defaultUser.png';
-                $file = $_FILES['avatar'];
-
-                if (!empty($_FILES['avatar']['name'])){
-
-                    $fileName = $_FILES['avatar']['name'];
-                    $fileTmpName = $_FILES['avatar']['tmp_name'];
-                    $fileSize = $_FILES['avatar']['size'];
-                    $fileError = $_FILES['avatar']['error'];
-                    $fileType = $_FILES['avatar']['type']; 
-
-                    $fileExt = explode('.', $fileName);
-                    $fileActualExt = strtolower(end($fileExt));
-
-                    $allowed = array('jpg', 'jpeg', 'png', 'gif');
-                    if (in_array($fileActualExt, $allowed)){
-
-                        if ($fileError === 0){
-
-                            if ($fileSize < 10000000){
-
-                                $FileNameNew = uniqid('', true) . "." . $fileActualExt;
-                                $fileDestination = '../../assets/uploads/users/' . $FileNameNew;
-                                move_uploaded_file($fileTmpName, $fileDestination);
-
-                            }
-                            else {
-
-                                $_SESSION['ERRORS']['imageerror'] = 'image size should be less than 10MB';
-                                header("Location: ../");
-                                exit(); 
-                            }
-                        }
-                        else {
-
-                            $_SESSION['ERRORS']['imageerror'] = 'image upload failed, try again';
-                            header("Location: ../");
-                            exit();
-                        }
-                    }
-                    else {
-
-                        $_SESSION['ERRORS']['imageerror'] = 'invalid image type, try again';
-                        header("Location: ../");
-                        exit();
-                    }
-                }
-
-
-                /*
-                * -------------------------------------------------------------------------------
-                *   User Creation
-                * -------------------------------------------------------------------------------
-                */
-
-                $sql = "insert into users(username, email, password, first_name, last_name, gender, 
-                        headline, bio, profile_image, created_at) 
-                        values ( ?,?,?,?,?,?,?,?,?, NOW() )";
-                $stmt = mysqli_stmt_init($conn);
-                if (!mysqli_stmt_prepare($stmt, $sql)) {
-
-                    $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
-                    header("Location: ../");
-                    exit();
-                } 
-                else {
-
-                    $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
-
-                    mysqli_stmt_bind_param($stmt, "sssssssss", $username, $email, $hashedPwd, $full_name, $last_name, $gender, $headline, $bio, $FileNameNew);
-                    mysqli_stmt_execute($stmt);
-                    mysqli_stmt_store_result($stmt);
-
-                    /*
-                    * -------------------------------------------------------------------------------
-                    *   Sending Verification Email for Account Activation
-                    * -------------------------------------------------------------------------------
-                    */
-                    
-                    require 'sendverificationemail.inc.php';
-
-                    $_SESSION['STATUS']['loginstatus'] = 'Account Created, please Login';
-                    header("Location: ../../login/");
-                    exit();
-                }
-            }
+            $_SESSION['STATUS']['loginstatus'] = 'Account Created, please Login';
+            header("Location: ../../login/");
+            exit();
         }
     }
 

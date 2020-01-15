@@ -16,6 +16,8 @@ check_logged_out();
 
             <form class="form-auth" action="includes/register.inc.php" method="post" enctype="multipart/form-data">
 
+                <?php insert_csrf_token(); ?>
+
                 <div class="picCard text-center">
                     <div class="avatar-upload">
                         <div class="avatar-preview text-center">
@@ -38,6 +40,16 @@ check_logged_out();
                 </div>
 
                 <h6 class="h3 mt-3 mb-3 font-weight-normal text-muted text-center">Create an Account</h6>
+
+                <div class="text-center mb-3">
+                    <small class="text-success font-weight-bold">
+                        <?php
+                            if (isset($_SESSION['STATUS']['signupstatus']))
+                                echo $_SESSION['STATUS']['signupstatus'];
+
+                        ?>
+                    </small>
+                </div>
 
                 <div class="form-group">
                     <label for="username" class="sr-only">Username</label>

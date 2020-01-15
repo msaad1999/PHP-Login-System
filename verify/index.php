@@ -18,14 +18,16 @@ check_logged_in_butnot_verified();
         <div class="shadow-lg box-shadow col-sm-7 px-5 m-5 bg-light rounded align-self-center verify-message">
 
             <form action="includes/sendverificationemail.inc.php" method="post">
+
+                <?php insert_csrf_token(); ?>
             
                 <h5 class="text-center mb-5 text-primary">Verify Your Email Address</h5>
 
                 <p>
                     Before proceeding, please check your email for a verification link. If you did not receive the email,
                     <button type="submit" name="verifysubmit">click here to send another</button>.
-                </p><br>
-
+                </p>
+                <br>
                 <div class="text-center mt-5">
                     <h6 class="text-success">
                         <?php

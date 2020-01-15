@@ -3,6 +3,9 @@
 session_start();
 
 require '../../assets/includes/auth_functions.php';
+require '../../assets/includes/datacheck.php';
+require '../../assets/includes/security_functions.php';
+
 check_logged_out();
 
 if (!isset($_POST['loginsubmit'])){
@@ -12,6 +15,32 @@ if (!isset($_POST['loginsubmit'])){
 }
 else {
 
+    /*
+    * -------------------------------------------------------------------------------
+    *   Securing against Header Injection
+    * -------------------------------------------------------------------------------
+    */
+
+    foreach($_POST as $key => $value){
+
+        $_POST[$key] = _cleaninjections(trim($value));
+    }
+
+
+    /*
+    * -------------------------------------------------------------------------------
+    *   Verifying CSRF token
+    * -------------------------------------------------------------------------------
+    */
+
+    if (!verify_csrf_token()){
+
+        $_SESSION['STATUS']['loginstatus'] = 'Request could not be validated';
+        header("Location: ../");
+        exit();
+    }
+
+    
     require '../../assets/setup/db.inc.php';
 
     $username = $_POST['username'];
@@ -20,7 +49,7 @@ else {
     if (empty($username) || empty($password)) {
 
         $_SESSION['STATUS']['loginstatus'] = 'fields cannot be empty';
-        header("Location: ../?error=emptyfields");
+        header("Location: ../");
         exit();
     } 
     else {
@@ -58,7 +87,7 @@ else {
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+            $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
             header("Location: ../");
             exit();
         } 
@@ -125,7 +154,7 @@ else {
                         $stmt = mysqli_stmt_init($conn);
                         if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-                            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+                            $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                             header("Location: ../");
                             exit();
                         }
@@ -150,7 +179,7 @@ else {
                         $stmt = mysqli_stmt_init($conn);
                         if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-                            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+                            $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                             header("Location: ../");
                             exit();
                         }

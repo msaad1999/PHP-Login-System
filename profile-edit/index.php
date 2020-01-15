@@ -20,6 +20,8 @@ check_verified();
         <div class="col-lg-7">
             <form class="form-auth" action="includes/profile-edit.inc.php" method="post" enctype="multipart/form-data" autocomplete="off">
 
+                <?php insert_csrf_token(); ?>
+
                 <div class="picCard text-center">
                     <div class="avatar-upload">
                         <div class="avatar-preview text-center">
@@ -44,8 +46,8 @@ check_verified();
                 <div class="text-center">
                     <small class="text-success font-weight-bold">
                         <?php
-                            if (isset($_SESSION['STATUS']['editsuccess']))
-                                echo $_SESSION['STATUS']['editsuccess'];
+                            if (isset($_SESSION['STATUS']['editstatus']))
+                                echo $_SESSION['STATUS']['editstatus'];
 
                         ?>
                     </small>
