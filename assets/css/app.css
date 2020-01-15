@@ -113,7 +113,7 @@ body {
 
 .card-profile {
     width: 230px;
-    height: 330px;
+    min-height: 330px;
     margin: 50px auto;
     /* background-color: #e6e5e1; */
     border-radius: 0;
@@ -149,7 +149,7 @@ body {
 }
 
 .card-profile .card-title {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .card-profile .card-title small {

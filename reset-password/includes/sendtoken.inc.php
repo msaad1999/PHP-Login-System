@@ -2,6 +2,7 @@
 
 session_start();
 
+require '../../assets/includes/security_functions.php';
 require '../../assets/includes/auth_functions.php';
 check_logged_out();
 
@@ -15,7 +16,6 @@ require '../../assets/vendor/PHPMailer/src/Exception.php';
 require '../../assets/vendor/PHPMailer/src/PHPMailer.php';
 require '../../assets/vendor/PHPMailer/src/SMTP.php';
 
-require '../../assets/includes/functions.php';
 
 if (isset($_POST['resentsend'])) {
 
@@ -67,7 +67,7 @@ if (isset($_POST['resentsend'])) {
 
         if (mysqli_stmt_num_rows($stmt) == 0){
 
-            $_SESSION['ERRORS']['emailerror'] = 'given email does not exist';
+            $_SESSION['ERRORS']['emailerror'] = 'given email does not exist in our records';
             header("Location: ../");
             exit();
         }
@@ -111,10 +111,25 @@ if (isset($_POST['resentsend'])) {
 
     $to = $email;
     $subject = 'Reset Your Password';
-    $message = '<p>We received a password reset request. The link to your password is below.
-            if you did not make this request, you can ignore this email.</p></br>
-            <p>Here is your password reset link: </br>
-            <a href=""' . $url . '">' .  $url . '</a></p>';
+    
+    /*
+    * -------------------------------------------------------------------------------
+    *   Using email template
+    * -------------------------------------------------------------------------------
+    */
+
+    $mail_variables = array();
+
+    $mail_variables['APP_NAME'] = APP_NAME;
+    $mail_variables['email'] = $email;
+    $mail_variables['url'] = $url;
+
+    $message = file_get_contents("./template_passwordresetemail.php");
+
+    foreach($mail_variables as $key => $value) {
+        
+        $message = str_replace('{{ '.$key.' }}', $value, $message);
+    }
 
     $mail = new PHPMailer(true);
 
