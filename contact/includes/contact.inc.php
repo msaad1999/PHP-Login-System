@@ -3,6 +3,7 @@
 session_start();
 
 require '../../assets/setup/env.php';
+require '../../assets/includes/security_functions.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -11,9 +12,19 @@ require '../../assets/vendor/PHPMailer/src/Exception.php';
 require '../../assets/vendor/PHPMailer/src/PHPMailer.php';
 require '../../assets/vendor/PHPMailer/src/SMTP.php';
 
-require '../../assets/includes/functions.php';
-
 if (isset($_POST['contact-submit'])) {
+
+    /*
+    * -------------------------------------------------------------------------------
+    *   Securing against Header Injection
+    * -------------------------------------------------------------------------------
+    */
+
+    foreach($_POST as $key => $value){
+
+        $_POST[$key] = _cleaninjections(trim($value));
+    }
+
     
     if (isset($_SESSION['auth'])){
 
@@ -21,17 +32,20 @@ if (isset($_POST['contact-submit'])) {
         $email = $_SESSION['email'];
     }
     else {
+        
+        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 
-        $name = trim($_POST['name']);
-        $email = trim($_POST['email']);
+            $_SESSION['ERRORS']['emailerror'] = 'invalid email';
+            header("Location: ../");
+            exit();
+        }
+
+        $name = $_POST['name'];
+        $email = $_POST['email'];
     }
 
     $msg = $_POST['message'];
 
-
-    if (has_header_injection($name) || has_header_injection($email)) {
-        die();
-    }
 
     if (!isset($_SESSION['auth']) && (!$name || !$msg)) {
 

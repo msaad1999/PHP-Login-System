@@ -4,8 +4,22 @@ session_start();
 
 require '../../assets/setup/env.php';
 require '../../assets/setup/db.inc.php';
+require '../../assets/includes/security_functions.php';
 
 if (isset($_GET['selector']) && isset($_GET['validator'])) {
+
+    /*
+    * -------------------------------------------------------------------------------
+    *   Securing against Header Injection
+    * -------------------------------------------------------------------------------
+    */
+
+    foreach($_GET as $key => $value){
+
+        $_GET[$key] = _cleaninjections(trim($value));
+    }
+
+
 
     $selector = $_GET['selector'];
     $validator = $_GET['validator'];
@@ -22,7 +36,7 @@ if (isset($_GET['selector']) && isset($_GET['validator'])) {
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-        $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+        $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
         header("Location: ../");
         exit();
     }
@@ -58,7 +72,7 @@ if (isset($_GET['selector']) && isset($_GET['validator'])) {
 
                 if (!mysqli_stmt_prepare($stmt, $sql)){
 
-                    $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+                    $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                     header("Location: ../");
                     exit();
                 }
@@ -81,7 +95,7 @@ if (isset($_GET['selector']) && isset($_GET['validator'])) {
 
                         if (!mysqli_stmt_prepare($stmt, $sql))
                         {
-                            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+                            $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                             header("Location: ../");
                             exit();
                         }
@@ -94,8 +108,8 @@ if (isset($_GET['selector']) && isset($_GET['validator'])) {
                             $stmt = mysqli_stmt_init($conn);
                             if (!mysqli_stmt_prepare($stmt, $sql)){
 
-                                $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
-                                header("Location: ../error=line98");
+                                $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
+                                header("Location: ../");
                                 exit();
                             }
                             else {

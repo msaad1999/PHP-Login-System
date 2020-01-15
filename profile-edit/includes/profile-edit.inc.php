@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+require '../../assets/includes/security_functions.php';
 require '../../assets/includes/auth_functions.php';
 check_verified();
 
@@ -12,6 +13,19 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 if (isset($_POST['update-profile'])) {
+
+    /*
+    * -------------------------------------------------------------------------------
+    *   Securing against Header Injection
+    * -------------------------------------------------------------------------------
+    */
+
+    foreach($_POST as $key => $value){
+
+        $_POST[$key] = _cleaninjections(trim($value));
+    }
+
+
 
     require '../../assets/setup/db.inc.php';
     require '../../assets/includes/datacheck.php';
@@ -218,7 +232,7 @@ if (isset($_POST['update-profile'])) {
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+            $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
             header("Location: ../");
             exit();
         } 
