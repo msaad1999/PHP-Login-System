@@ -25,6 +25,18 @@ if (isset($_POST['update-profile'])) {
         $_POST[$key] = _cleaninjections(trim($value));
     }
 
+    /*
+    * -------------------------------------------------------------------------------
+    *   Verifying CSRF token
+    * -------------------------------------------------------------------------------
+    */
+
+    if (!verify_csrf_token()){
+
+        $_SESSION['STATUS']['editstatus'] = 'Request could not be validated';
+        header("Location: ../");
+        exit();
+    }
 
 
     require '../../assets/setup/db.inc.php';
@@ -282,7 +294,7 @@ if (isset($_POST['update-profile'])) {
             $_SESSION['bio'] = $bio;
             $_SESSION['profile_image'] = $FileNameNew;
 
-            $_SESSION['STATUS']['editsuccess'] = 'profile successfully updated';
+            $_SESSION['STATUS']['editstatus'] = 'profile successfully updated';
             header("Location: ../");
             exit();
         }

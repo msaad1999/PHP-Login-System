@@ -25,7 +25,20 @@ if (isset($_POST['contact-submit'])) {
         $_POST[$key] = _cleaninjections(trim($value));
     }
 
-    
+    /*
+    * -------------------------------------------------------------------------------
+    *   Verifying CSRF token
+    * -------------------------------------------------------------------------------
+    */
+
+    if (!verify_csrf_token()){
+
+        $_SESSION['STATUS']['mailstatus'] = 'Request could not be validated';
+        header("Location: ../");
+        exit();
+    }
+
+
     if (isset($_SESSION['auth'])){
 
         $name = $_SESSION['username'];

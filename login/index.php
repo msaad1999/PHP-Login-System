@@ -15,6 +15,8 @@ check_logged_out();
         <div class="col-sm-4">
             <form class="form-auth" action="includes/login.inc.php" method="post">
 
+                <?php insert_csrf_token(); ?>
+
                 <div class="text-center">
                     <img class="mb-4" src="../assets/images/logo.png" alt="" width="92" height="92">
                 </div>

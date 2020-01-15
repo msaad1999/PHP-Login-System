@@ -18,6 +18,8 @@ include '../assets/layouts/header.php';
 
             <form class="form-auth" action="includes/contact.inc.php" method="post">
 
+                <?php insert_csrf_token(); ?>
+
                 <h6 class="h3 mb-3 font-weight-normal text-muted  text-center">Contact Us</h6>
 
                 <div class="text-center mb-3">

@@ -22,7 +22,19 @@ if (isset($_POST['resetsubmit'])) {
         $_POST[$key] = _cleaninjections(trim($value));
     }
 
-    
+    /*
+    * -------------------------------------------------------------------------------
+    *   Verifying CSRF token
+    * -------------------------------------------------------------------------------
+    */
+
+    if (!verify_csrf_token()){
+
+        $_SESSION['STATUS']['resetsubmit'] = 'Request could not be validated';
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+        exit();
+    }
+
 
     $selector = $_POST['selector'];
     $validator = $_POST['validator'];

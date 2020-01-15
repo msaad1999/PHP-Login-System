@@ -22,6 +22,20 @@ if (isset($_POST['signupsubmit'])) {
         $_POST[$key] = _cleaninjections(trim($value));
     }
 
+    /*
+    * -------------------------------------------------------------------------------
+    *   Verifying CSRF token
+    * -------------------------------------------------------------------------------
+    */
+
+    if (!verify_csrf_token()){
+
+        $_SESSION['STATUS']['signupstatus'] = 'Request could not be validated';
+        header("Location: ../");
+        exit();
+    }
+
+
 
     require '../../assets/setup/db.inc.php';
 

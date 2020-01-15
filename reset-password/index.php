@@ -19,6 +19,8 @@ check_logged_out();
                     <form class="form-auth" action="includes/reset.inc.php" method="post">
 
                         <?php
+                            insert_csrf_token();
+
                             $selector = $_GET['selector'];
                             $validator = $_GET['validator'];
                         ?>
@@ -68,6 +70,8 @@ check_logged_out();
                 <?php } else { ?>
 
                     <form class="form-auth" action="includes/sendtoken.inc.php" method="post">
+
+                        <?php insert_csrf_token(); ?>
 
                         <div class="text-center">
                             <img class="mb-4" src="../assets/images/logo.png" alt="" width="92" height="92">

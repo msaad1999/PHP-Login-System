@@ -3,6 +3,7 @@
 session_start();
 
 require '../../assets/includes/auth_functions.php';
+require '../../assets/includes/security_functions.php';
 check_logged_in_butnot_verified();
 
 require '../../assets/setup/env.php';
@@ -16,6 +17,31 @@ require '../../assets/vendor/PHPMailer/src/PHPMailer.php';
 require '../../assets/vendor/PHPMailer/src/SMTP.php';
 
 if (isset($_POST['verifysubmit'])) {
+
+    /*
+    * -------------------------------------------------------------------------------
+    *   Securing against Header Injection
+    * -------------------------------------------------------------------------------
+    */
+
+    foreach($_POST as $key => $value){
+
+        $_POST[$key] = _cleaninjections(trim($value));
+    }
+
+    /*
+    * -------------------------------------------------------------------------------
+    *   Verifying CSRF token
+    * -------------------------------------------------------------------------------
+    */
+
+    if (!verify_csrf_token()){
+
+        $_SESSION['STATUS']['verify'] = 'Request could not be validated';
+        header("Location: ../");
+        exit();
+    }
+
 
     $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32);
