@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Verify Your Email</title>
+    <title>New Contact Form Entry</title>
 
     <style type="text/css">
         body {
@@ -140,7 +140,7 @@
 
                         <div style="line-height: 35px">
 
-                            <span style="color: #5caad2;">{{ APP_NAME }}:</span> Please Activate Your Account
+                            <span style="color: #5caad2;">{{ APP_NAME }}:</span> New Contact Form Entry
 
                         </div>
                     </td>
@@ -161,19 +161,39 @@
                 </tr>
 
                 <tr>
-                    <td height="20" style="font-size: 20px; line-height: 20px;">&nbsp;</td>
+                    <td height="70" style="font-size: 20px; line-height: 20px;">&nbsp;</td>
                 </tr>
 
                 <tr>
                     <td align="center">
                         <table border="0" width="400" align="center" cellpadding="0" cellspacing="0" class="container590">
                             <tr>
-                                <td align="center" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
+                                <td align="left" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
 
 
                                     <div style="line-height: 24px">
-                                        You recently created an account on {{ APP_NAME }} with the email [{{ email }}]. Please use below button 
-                                        to verify your email and activate your account.
+                                        Name: {{ username }} <br>
+                                        Email: {{ email }} <br> 
+                                        Message: 
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                
+                <tr>
+                    <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
+                </tr>
+
+                <tr>
+                    <td align="center">
+                        <table border="0" width="400" align="center" cellpadding="0" cellspacing="0" class="container590">
+                            <tr>
+                                <td align="left" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
+                                    <div style="line-height: 24px">
+                                        {{ message }}
                                     </div>
                                 </td>
                             </tr>
@@ -183,68 +203,6 @@
 
                 <tr>
                     <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-                </tr>
-
-                <tr>
-                    <td align="center">
-                        <table border="0" align="center" width="160" cellpadding="0" cellspacing="0" bgcolor="5caad2">
-
-                            <tr>
-                                <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
-                            </tr>
-
-                            <tr>
-                                <td align="center" style="color: #ffffff; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 26px;">
-
-
-                                    <div style="line-height: 26px;">
-                                        <a href="{{ url }}" style="color: #ffffff; text-decoration: none;">Verify Email</a>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
-                            </tr>
-
-                        </table>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-                </tr>
-
-                <tr>
-                    <td align="center">
-                        <table border="0" width="400" align="center" cellpadding="0" cellspacing="0" class="container590">
-                            <tr>
-                                <td align="center" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
-                                    <div style="line-height: 24px">
-                                        If above button does not work, copy the link given below and paste into your browser.
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-                </tr>
-
-                <tr>
-                    <td align="center">
-                        <table border="0" width="400" align="center" cellpadding="0" cellspacing="0" class="container590">
-                            <tr>
-                                <td align="center" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
-                                    <div style="line-height: 24px">
-                                        <a href="{{ url }}">{{ url }}</a> 
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
                 </tr>
 
             </table>
