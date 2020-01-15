@@ -63,6 +63,15 @@ check_logged_out();
                             Reset Password
                         </button>
 
+                        <p class="mt-4 mb-3 text-muted text-center">
+                            <a href="https://github.com/msaad1999/PHP-Login-System" target="_blank">
+                                Login System
+                            </a> | 
+                            <a href="https://github.com/msaad1999/PHP-Login-System/blob/master/LICENSE" target="_blank">
+                                MIT License
+                            </a>
+                        </p>
+
                     </form>
 
                 <?php } else { ?>
@@ -101,7 +110,9 @@ check_logged_out();
                         </button>
 
                         <p class="mt-4 mb-3 text-muted text-center">
-                            Login System | 
+                            <a href="https://github.com/msaad1999/PHP-Login-System" target="_blank">
+                                Login System
+                            </a> | 
                             <a href="https://github.com/msaad1999/PHP-Login-System/blob/master/LICENSE" target="_blank">
                                 MIT License
                             </a>
