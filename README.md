@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/README&#32;assets/readmecover.png" width="300" align="center"/>
+  <img src="assets/images/README_cover.png" width="400" align="center"/>
 </p><br>
 
-> Embeddable and Secure Authentication System in PHP with User Profiles, Profile Editing, Login, Signup, Account Verification via Email, Password Reset System and Remember Me Feature.
+> Embeddable and Secure PHP Authentication System with Login, Signup, User Profiles, Profile Editing, Account Verification via Email, Password Reset System, Remember Me Feature, Global ERROR and STATUS variables system and Authentication checks.
 
 # Table of Contents
 
@@ -18,7 +18,8 @@
     - [Development Environment](#development-environment)
     - [External Resources/Plugins](#external-resourcesplugins)
   - [Features](#features)
-    - [Easy Integration](#easy-integration)
+    - [Easy Integration / Embedding](#easy-integration--embedding)
+    - [Security](#security)
     - [Login | Signup](#login--signup)
     - [User Profile | Profile Editing](#user-profile--profile-editing)
     - [Email Verification | Account Activation](#email-verification--account-activation)
@@ -32,27 +33,26 @@
   - [License](#license)
   - [Personal Note](#personal-note)
 
-
-
 ## Getting Started
 
 ### Requirements
 * PHP
 * Apache server
-* MySQL 
-
-> All of these requirements can be collectively completed by simply installing a server stack like `Wamp` or `Xampp`
+* MySQL
+* PHPMailer
+* Bootstrap
+* JQuery 
 
 ### Installation
-1. Import the file `assets/setup/db.inc.php` into the current DBMS. The dump file also creates database, so no other action is needed. If databse needs to be updated, change it in the dump file.
+1. Import the file `assets/setup/DBcreation.sql` into the current DBMS. The dump file also creates the database (named `klik_loginsystem`), so no prior action is needed. If database name needs to be updated, change it in the dump file where the database title is declared.
 
-2. Edit the `assets/setup/env.php` and change the variables to correct values. Port value is usually not needed in Database connections. Only edit if you know what you are doing. Setup the email server configurations, which will be used to send confirmation, validation and notification emails. 
+2. Edit the `assets/setup/env.php` and setup the Application information, Database connection and SMTP server. Port value is usually not needed in Database connections, so only edit if you know what you are doing. The email server (and the connected email account) will be used to send confirmation, validation and notification emails. 
 
 ```php
 if (!defined('APP_NAME'))           define('APP_NAME' ,'Login System');
 if (!defined('APP_ORGANIZATION'))   define('APP_ORGANIZATION' ,'KLiK');
 if (!defined('APP_OWNER'))          define('APP_OWNER' ,'msaad1999');
-if (!defined('APP_DESCRIPTION'))    define('APP_DESCRIPTION' ,'Embeddable PHP Login System');
+if (!defined('APP_DESCRIPTION'))    define('APP_DESCRIPTION' ,'Embeddable and Secure PHP Login System');
 
 
 if (!defined('DB_DATABASE'))        define('DB_DATABASE', 'klik_loginsystem');
@@ -75,8 +75,8 @@ The database already contains a sample account to test things out with. Use that
 ```php
 // credentials for existing account
 
-username: user
-password: user
+username: supahot
+password: aaaaaa
 ```
 
 ### Project File Structure
@@ -84,24 +84,25 @@ password: user
   
 | Path / File | Purpose  |
 | -- | -- | 
-| `[accessible URLs/Pages]`     | All folders in root director except assets. |
+| `[accessible URLs/Pages]`     | All folders in root directory except `assets`. |
 | `assets/css`                  | Folder for global or layout-specific custom CSS files. |
-| `assets/images`               | Images used in website UI. |
+| `assets/images`               | Images used in Application UI or git README. |
 | `assets/includes`             | Functions or classes. |
 | `assets/js`                   | Custom js files. |
-| `assets/README assets`        | Pictures/screenshots used in project's README. |
 | `assets/setup`                | Project configuration and setup files. |
 | `assets/uploads`              | Folder for all content uploaded by application users. |
 | `assets/uploads/users`        | Images uploaded by users. |
-| `assets/vendor`               |  Folder for all plugins/resources.|
+| `assets/vendor`               | Folder for all plugins/resources. |
 
 ### Building on top of System
 
-Best way to start building any custom application after setting up this Authentication system would include adopting the same file structure conventions, in order to avoid extra and/or unneeded effort to synchronise the entire project. New pages can be quickly added by creating more folders in the root directory, with the main frontend file being `index.php`, backend functionalities in `includes` folder and custom styling in the `custom.css` file, present in the same top-level folder as that of index.php.
+Once this Authentication system has been set up, it can be easily built upon this way: New pages can be quickly added by creating more folders in the root directory, with the main frontend file being `index.php`, backend functionalities in `includes` folder and custom styling in the `custom.css` file, present in the same top-level folder as that of index.php.
 
 New function groups or classes can be created in new files in `assets/includes/` folder, and will have to be included in relevant pages. if the added functionalities are mostly universal, they can be required in th `assets/layouts/header.php` file. In the same way, more global css files can be saved in `assets/css` and included in the header.php layout file. Same convention will hold for JS files, with the scripts being in `assets/js/` and included in `assets/layouts/footer.php` file.
 
 Additional plugins or offline resources can be placed in `assets/vendor/` folder and linked-to in either the header or footer layout file, depending on the file type to be linked.
+
+> A good convention to adopt while building on top of this would be to adopt the same file structure conventions as in this, in order to avoid extra and/or unneeded effort to synchronise the entire project. The system has already been made with the default PHP Application file structure in order to avoid most conflicts.
 
 ## Components
 
@@ -126,7 +127,7 @@ Additional plugins or offline resources can be placed in `assets/vendor/` folder
 
 ## Features
 
-### Easy Integration
+### Easy Integration / Embedding
 
 The application is designed to be easily embeddable and is meant to be built upon. The current UI has been built mostly on raw bootstrap, and is meant to be completely replaces rather than improved upon. The purpose of this project is to provide the needed backend functionality, and all UI elements should be replaced and rebuilt when creating a separate application.
 
@@ -135,6 +136,10 @@ It is recommended that the application be installed/embedded into the project be
 The project was created with the standard PHP development file structure, in order to maintain flexibility. Simply add more features/ pages in the same way the sample page-folders in the root folder are created.
 
 In each page folder, the index.php is the main target page, the includes folder holds the backend functionality and the custom.css enables custom designs on top of a global css file without interfering with other pages.
+
+### Security
+
+
 
 ### Login | Signup
 
@@ -272,7 +277,7 @@ That being said, these are some possible improvements i have in my mind right no
 
 ## Contribution Guidelines
 
-If you want to contribute to this project, please refer to the [Contributing Guidelines](CONTRIBUTING).
+If you want to contribute to this project, please refer to the [Contributing Guidelines](CONTRIBUTING.md).
 
 ## License
 
