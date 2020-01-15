@@ -61,7 +61,8 @@ body {
     height: 34px;
     margin-bottom: 0;
     border-radius: 100%;
-    background: #FFFFFF;
+    z-index: 1000000;
+    background: blue;
     border: 1px solid transparent;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
     cursor: pointer;
@@ -70,8 +71,8 @@ body {
 }
 
 .avatar-upload .avatar-edit input+label:hover {
-    background: #f1f1f1;
-    border-color: #d6d6d6;
+    background: #757575;
+    border-color: #757575;
 }
 
 .avatar-upload .avatar-edit input+label:after {
