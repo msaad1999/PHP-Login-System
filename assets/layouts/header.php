@@ -19,10 +19,11 @@ check_remember_me();
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="<?php echo APP_DESCRIPTION;  ?>">
+    <meta name="author" content="<?php echo APP_OWNER;  ?>">
 
     <title><?php echo TITLE . ' | ' . APP_NAME; ?></title>
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
 
     <link rel="stylesheet" href="../assets/vendor/bootstrap-4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/vendor/fontawesome-5.12.0/css/all.min.css">

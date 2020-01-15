@@ -43,12 +43,12 @@ check_verified();
             </div>
 
 
-        </div><!-- End profile widget -->
+        </div>
 
     </div>
 </div>
 
-<div class="row mt-5">
+<div class="row bio">
 
     <div class="col-xl-6 col-md-9 col-sm-12 mx-auto">
     

@@ -11,3 +11,14 @@
     height: 150px;
     object-fit: cover;
 }
+
+.profile-cover {
+    background-image: url('../assets/images/profile_banner.jpg');
+    background-position: top;
+    background-size: cover;
+}
+
+.bio {
+    margin-top: 50px;
+    margin-bottom: 150px;
+}

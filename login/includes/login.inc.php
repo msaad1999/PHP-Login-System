@@ -54,6 +54,34 @@ else {
     } 
     else {
 
+        /*
+        * -------------------------------------------------------------------------------
+        *   Updating last_login_at
+        * -------------------------------------------------------------------------------
+        */
+
+        $sql = "UPDATE users SET last_login_at=NOW() WHERE username=?;";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+            $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
+            header("Location: ../");
+            exit();
+        }
+        else {
+
+            mysqli_stmt_bind_param($stmt, "s", $username);
+            mysqli_stmt_execute($stmt);
+        }
+
+
+
+        /*
+        * -------------------------------------------------------------------------------
+        *   Creating SESSION Variables
+        * -------------------------------------------------------------------------------
+        */
+
         $sql = "SELECT * FROM users WHERE username=?;";
         $stmt = mysqli_stmt_init($conn);
 

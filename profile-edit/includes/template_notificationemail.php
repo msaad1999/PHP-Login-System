@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Verify Your Email</title>
+    <title>Password Updated</title>
 
     <style type="text/css">
         body {
@@ -140,7 +140,7 @@
 
                         <div style="line-height: 35px">
 
-                            PASSWORD UPDATED</span>
+                            <span style="color: #5caad2;">{{ APP_NAME }}:</span> PASSWORD UPDATED
 
                         </div>
                     </td>

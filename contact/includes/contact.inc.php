@@ -67,17 +67,32 @@ if (isset($_POST['contact-submit'])) {
         exit();
     }
 
+    
+
+    // $message = "<strong>Name:</strong> $name<br>" 
+    //     . "<strong>Email:</strong> <i>$email</i><br><br>"
+    //     . "<strong>Message:</strong><br><br>$msg";
+
+    /*
+    * -------------------------------------------------------------------------------
+    *   Using email template
+    * -------------------------------------------------------------------------------
+    */
+
     $subject = "$name sent you a message via your contact form";
 
-    $message = "<strong>Name:</strong> $name<br>" 
-        . "<strong>Email:</strong> <i>$email</i><br><br>"
-        . "<strong>Message:</strong><br><br>$msg";
+    $mail_variables = array();
 
-    if (isset($_POST['subscribe'])) {
+    $mail_variables['APP_NAME'] = APP_NAME;
+    $mail_variables['username'] = $name;
+    $mail_variables['email'] = $email;
+    $mail_variables['message'] = $msg;
 
-        $message .= "<br><br><br>"
-            . "<strong>IMPORTANT:</strong> Please add <i>$email</i> "
-            . "to your mailing list.<br>";
+    $message = file_get_contents("./template_contactemail.php");
+
+    foreach($mail_variables as $key => $value) {
+        
+        $message = str_replace('{{ '.$key.' }}', $value, $message);
     }
 
     $mail = new PHPMailer(true);
