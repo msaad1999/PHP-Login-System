@@ -1,0 +1,16 @@
+.verify-message {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+button[type="submit"] {
+    padding: 0;
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    color: blue;
+}

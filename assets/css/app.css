@@ -1,0 +1,268 @@
+html,
+body {
+    overflow-x: hidden;
+    height: 100%;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.form-auth {
+    margin-top: 10%;
+    width: 100%;
+    padding: 15px;
+}
+
+.form-auth .checkbox {
+    font-weight: 400;
+}
+
+.form-auth .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-auth .form-control:focus {
+    z-index: 2;
+}
+
+.form-auth input[type="email"] {
+    margin-bottom: -1px;
+}
+
+.form-auth input[type="password"] {
+    margin-bottom: 10px;
+}
+
+
+/* --------------User Image Upload---------------------- */
+
+.avatar-upload {
+    text-align: center;
+    display: inline-block;
+}
+
+.avatar-edit {
+    top: 150px;
+    margin-right: -125px;
+    margin-top: -40px;
+}
+
+.avatar-upload .avatar-edit input {
+    display: none;
+}
+
+.avatar-upload .avatar-edit input+label {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 0;
+    border-radius: 100%;
+    z-index: 1000000;
+    background: blue;
+    border: 1px solid transparent;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    font-weight: normal;
+    transition: all 0.2s ease-in-out;
+}
+
+.avatar-upload .avatar-edit input+label:hover {
+    background: #757575;
+    border-color: #757575;
+}
+
+.avatar-upload .avatar-edit input+label:after {
+    color: #757575;
+    position: absolute;
+    top: 5px;
+    left: 1px;
+    right: 0;
+    text-align: center;
+    margin: auto;
+}
+
+.avatar-upload .avatar-preview {
+    width: 162px;
+    height: 162px;
+    position: relative;
+    border-radius: 100%;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.avatar-upload .avatar-preview>div {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.navbar-img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+/* --------------Profile card---------------------- */
+
+.card-profile {
+    width: 230px;
+    min-height: 330px;
+    margin: 50px auto;
+    /* background-color: #e6e5e1; */
+    border-radius: 0;
+    border: 0;
+}
+
+.card-profile .card-img-top {
+    border-radius: 0;
+}
+
+.card-img-profile {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: -45px;
+    margin-bottom: 35px;
+    border: 2px solid #ffffff;
+}
+
+.edit-profile {
+    position: absolute;
+    right: 10px;
+    top: 110px;
+}
+
+.card-img-profile {
+    transition: transform .2s;
+}
+
+.card-img-profile:hover {
+    transform: scale(1.02);
+}
+
+.card-profile .card-title {
+    margin-bottom: 30px;
+}
+
+.card-profile .card-title small {
+    display: block;
+    font-size: .6em;
+    margin-top: .2em;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.card-profile .fa {
+    color: grey;
+}
+
+.card-profile .fa:hover {
+    color: blue;
+}
+
+
+/* --------------Footer---------------------- */
+
+footer {
+    margin-top: 100px;
+}
+
+#myFooter {
+    background-color: #3c3d41;
+    color: white;
+    padding-top: 30px;
+}
+
+#myFooter .footer-copyright {
+    background-color: #333333;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: center;
+}
+
+#myFooter .row {
+    margin-bottom: 60px;
+}
+
+#myFooter .navbar-brand {
+    margin-top: 45px;
+    height: 65px;
+}
+
+#myFooter .footer-copyright p {
+    margin: 10px;
+    color: #ccc;
+}
+
+#myFooter .footer-copyright a:hover {
+    color: #d84b6b;
+}
+
+#myFooter ul {
+    list-style-type: none;
+    padding-left: 0;
+    line-height: 1.7;
+}
+
+#myFooter h5 {
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+#myFooter h2 a {
+    font-size: 50px;
+    text-align: center;
+    color: #fff;
+}
+
+#myFooter a {
+    color: #d2d1d1;
+    text-decoration: none;
+}
+
+#myFooter a:hover,
+#myFooter a:focus {
+    text-decoration: none;
+    color: white;
+}
+
+#myFooter .social-networks {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 16px;
+}
+
+#myFooter .social-networks a {
+    font-size: 32px;
+    color: #f9f9f9;
+    padding: 10px;
+    transition: 0.2s;
+}
+
+#myFooter .social-networks a:hover {
+    text-decoration: none;
+    color: #d84b6b;
+}
+
+#myFooter .btn {
+    color: white;
+    background-color: #d84b6b;
+    border-radius: 20px;
+    border: none;
+    width: 150px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    line-height: 25px;
+}
