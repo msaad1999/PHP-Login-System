@@ -2,7 +2,7 @@
   <img src="assets/images/README_cover.png" width="350" align="center"/>
 </p><br>
 
-> Embeddable and Secure PHP Authentication System with Login, Signup, User Profiles, Profile Editing, Account Verification via Email, Password Reset System, Remember Me Feature, Global ERROR & STATUS variables system and Authentication checks.
+> Embeddable and Highly Secure PHP Authentication System with Login, Signup, User Profiles, Profile Editing, Account Verification via Email, Password Reset System, Remember Me Feature, Automatic Logout on Inactivity,  Global ERROR & STATUS variable system, Authentication checks and more.
 
 # Table of Contents
 
@@ -26,6 +26,7 @@
       - [Secure Remember-me Cookie](#secure-remember-me-cookie)
       - [Secure Account Activation & Password Reset](#secure-account-activation--password-reset)
     - [Login | Signup](#login--signup)
+    - [Automatic Logout on Inactivity](#automatic-logout-on-inactivity)
     - [User Profile | Profile Editing](#user-profile--profile-editing)
     - [Email Verification | Account Activation](#email-verification--account-activation)
     - [Password Resetting](#password-resetting)
@@ -56,24 +57,24 @@
 ```php
 // env.php
 
-if (!defined('APP_NAME'))           define('APP_NAME' ,'Login System');
-if (!defined('APP_ORGANIZATION'))   define('APP_ORGANIZATION' ,'KLiK');
-if (!defined('APP_OWNER'))          define('APP_OWNER' ,'msaad1999');
-if (!defined('APP_DESCRIPTION'))    define('APP_DESCRIPTION' ,'Embeddable and Secure PHP Login System');
+if (!defined('APP_NAME'))                       define('APP_NAME', 'Login System');
+if (!defined('APP_ORGANIZATION'))               define('APP_ORGANIZATION', 'KLiK');
+if (!defined('APP_OWNER'))                      define('APP_OWNER', 'msaad1999');
+if (!defined('APP_DESCRIPTION'))                define('APP_DESCRIPTION', 'Embeddable PHP Login System');
 
+if (!defined('ALLOWED_INACTIVITY_TIME'))        define('ALLOWED_INACTIVITY_TIME', time()+1*60);
 
-if (!defined('DB_DATABASE'))        define('DB_DATABASE', 'klik_loginsystem');
-if (!defined('DB_HOST'))            define('DB_HOST','127.0.0.1');
-if (!defined('DB_USERNAME'))        define('DB_USERNAME','root');
-if (!defined('DB_PASSWORD'))        define('DB_PASSWORD' ,'');
-if (!defined('DB_PORT'))            define('DB_PORT' ,'');
+if (!defined('DB_DATABASE'))                    define('DB_DATABASE', 'klik_loginsystem');
+if (!defined('DB_HOST'))                        define('DB_HOST','127.0.0.1');
+if (!defined('DB_USERNAME'))                    define('DB_USERNAME','root');
+if (!defined('DB_PASSWORD'))                    define('DB_PASSWORD' ,'');
+if (!defined('DB_PORT'))                        define('DB_PORT' ,'');
 
-
-if (!defined('MAIL_HOST'))          define('MAIL_HOST', 'smtp.gmail.com');
-if (!defined('MAIL_USERNAME'))      define('MAIL_USERNAME', 'example.email@gmail.com');
-if (!defined('MAIL_PASSWORD'))      define('MAIL_PASSWORD', 'example_password');
-if (!defined('MAIL_ENCRYPTION'))    define('MAIL_ENCRYPTION', 'ssl');
-if (!defined('MAIL_PORT'))          define('MAIL_PORT', 465);
+if (!defined('MAIL_HOST'))                      define('MAIL_HOST', 'smtp.gmail.com');
+if (!defined('MAIL_USERNAME'))                  define('MAIL_USERNAME', 'example.email@gmail.com');
+if (!defined('MAIL_PASSWORD'))                  define('MAIL_PASSWORD', 'example-password');
+if (!defined('MAIL_ENCRYPTION'))                define('MAIL_ENCRYPTION', 'ssl');
+if (!defined('MAIL_PORT'))                      define('MAIL_PORT', 465);
 ```
 
 ### Existing Account(s)
@@ -215,6 +216,23 @@ The features for account activation and password reset both use a link sent via 
 The system supports a default and secure login and signup system. The user can signup to make a new account, and then will be prompted to login to the new account with his credentials. The user can also set his profile image on signup. To make a new account, the user must set a unique username and email. There are also additional information fields available, but they are optional and can be skipped.
 
 The login system also supports a `remember me` feature, which will keep the user logged in for a certain time (currently a month) even if the browser or system is turned off.
+
+### Automatic Logout on Inactivity
+
+The Application has a jquery snippet in `assets/js/check_inactive.js` which continously checks if the user is inactive. When the user is inactive for more than the specified time, it automatically logs the user out and redirects to the login page. The allowed inactivity time period is currently `1 hr`, specified in `assets/setup/env.php` in the `ALLOWED_INACTIVITY_TIME` constant. The js script calls the script in `assets/includes/checkinactive.ajax.php` via AJAX call, where the user's inactivity is checked.
+
+```php
+// checkinactive.ajax.php
+
+session_start();
+if (isset($_SESSION['auth']) && !isset($_COOKIE['rememberme'])){
+    if(time() > $_SESSION['expire']){
+        session_unset();
+        session_destroy();
+        echo 'logout_redirect';
+    }
+}
+```
 
 ### User Profile | Profile Editing
 

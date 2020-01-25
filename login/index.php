@@ -3,7 +3,6 @@
 define('TITLE', "Login");
 include '../assets/layouts/header.php';
 check_logged_out();
-
 ?>
 
 
