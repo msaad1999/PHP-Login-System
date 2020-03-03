@@ -116,12 +116,14 @@ if (isset($_POST['update-profile'])) {
                         *   Deleting old profile photo
                         * -------------------------------------------------------------------------------
                         */
-                        if (!unlink('../../assets/uploads/users/' . $_SESSION['profile_image'])) {  
+						if ( $_SESSION['profile_image'] != "_defaultUser.png" ) {
+							if (!unlink('../../assets/uploads/users/' . $_SESSION['profile_image'])) {  
 
-                            $_SESSION['ERRORS']['imageerror'] = 'old image could not be deleted';
-                            header("Location: ../");
-                            exit();
-                        } 
+								$_SESSION['ERRORS']['imageerror'] = 'old image could not be deleted';
+								header("Location: ../");
+								exit();
+							} 
+						}
                     }
                     else
                     {
