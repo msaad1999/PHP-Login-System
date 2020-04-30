@@ -38,18 +38,26 @@ if (isset($_POST['signupsubmit'])) {
 
 
     require '../../assets/setup/db.inc.php';
-
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $passwordRepeat  = $_POST['confirmpassword'];
-    $headline = $_POST['headline'];
-    $bio = $_POST['bio'];
-    $full_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
+    
+    //filter POST data
+    function input_filter($data) {
+        $data= trim($data);
+        $data= stripslashes($data);
+        $data= htmlspecialchars($data);
+        return $data;
+    }
+    
+    $username = input_filter($_POST['username']);
+    $email = input_filter($_POST['email']);
+    $password = $_POST['password']);
+    $passwordRepeat  = input_filter($_POST['confirmpassword']);
+    $headline = input_filter($_POST['headline']);
+    $bio = input_filter($_POST['bio']);
+    $full_name = input_filter($_POST['first_name']);
+    $last_name = input_filter($_POST['last_name']);
 
     if (isset($_POST['gender'])) 
-        $gender = $_POST['gender'];
+        $gender = input_filter($_POST['gender']);
     else
         $gender = NULL;
 
