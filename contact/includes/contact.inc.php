@@ -39,33 +39,57 @@ if (isset($_POST['contact-submit'])) {
     }
 
 
-    if (isset($_SESSION['auth'])){
+    	// Check if the referer is a local server.
+	if (!isset($_SERVER['HTTP_REFERER']) || (parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) != $_SERVER['SERVER_NAME'])) {
+	exit('Direct access not permitted');
+	}
+	
+	if (isset($_SESSION['auth'])){
+	
+		$name = $_SESSION['username'];
+		$email = $_SESSION['email'];
+	}
+	else {
+			if (!filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL)) {
+				$_SESSION['ERRORS']['emailerror'] = 'invalid email';
+				header("Location: ../");
+				exit();
+			}
+	
+		$name = $_POST['name'];
+		$email = $_POST['email'];
+	}
+	//To filter message variable
+	function input_filter($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		return $data; 
+	} 
 
-        $name = $_SESSION['username'];
-        $email = $_SESSION['email'];
-    }
-    else {
-        
-        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+	$msg = input_filter($_POST['message']);
 
-            $_SESSION['ERRORS']['emailerror'] = 'invalid email';
-            header("Location: ../");
-            exit();
-        }
+	if (!isset($_SESSION['auth']) && (!$name || !$msg)) {
+	
+		$_SESSION['ERRORS']['mailstatus'] = 'Fields cannot be empty';
+		exit();
+	}
 
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-    }
+	//check if the message is longer than 20 characters.
+	elseif(strlen($msg) >= 20){
+	
+		$_SESSION['ERRORS']['mailstatus'] = 'Message should be longer than 20 characters';
+		header("Location: ../");
+		exit();
+	}
 
-    $msg = $_POST['message'];
-
-
-    if (!isset($_SESSION['auth']) && (!$name || !$msg)) {
-
-        $_SESSION['ERRORS']['mailstatus'] = 'Fields cannot be empty';
-        header("Location: ../");
-        exit();
-    }
+	//check if the message is shorter than 500 characters.
+	elseif(strlen($msg) <= 500){
+	
+		$_SESSION['ERRORS']['mailstatus'] = 'Message should be shorter than 500 characters';
+		header("Location: ../");
+		exit();
+	}
 
     
 
