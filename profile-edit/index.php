@@ -4,6 +4,14 @@ define('TITLE', "Edit Profile");
 include '../assets/layouts/header.php';
 check_verified();
 
+//XSS filter for session variables
+function xss_filter($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 ?>
 
 
@@ -57,7 +65,7 @@ check_verified();
 
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" value="<?php echo $_SESSION['username']; ?>" autocomplete="off">
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" value="<?php echo xss_filter($_SESSION['username']); ?>" autocomplete="off">
                     <sub class="text-danger">
                         <?php
                             if (isset($_SESSION['ERRORS']['usernameerror']))
@@ -69,7 +77,7 @@ check_verified();
 
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Email address" value="<?php echo $_SESSION['email']; ?>">
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email address" value="<?php echo xss_filter($_SESSION['email']); ?>">
                     <sub class="text-danger">
                         <?php
                             if (isset($_SESSION['ERRORS']['emailerror']))
@@ -81,22 +89,22 @@ check_verified();
 
                 <div class="form-group">
                     <label for="first_name">First Name</label>
-                    <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" value="<?php echo $_SESSION['first_name']; ?>">
+                    <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" value="<?php echo xss_filter($_SESSION['first_name']); ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="last_name">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" value="<?php echo $_SESSION['last_name']; ?>">
+                    <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" value="<?php echo xss_filter($_SESSION['last_name']); ?>">
                 </div>
 
                 <div class="form-group mt-4">
                     <label for="headline">Headline</label>
-                    <input type="text" id="headline" name="headline" class="form-control" placeholder="headline" value="<?php echo $_SESSION['headline']; ?>">
+                    <input type="text" id="headline" name="headline" class="form-control" placeholder="headline" value="<?php echo xss_filter($_SESSION['headline']); ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="bio">Profile Details</label>
-                    <textarea type="text" id="bio" name="bio" class="form-control" placeholder="Tell us about yourself..."><?php echo $_SESSION['bio']; ?></textarea>
+                    <textarea type="text" id="bio" name="bio" class="form-control" placeholder="Tell us about yourself..."><?php echo xss_filter($_SESSION['bio']); ?></textarea>
                 </div>
 
                 <div class="form-group mb-5">
