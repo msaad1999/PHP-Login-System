@@ -43,7 +43,7 @@ use Hayageek\OAuth2\Client\Provider\Yahoo;
 // @see https://github.com/stevenmaguire/oauth2-microsoft
 use Stevenmaguire\OAuth2\Client\Provider\Microsoft;
 
-if (!isset($_GET['code']) && !isset($_GET['provider'])) {
+if(!isset($_GET['code']) && !isset($_GET['provider'])) {
 ?>
 <html>
 <body>Select Provider:<br/>
@@ -62,13 +62,13 @@ session_start();
 
 $providerName = '';
 
-if (array_key_exists('provider', $_GET)) {
+if(array_key_exists('provider', $_GET)) {
     $providerName = $_GET['provider'];
     $_SESSION['provider'] = $providerName;
-} elseif (array_key_exists('provider', $_SESSION)) {
+} elseif(array_key_exists('provider', $_SESSION)) {
     $providerName = $_SESSION['provider'];
 }
-if (!in_array($providerName, ['Google', 'Microsoft', 'Yahoo'])) {
+if(!in_array($providerName, ['Google', 'Microsoft', 'Yahoo'])) {
     exit('Only Google, Microsoft and Yahoo OAuth2 providers are currently supported in this script.');
 }
 
@@ -114,18 +114,18 @@ switch ($providerName) {
         break;
 }
 
-if (null === $provider) {
+if(null === $provider) {
     exit('Provider missing');
 }
 
-if (!isset($_GET['code'])) {
+if(!isset($_GET['code'])) {
     // If we don't have an authorization code then get one
     $authUrl = $provider->getAuthorizationUrl($options);
     $_SESSION['oauth2state'] = $provider->getState();
     header('Location: ' . $authUrl);
     exit;
 // Check given state against previously stored one to mitigate CSRF attack
-} elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
+} elseif(empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
     unset($_SESSION['oauth2state']);
     unset($_SESSION['provider']);
     exit('Invalid state');

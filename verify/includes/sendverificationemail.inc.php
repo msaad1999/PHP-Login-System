@@ -16,7 +16,7 @@ require '../../assets/vendor/PHPMailer/src/Exception.php';
 require '../../assets/vendor/PHPMailer/src/PHPMailer.php';
 require '../../assets/vendor/PHPMailer/src/SMTP.php';
 
-if (isset($_POST['verifysubmit'])) {
+if(isset($_POST['verifysubmit'])) {
 
     /*
     * -------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ if (isset($_POST['verifysubmit'])) {
     * -------------------------------------------------------------------------------
     */
 
-    foreach($_POST as $key => $value){
+    foreach($_POST as $key => $value) {
 
         $_POST[$key] = _cleaninjections(trim($value));
     }
@@ -35,7 +35,7 @@ if (isset($_POST['verifysubmit'])) {
     * -------------------------------------------------------------------------------
     */
 
-    if (!verify_csrf_token()){
+    if(!verify_csrf_token()) {
 
         $_SESSION['STATUS']['verify'] = 'Request could not be validated';
         header("Location: ../");
@@ -53,7 +53,7 @@ if (isset($_POST['verifysubmit'])) {
 
     $sql = "DELETE FROM auth_tokens WHERE user_email=? AND auth_type='account_verify';";
     $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    if(!mysqli_stmt_prepare($stmt, $sql)) {
 
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");
@@ -69,7 +69,7 @@ if (isset($_POST['verifysubmit'])) {
     $sql = "INSERT INTO auth_tokens (user_email, auth_type, selector, token, expires_at) 
             VALUES (?, 'account_verify', ?, ?, " . $expires . ");";
     $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    if(!mysqli_stmt_prepare($stmt, $sql)) {
 
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");

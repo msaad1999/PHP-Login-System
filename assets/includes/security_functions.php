@@ -20,12 +20,12 @@ function _cleaninjections($test) {
 
 function generate_csrf_token() {
 
-    if (!isset($_SESSION)) {
+    if(!isset($_SESSION)) {
 
         session_start();
     }
 
-    if (empty($_SESSION['token'])) {
+    if(empty($_SESSION['token'])) {
 
         $_SESSION['token'] = bin2hex(random_bytes(32));
     }
@@ -42,9 +42,9 @@ function verify_csrf_token() {
 
     generate_csrf_token();
 
-    if (!empty($_POST['token'])) {
+    if(!empty($_POST['token'])) {
 
-        if (hash_equals($_SESSION['token'], $_POST['token'])) {
+        if(hash_equals($_SESSION['token'], $_POST['token'])) {
 
             return true;
         } 

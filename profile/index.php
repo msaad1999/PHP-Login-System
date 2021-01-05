@@ -21,12 +21,12 @@ check_verified();
                         <h4 class="mt-0 mb-0"><?php echo $_SESSION['username']; ?></h4>
                         <p class="small">
 
-                            <?php if ($_SESSION['gender'] == 'm'){ ?>
+                            <?php if($_SESSION['gender'] == 'm'){ ?>
 
                             <i class="fa fa-male"></i>
                             
 
-                            <?php } elseif ($_SESSION['gender'] == 'f'){ ?>
+                            <?php } elseif($_SESSION['gender'] == 'f'){ ?>
 
                             <i class="fa fa-female"></i>
 

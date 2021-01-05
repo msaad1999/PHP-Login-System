@@ -1,10 +1,10 @@
 <?php
 
-function availableUsername($conn, $username){
+function availableUsername($conn, $username) {
 
     $sql = "select id from users where username=?;";
     $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    if(!mysqli_stmt_prepare($stmt, $sql)) {
 
         return $_SESSION['ERRORS']['scripterror'] = 'SQL error';
     } 
@@ -15,7 +15,7 @@ function availableUsername($conn, $username){
         mysqli_stmt_store_result($stmt);
         $resultCheck = mysqli_stmt_num_rows($stmt);
 
-        if ($resultCheck > 0) {
+        if($resultCheck > 0) {
             
             return false;
         } else {
@@ -25,11 +25,11 @@ function availableUsername($conn, $username){
     }
 }
 
-function availableEmail($conn, $email){
+function availableEmail($conn, $email) {
 
     $sql = "select id from users where email=?;";
     $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    if(!mysqli_stmt_prepare($stmt, $sql)) {
 
         return $_SESSION['ERRORS']['scripterror'] = 'SQL error';
     } 
@@ -40,7 +40,7 @@ function availableEmail($conn, $email){
         mysqli_stmt_store_result($stmt);
         $resultCheck = mysqli_stmt_num_rows($stmt);
 
-        if ($resultCheck > 0) {
+        if($resultCheck > 0) {
             
             return false;
         } else {

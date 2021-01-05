@@ -31,7 +31,7 @@ check_logged_in_butnot_verified();
                 <div class="text-center mt-5">
                     <h6 class="text-success">
                         <?php
-                            if (isset($_SESSION['STATUS']['verify']))
+                            if(isset($_SESSION['STATUS']['verify']))
                                 echo $_SESSION['STATUS']['verify'];
 
                         ?>

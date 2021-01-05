@@ -45,7 +45,7 @@ function xss_filter($data) {
                 <div class="text-center">
                     <sub class="text-danger">
                         <?php
-                            if (isset($_SESSION['ERRORS']['imageerror']))
+                            if(isset($_SESSION['ERRORS']['imageerror']))
                                 echo $_SESSION['ERRORS']['imageerror'];
 
                         ?>
@@ -54,7 +54,7 @@ function xss_filter($data) {
                 <div class="text-center">
                     <small class="text-success font-weight-bold">
                         <?php
-                            if (isset($_SESSION['STATUS']['editstatus']))
+                            if(isset($_SESSION['STATUS']['editstatus']))
                                 echo $_SESSION['STATUS']['editstatus'];
 
                         ?>
@@ -68,7 +68,7 @@ function xss_filter($data) {
                     <input type="text" id="username" name="username" class="form-control" placeholder="Username" value="<?php echo xss_filter($_SESSION['username']); ?>" autocomplete="off">
                     <sub class="text-danger">
                         <?php
-                            if (isset($_SESSION['ERRORS']['usernameerror']))
+                            if(isset($_SESSION['ERRORS']['usernameerror']))
                                 echo $_SESSION['ERRORS']['usernameerror'];
 
                         ?>
@@ -80,7 +80,7 @@ function xss_filter($data) {
                     <input type="email" id="email" name="email" class="form-control" placeholder="Email address" value="<?php echo xss_filter($_SESSION['email']); ?>">
                     <sub class="text-danger">
                         <?php
-                            if (isset($_SESSION['ERRORS']['emailerror']))
+                            if(isset($_SESSION['ERRORS']['emailerror']))
                                 echo $_SESSION['ERRORS']['emailerror'];
 
                         ?>
@@ -110,11 +110,11 @@ function xss_filter($data) {
                 <div class="form-group mb-5">
                     <label>Gender</label>
                     <div class="custom-control custom-radio custom-control">
-                        <input type="radio" id="male" name="gender" class="custom-control-input" value="m" <?php if ($_SESSION['gender'] == 'm') echo 'checked' ?>>
+                        <input type="radio" id="male" name="gender" class="custom-control-input" value="m" <?php if($_SESSION['gender'] == 'm') echo 'checked' ?>>
                         <label class="custom-control-label" for="male">Male</label>
                     </div>
                     <div class="custom-control custom-radio custom-control">
-                        <input type="radio" id="female" name="gender" class="custom-control-input" value="f" <?php if ($_SESSION['gender'] == 'f') echo 'checked' ?>>
+                        <input type="radio" id="female" name="gender" class="custom-control-input" value="f" <?php if($_SESSION['gender'] == 'f') echo 'checked' ?>>
                         <label class="custom-control-label" for="female">Female</label>
                     </div>
                 </div>
@@ -124,7 +124,7 @@ function xss_filter($data) {
                     <br>
                     <sub class="text-danger mb-4">
                         <?php
-                            if (isset($_SESSION['ERRORS']['passworderror']))
+                            if(isset($_SESSION['ERRORS']['passworderror']))
                                 echo $_SESSION['ERRORS']['passworderror'];
 
                         ?>
@@ -165,7 +165,7 @@ include '../assets/layouts/footer.php';
 <script type="text/javascript">
     function readURL(input) {
 
-        if (input.files && input.files[0]) {
+        if(input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function(e) {
                 $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');

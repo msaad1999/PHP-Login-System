@@ -20,7 +20,7 @@ if (isset($_POST['update-profile'])) {
     * -------------------------------------------------------------------------------
     */
 
-    foreach($_POST as $key => $value){
+    foreach($_POST as $key => $value) {
 
         $_POST[$key] = _cleaninjections(trim($value));
     }
@@ -31,7 +31,7 @@ if (isset($_POST['update-profile'])) {
     * -------------------------------------------------------------------------------
     */
 
-    if (!verify_csrf_token()){
+    if (!verify_csrf_token()) {
 
         $_SESSION['STATUS']['editstatus'] = 'Request could not be validated';
         header("Location: ../");
@@ -154,7 +154,7 @@ if (isset($_POST['update-profile'])) {
         * -------------------------------------------------------------------------------
         */
 
-        if( !empty($oldPassword) || !empty($newpassword) || !empty($passwordRepeat)){
+        if( !empty($oldPassword) || !empty($newpassword) || !empty($passwordRepeat)) {
 
             include 'password-edit.inc.php';
         }
@@ -232,7 +232,7 @@ if (isset($_POST['update-profile'])) {
             bio=?, 
             profile_image=?";
 
-        if ($passwordUpdated){
+        if ($passwordUpdated) {
 
             $sql .= ", password=? 
                     WHERE id=?;";
@@ -252,7 +252,7 @@ if (isset($_POST['update-profile'])) {
         } 
         else {
 
-            if ($passwordUpdated){
+            if ($passwordUpdated) {
 
                 $hashedPwd = password_hash($newpassword, PASSWORD_DEFAULT);
                 mysqli_stmt_bind_param($stmt, "ssssssssss", 

@@ -14,7 +14,7 @@ check_logged_out();
         </div>
         <div class="col-sm-4">
 
-                <?php if (isset($_GET['selector']) && isset($_GET['validator'])) { ?>
+                <?php if(isset($_GET['selector']) && isset($_GET['validator'])) { ?>
 
                     <form class="form-auth" action="includes/reset.inc.php" method="post">
 
@@ -37,7 +37,7 @@ check_logged_out();
                         <div class="text-center mb-3">
                             <small class="text-success font-weight-bold">
                                 <?php
-                                    if (isset($_SESSION['STATUS']['resetsubmit']))
+                                    if(isset($_SESSION['STATUS']['resetsubmit']))
                                         echo $_SESSION['STATUS']['resetsubmit'];
 
                                 ?>
@@ -47,7 +47,7 @@ check_logged_out();
                         <div class="text-center mb-3">
                             <sub class="text-danger">
                                 <?php
-                                    if (isset($_SESSION['ERRORS']['passworderror']))
+                                    if(isset($_SESSION['ERRORS']['passworderror']))
                                         echo $_SESSION['ERRORS']['passworderror'];
                                 ?>
                             </sub>
@@ -91,7 +91,7 @@ check_logged_out();
                         <div class="text-center mb-3">
                             <small class="text-success font-weight-bold">
                                 <?php
-                                    if (isset($_SESSION['STATUS']['resentsend']))
+                                    if(isset($_SESSION['STATUS']['resentsend']))
                                         echo $_SESSION['STATUS']['resentsend'];
 
                                 ?>
@@ -103,7 +103,7 @@ check_logged_out();
                             <input type="email" id="email" name="email" class="form-control" placeholder="Email" required autofocus>
                             <sub class="text-danger">
                                 <?php
-                                    if (isset($_SESSION['ERRORS']['emailerror']))
+                                    if(isset($_SESSION['ERRORS']['emailerror']))
                                         echo $_SESSION['ERRORS']['emailerror'];
                                 ?>
                             </sub>

@@ -10,7 +10,7 @@ require '../../assets/vendor/PHPMailer/src/Exception.php';
 require '../../assets/vendor/PHPMailer/src/PHPMailer.php';
 require '../../assets/vendor/PHPMailer/src/SMTP.php';
 
-if (isset($_POST['signupsubmit'])) {
+if(isset($_POST['signupsubmit'])) {
 
     $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32);
@@ -20,7 +20,7 @@ if (isset($_POST['signupsubmit'])) {
 
     $sql = "DELETE FROM auth_tokens WHERE user_email=? AND auth_type='account_verify';";
     $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    if(!mysqli_stmt_prepare($stmt, $sql)) {
 
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");
@@ -36,7 +36,7 @@ if (isset($_POST['signupsubmit'])) {
     $sql = "INSERT INTO auth_tokens (user_email, auth_type, selector, token, expires_at) 
             VALUES (?, 'account_verify', ?, ?, " . $expires . ");";
     $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    if(!mysqli_stmt_prepare($stmt, $sql)) {
 
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");

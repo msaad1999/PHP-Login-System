@@ -2,7 +2,7 @@
 
 function check_logged_in() {
 
-    if (isset($_SESSION['auth'])){
+    if(isset($_SESSION['auth'])) {
 
         return true;
     }
@@ -13,15 +13,15 @@ function check_logged_in() {
     }
 }
 
-function check_logged_in_butnot_verified(){
+function check_logged_in_butnot_verified() {
 
-    if (isset($_SESSION['auth'])){
+    if(isset($_SESSION['auth'])) {
 
-        if ($_SESSION['auth'] == 'loggedin') {
+        if($_SESSION['auth'] == 'loggedin') {
     
             return true;
         }
-        elseif ($_SESSION['auth'] == 'verified') {
+        elseif($_SESSION['auth'] == 'verified') {
 
             header("Location: ../home/");
             exit(); 
@@ -36,7 +36,7 @@ function check_logged_in_butnot_verified(){
 
 function check_logged_out() {
 
-    if (!isset($_SESSION['auth'])){
+    if(!isset($_SESSION['auth'])) {
 
         return true;
     }
@@ -49,13 +49,13 @@ function check_logged_out() {
 
 function check_verified() {
 
-    if (isset($_SESSION['auth'])) {
+    if(isset($_SESSION['auth'])) {
 
-        if ($_SESSION['auth'] == 'verified') {
+        if($_SESSION['auth'] == 'verified') {
 
             return true;
         }
-        elseif ($_SESSION['auth'] == 'loggedin') {
+        elseif($_SESSION['auth'] == 'loggedin') {
 
             header("Location: ../verify/");
             exit(); 
@@ -75,7 +75,7 @@ function force_login($email) {
     $sql = "SELECT * FROM users WHERE email=?;";
     $stmt = mysqli_stmt_init($conn);
 
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    if(!mysqli_stmt_prepare($stmt, $sql)) {
         
         return false;
     } 
@@ -86,13 +86,13 @@ function force_login($email) {
 
         $result = mysqli_stmt_get_result($stmt);
 
-        if (!$row = mysqli_fetch_assoc($result)) {
+        if(!$row = mysqli_fetch_assoc($result)) {
             
             return false;
         }
         else {
 
-            if($row['verified_at'] != NULL){
+            if($row['verified_at'] != NULL) {
 
                 $_SESSION['auth'] = 'verified';
             } else{
@@ -128,14 +128,14 @@ function check_remember_me() {
 
     require '../assets/setup/db.inc.php';
     
-    if (empty($_SESSION['auth']) && !empty($_COOKIE['rememberme'])) {
+    if(empty($_SESSION['auth']) && !empty($_COOKIE['rememberme'])) {
         
         list($selector, $validator) = explode(':', $_COOKIE['rememberme']);
 
         $sql = "SELECT * FROM auth_tokens WHERE auth_type='remember_me' AND selector=? AND expires_at >= NOW() LIMIT 1;";
         $stmt = mysqli_stmt_init($conn);
 
-        if (!mysqli_stmt_prepare($stmt, $sql)) {
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
 
             // SQL ERROR
             return false;
@@ -146,7 +146,7 @@ function check_remember_me() {
             mysqli_stmt_execute($stmt);
             $results = mysqli_stmt_get_result($stmt);
 
-            if (!($row = mysqli_fetch_assoc($results))) {
+            if(!($row = mysqli_fetch_assoc($results))) {
 
                 // COOKIE VALIDATION FAILURE
                 return false;
@@ -156,12 +156,12 @@ function check_remember_me() {
                 $tokenBin = hex2bin($validator);
                 $tokenCheck = password_verify($tokenBin, $row['token']);
 
-                if ($tokenCheck === false) {
+                if($tokenCheck === false) {
 
                     // COOKIE VALIDATION FAILURE
                     return false;
                 }
-                else if ($tokenCheck === true) {
+                else if($tokenCheck === true) {
 
                     $email = $row['user_email'];
                     force_login($email);

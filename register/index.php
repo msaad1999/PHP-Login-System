@@ -32,7 +32,7 @@ check_logged_out();
                 <div class="text-center">
                     <sub class="text-danger">
                         <?php
-                            if (isset($_SESSION['ERRORS']['imageerror']))
+                            if(isset($_SESSION['ERRORS']['imageerror']))
                                 echo $_SESSION['ERRORS']['imageerror'];
 
                         ?>
@@ -44,7 +44,7 @@ check_logged_out();
                 <div class="text-center mb-3">
                     <small class="text-success font-weight-bold">
                         <?php
-                            if (isset($_SESSION['STATUS']['signupstatus']))
+                            if(isset($_SESSION['STATUS']['signupstatus']))
                                 echo $_SESSION['STATUS']['signupstatus'];
 
                         ?>
@@ -56,7 +56,7 @@ check_logged_out();
                     <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
                     <sub class="text-danger">
                         <?php
-                            if (isset($_SESSION['ERRORS']['usernameerror']))
+                            if(isset($_SESSION['ERRORS']['usernameerror']))
                                 echo $_SESSION['ERRORS']['usernameerror'];
 
                         ?>
@@ -68,7 +68,7 @@ check_logged_out();
                     <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
                     <sub class="text-danger">
                         <?php
-                            if (isset($_SESSION['ERRORS']['emailerror']))
+                            if(isset($_SESSION['ERRORS']['emailerror']))
                                 echo $_SESSION['ERRORS']['emailerror'];
 
                         ?>
@@ -85,7 +85,7 @@ check_logged_out();
                     <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="Confirm Password" required>
                     <sub class="text-danger mb-4">
                         <?php
-                            if (isset($_SESSION['ERRORS']['passworderror']))
+                            if(isset($_SESSION['ERRORS']['passworderror']))
                                 echo $_SESSION['ERRORS']['passworderror'];
 
                         ?>
@@ -160,7 +160,7 @@ include '../assets/layouts/footer.php'
 <script type="text/javascript">
     function readURL(input) {
 
-        if (input.files && input.files[0]) {
+        if(input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function(e) {
                 $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');

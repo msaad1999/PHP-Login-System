@@ -1,5 +1,5 @@
 
-<?php if (isset($_SESSION['auth'])) { ?>
+<?php if(isset($_SESSION['auth'])) { ?>
 
 </body>
 
@@ -78,9 +78,9 @@
 
 <?php
 
-if (isset($_SESSION['ERRORS']))
+if(isset($_SESSION['ERRORS']))
     $_SESSION['ERRORS'] = NULL;
-if (isset($_SESSION['STATUS']))
+if(isset($_SESSION['STATUS']))
     $_SESSION['STATUS'] = NULL;
 
 ?>

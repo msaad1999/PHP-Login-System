@@ -17,7 +17,7 @@ require '../../assets/vendor/PHPMailer/src/PHPMailer.php';
 require '../../assets/vendor/PHPMailer/src/SMTP.php';
 
 
-if (isset($_POST['resentsend'])) {
+if(isset($_POST['resentsend'])) {
 
     /*
     * -------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ if (isset($_POST['resentsend'])) {
     * -------------------------------------------------------------------------------
     */
 
-    foreach($_POST as $key => $value){
+    foreach($_POST as $key => $value) {
 
         $_POST[$key] = _cleaninjections(trim($value));
     }
@@ -36,7 +36,7 @@ if (isset($_POST['resentsend'])) {
     * -------------------------------------------------------------------------------
     */
 
-    if (!verify_csrf_token()){
+    if(!verify_csrf_token()) {
 
         $_SESSION['STATUS']['resentsend'] = 'Request could not be validated';
         header("Location: ../");
@@ -53,7 +53,7 @@ if (isset($_POST['resentsend'])) {
 
     $sql = "SELECT id FROM users WHERE email=?;";
     $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)){
+    if(!mysqli_stmt_prepare($stmt, $sql)) {
 
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");
@@ -65,7 +65,7 @@ if (isset($_POST['resentsend'])) {
         mysqli_stmt_execute($stmt);
         mysqli_stmt_store_result($stmt);
 
-        if (mysqli_stmt_num_rows($stmt) == 0){
+        if(mysqli_stmt_num_rows($stmt) == 0) {
 
             $_SESSION['ERRORS']['emailerror'] = 'given email does not exist in our records';
             header("Location: ../");
@@ -76,7 +76,7 @@ if (isset($_POST['resentsend'])) {
 
     $sql = "DELETE FROM auth_tokens WHERE user_email=? AND auth_type='password_reset';";
     $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    if(!mysqli_stmt_prepare($stmt, $sql)) {
 
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");
@@ -92,7 +92,7 @@ if (isset($_POST['resentsend'])) {
     $sql = "INSERT INTO auth_tokens (user_email, auth_type, selector, token, expires_at) 
             VALUES (?, 'password_reset', ?, ?, " . $expires . ");";
     $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    if(!mysqli_stmt_prepare($stmt, $sql)) {
 
         $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
         header("Location: ../");

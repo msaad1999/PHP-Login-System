@@ -8,7 +8,7 @@ require '../../assets/includes/security_functions.php';
 
 check_logged_out();
 
-if (!isset($_POST['loginsubmit'])){
+if(!isset($_POST['loginsubmit'])) {
 
     header("Location: ../");
     exit();
@@ -21,7 +21,7 @@ else {
     * -------------------------------------------------------------------------------
     */
 
-    foreach($_POST as $key => $value){
+    foreach($_POST as $key => $value) {
 
         $_POST[$key] = _cleaninjections(trim($value));
     }
@@ -33,7 +33,7 @@ else {
     * -------------------------------------------------------------------------------
     */
 
-    if (!verify_csrf_token()){
+    if(!verify_csrf_token()) {
 
         $_SESSION['STATUS']['loginstatus'] = 'Request could not be validated';
         header("Location: ../");
@@ -46,7 +46,7 @@ else {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if (empty($username) || empty($password)) {
+    if(empty($username) || empty($password)) {
 
         $_SESSION['STATUS']['loginstatus'] = 'fields cannot be empty';
         header("Location: ../");
@@ -62,7 +62,7 @@ else {
 
         $sql = "UPDATE users SET last_login_at=NOW() WHERE username=?;";
         $stmt = mysqli_stmt_init($conn);
-        if (!mysqli_stmt_prepare($stmt, $sql)) {
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
 
             $_SESSION['ERRORS']['sqlerror'] = 'SQL ERROR';
             header("Location: ../");
@@ -85,7 +85,7 @@ else {
         $sql = "SELECT * FROM users WHERE username=?;";
         $stmt = mysqli_stmt_init($conn);
 
-        if (!mysqli_stmt_prepare($stmt, $sql)) {
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
 
             $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
             header("Location: ../");
@@ -98,22 +98,22 @@ else {
 
             $result = mysqli_stmt_get_result($stmt);
 
-            if ($row = mysqli_fetch_assoc($result)) {
+            if($row = mysqli_fetch_assoc($result)) {
 
                 $pwdCheck = password_verify($password, $row['password']);
 
-                if ($pwdCheck == false) {
+                if($pwdCheck == false) {
 
                     $_SESSION['ERRORS']['wrongpassword'] = 'wrong password';
                     header("Location: ../");
                     exit();
                 } 
-                else if ($pwdCheck == true) {
+                else if($pwdCheck == true) {
 
                     session_start();
 
                     
-                    if($row['verified_at'] != NULL){
+                    if($row['verified_at'] != NULL) {
 
                         $_SESSION['auth'] = 'verified';
                     } else{
@@ -145,14 +145,14 @@ else {
                     * -------------------------------------------------------------------------------
                     */
 
-                    if (isset($_POST['rememberme'])){
+                    if(isset($_POST['rememberme'])) {
 
                         $selector = bin2hex(random_bytes(8));
                         $token = random_bytes(32);
 
                         $sql = "DELETE FROM auth_tokens WHERE user_email=? AND auth_type='remember_me';";
                         $stmt = mysqli_stmt_init($conn);
-                        if (!mysqli_stmt_prepare($stmt, $sql)) {
+                        if(!mysqli_stmt_prepare($stmt, $sql)) {
 
                             $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                             header("Location: ../");
@@ -177,7 +177,7 @@ else {
                         $sql = "INSERT INTO auth_tokens (user_email, auth_type, selector, token, expires_at) 
                                 VALUES (?, 'remember_me', ?, ?, ?);";
                         $stmt = mysqli_stmt_init($conn);
-                        if (!mysqli_stmt_prepare($stmt, $sql)) {
+                        if(!mysqli_stmt_prepare($stmt, $sql)) {
 
                             $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
                             header("Location: ../");

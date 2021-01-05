@@ -1,4 +1,4 @@
-    <?php if (!isset($_SESSION['auth'])) { ?>
+    <?php if(!isset($_SESSION['auth'])) { ?>
 
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm p-2">
 
@@ -13,7 +13,7 @@
             <div class="container">
                 <a class="navbar-brand" href="../home">
 
-                    <?php if (!isset($_SESSION['auth'])) { ?>
+                    <?php if(!isset($_SESSION['auth'])) { ?>
                         <img src="../assets/images/logonotext.png" alt="" width="50" height="50" class="mr-3">
                     <?php } else { ?>
                         <img src="../assets/images/logonotextwhite.png" alt="" width="50" height="50" class="mr-3">
@@ -41,7 +41,7 @@
                             <a class="nav-link" href="../welcome">Welcome</a>
                         </li>
 
-                        <?php if (!isset($_SESSION['auth'])) { ?>
+                        <?php if(!isset($_SESSION['auth'])) { ?>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="../contact">Contact Us</a>

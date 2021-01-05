@@ -3,7 +3,7 @@
 
 <div class='card card-profile text-center box-shadow bg-white'>
 
-    <?php if (isset($_SESSION['auth'])) { ?>
+    <?php if(isset($_SESSION['auth'])) { ?>
 
     <img alt='' class='card-img-top card-user-cover' src='../assets/images/banner.png'>
     <div class='card-block'>
