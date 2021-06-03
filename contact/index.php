@@ -30,6 +30,13 @@ include '../assets/layouts/header.php';
 
                         ?>
                     </small>
+                    <small class="text-danger font-weight-bold">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['mailstatus']))
+                                echo $_SESSION['ERRORS']['mailstatus'];
+
+                        ?>
+                    </small>
                 </div>
 
                 <?php if(!isset($_SESSION['auth'])) { ?>
