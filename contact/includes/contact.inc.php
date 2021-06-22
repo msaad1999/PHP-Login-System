@@ -76,7 +76,7 @@ if (isset($_POST['contact-submit'])) {
 	}
 
 	//check if the message is longer than 20 characters.
-	elseif(strlen($msg) >= 20){
+	elseif(strlen($msg) <= 20){
 	
 		$_SESSION['ERRORS']['mailstatus'] = 'Message should be longer than 20 characters';
 		header("Location: ../");
@@ -84,7 +84,7 @@ if (isset($_POST['contact-submit'])) {
 	}
 
 	//check if the message is shorter than 500 characters.
-	elseif(strlen($msg) <= 500){
+	elseif(strlen($msg) >= 500){
 	
 		$_SESSION['ERRORS']['mailstatus'] = 'Message should be shorter than 500 characters';
 		header("Location: ../");
