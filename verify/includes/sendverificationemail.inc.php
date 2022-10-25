@@ -45,7 +45,7 @@ if (isset($_POST['verifysubmit'])) {
 
     $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32);
-    $url = "localhost/loginsystem/verify/includes/verify.inc.php?selector=" . $selector . "&validator=" . bin2hex($token);
+    $url = EMAIL_RETURN_URL . "/verify/includes/verify.inc.php?selector=" . $selector . "&validator=" . bin2hex($token);
     $expires = 'DATE_ADD(NOW(), INTERVAL 1 HOUR)';
 
     $email = $_SESSION['email'];
