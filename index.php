@@ -1,12 +1,16 @@
 <?php
 
-if (isset($_SESSION['auth'])) {
+    // IF there is some sort of authorization redirect accordingly
+    if (isset($_SESSION['authorization'])) {
 
-    header("Location: home");
-    exit();
-}
-else {
+        header("Location: home"); // Home has its own IF to check if user is loggedin, verified or neither.
+        exit();
 
-    header("Location: login");
-    exit();
-}
+    } else {
+
+        header("Location: login"); // If there is no session variable called authorization send it to login
+        exit();
+
+    }
+
+?>

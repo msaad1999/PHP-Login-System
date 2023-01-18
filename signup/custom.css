@@ -1,0 +1,89 @@
+/*.form-control:focus {
+    border-color: #a72872;
+    box-shadow: 0 0 0 0.2rem rgba(43, 7, 59, 0.25);
+}*/
+
+body {
+    background-color:rgb(244, 232, 253);
+}
+
+/*.container {
+    width: 800px;
+    padding: 10px;
+    border-radius: 20px;
+    background: rgb(240, 219, 241);
+    border: none;
+    height: 600px;
+    position: relative;
+}*/
+
+.col-lg-4 {
+    width: 420px;
+    padding: 10px;
+    border-radius: 20px;
+    background: rgb(255, 255, 255);
+    border: none;
+    height: 830px;
+    position: relative;
+}
+
+#fullname {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+#phone {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+#instagram {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+#email {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+#pwd {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+#cpwd {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #e225d2;
+    border-color: #e225d2;
+}
+
+.btn-primary:hover {
+    color: #ffffff;
+    background-color: #86107d;
+    border-color: #86107d;
+}
+
+.btn-lg {
+    padding: 10px 16px;
+    font-size: 22px;
+    line-height: 1.33;
+    border-radius: 6px;
+}

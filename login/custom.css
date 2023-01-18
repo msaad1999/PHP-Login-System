@@ -1,0 +1,65 @@
+/*.form-control:focus {
+    border-color: #a72872;
+    box-shadow: 0 0 0 0.2rem rgba(43, 7, 59, 0.25);
+}*/
+
+#fullname {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+#phone {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+#instagram {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+#email {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+#pwd {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+#cpwd {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #e225d2;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #e225d2;
+    border-color: #e225d2;
+}
+
+.btn-primary:hover {
+    color: #ffffff;
+    background-color: #86107d;
+    border-color: #86107d;
+}
+
+.btn-lg {
+    padding: 10px 16px;
+    font-size: 22px;
+    line-height: 1.33;
+    border-radius: 6px;
+  }

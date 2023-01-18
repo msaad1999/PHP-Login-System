@@ -1,52 +1,60 @@
 <?php
 
-define('TITLE', "Verify Email");
-include '../assets/layouts/header.php';
-check_logged_in_butnot_verified(); 
+    define('TITLE', "Verificar Email");
+    include '../assets/layouts/headie.php';
+    check_if_its_logged_in_but_its_not_verified(); // If $_SESSION['authorization'] is Verified redirect to HOME, 
+                                                   // if $_SESSION['authorization'] is just loggedIn do nothing, stay here (user must verify email in some way) and
+                                                   // if $_SESSION['authorization'] is not set redirect to LOGIN.
 
 ?>
 
+<!-- HTML -->
 
-<main role="main" class="container">
+    <!-- BODY -->   
+    
+        <div class="container mt-5">
 
-    <div class="row">
-        <div class="col-sm-3">
+            <div class="row justify-content-center mt-5">
+    
+                <div class="col-lg-4">
+        
+                    <div class="text-center">
+                        <img class="mb-1" src="../assets/images/Shop2pacK_logo1.png" alt="De Orlando para Você!">
+                    </div>
 
-            <?php include('../assets/layouts/profile-card.php'); ?>
+                    <h6 class="h1 mb-3 font-weight-normal text-center">Shop2pacK</h6>
+                    <br>
 
-        </div>
-        <div class="shadow-lg box-shadow col-sm-7 px-5 m-5 bg-light rounded align-self-center verify-message">
+                    <h6 class="h4 mb-3 font-weight-normal text-center">Verifique seu Email</h6>
 
-            <form action="includes/sendverificationemail.inc.php" method="post">
+                    <form action="includes/send_verif_email.php" method="POST">
 
-                <?php insert_csrf_token(); ?>
-            
-                <h5 class="text-center mb-5 text-primary">Verify Your Email Address</h5>
+                        <!--  Placing the token -->
+                        <?php _placetoken(); ?>
 
-                <p>
-                    Before proceeding, please check your email for a verification link. If you did not receive the email,
-                    <button type="submit" name="verifysubmit">click here to send another</button>.
-                </p>
-                <br>
-                <div class="text-center mt-5">
-                    <h6 class="text-success">
-                        <?php
-                            if (isset($_SESSION['STATUS']['verify']))
-                                echo $_SESSION['STATUS']['verify'];
+                        <p>
+                            O seu email ainda não foi validado no sistema.<br>
+                            Se você não recebeu o email para verificação 
+                            <button type="submit" name="doverify">clique aqui para enviar um novo email</button>.
+                        </p>
+                        <br>
 
-                        ?>
-                    </h6>
+                        <p class="mt-3 text-muted text-center"><a href="../logout/">Logout</a></p>
+
+                    </form>
+
                 </div>
 
-            </form>
+            </div>
 
         </div>
-    </div>
-</main>
 
+        <?php
 
-<?php
+            include __DIR__ . '/../assets/layouts/footie.php';
 
-include '../assets/layouts/footer.php'
+        ?>
 
-?>
+    <!-- /BODY -->
+
+<!-- /HTML -->
