@@ -1,0 +1,28 @@
+<html>
+
+    <head>
+
+        <link rel="stylesheet" href="../assets/vendor/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+
+        <script src="../assets/vendor/js/jquery-3.4.1.min.js"></script>
+
+        <script src="../assets/vendor/jQuery-Mask-Plugin-master/src/jquery.mask.js"></script>
+
+    </head>
+
+    <body>
+
+        <div class="form-floating mb-2">
+            <input type="text" id="phone" name="phone" class="form-control" maxlength="15" placeholder="Telefone">
+            <label for="phone">Telefone (00) 90000-0000 ou (00) 0000-0000</label>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#phone').mask("(00) 0000-0000x", { translation: { 'x': { pattern: /[0-9]/, optional: true } } });
+            });       
+        </script>
+
+    </body>
+
+</html>

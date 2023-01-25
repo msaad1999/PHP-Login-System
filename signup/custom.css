@@ -1,0 +1,126 @@
+/*.form-control:focus {
+    border-color: #a72872;
+    box-shadow: 0 0 0 0.2rem rgba(43, 7, 59, 0.25);
+}*/
+
+body {
+    background-color:rgb(177, 202, 152);
+}
+
+/*.container {
+    width: 800px;
+    padding: 10px;
+    border-radius: 20px;
+    background: rgb(240, 219, 241);
+    border: none;
+    height: 600px;
+    position: relative;
+}*/
+
+.col-lg-4 {
+    width: 420px;
+    padding: 10px;
+    border-radius: 20px;
+    background: rgb(255, 255, 255);
+    border: none;
+    height: 830px;
+    position: relative;
+}
+
+#fullname {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #027725;
+}
+
+#phone {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #027725;
+}
+
+#instagram {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #027725;
+}
+
+#email {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #027725;
+}
+
+#pwd {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #027725;
+}
+
+#cpwd {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #027725;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #027725;
+    border-color: #027725;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    color: #ffffff;
+    background-color: #02aa3a;
+    border-color: #10d351;
+}
+
+.btn-primary:active {
+    color: #ffffff;
+    background-color: #2fd366;
+    border-color: #437453;
+}
+
+.btn-primary:visited {
+    color: #ffffff;
+    background-color: #0cee57;
+    border-color: #254b31;
+}
+
+.btn-lg {
+    padding: 10px 16px;
+    font-size: 22px;
+    line-height: 1.33;
+    border-radius: 6px;
+}
+
+a:link {
+    color: #027725;
+    background-color: transparent;
+    text-decoration: underline;
+}
+  
+a:visited {
+    color: #027725;
+    background-color: transparent;
+    text-decoration: underline;
+}
+  
+a:hover {
+    color: #027725;
+    background-color: transparent;
+    text-decoration: none;
+}
+  
+a:active {
+    color: #027725;
+    background-color: transparent;
+    text-decoration: underline;
+}
