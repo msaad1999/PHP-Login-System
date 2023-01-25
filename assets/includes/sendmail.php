@@ -1,15 +1,15 @@
 <?php 
 
     /* SMTP Information */
-    include($_SERVER['DOCUMENT_ROOT'] . '/supabkp/assets/setup/smtp.php');
+    include __DIR__ . '/../setup/smtp.php';
 
     /* PHPMailer */
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
-    include($_SERVER['DOCUMENT_ROOT'] . '/supabkp/assets/vendor/PHPMailer/src/Exception.php');
-    include($_SERVER['DOCUMENT_ROOT'] . '/supabkp/assets/vendor/PHPMailer/src/PHPMailer.php');
-    include($_SERVER['DOCUMENT_ROOT'] . '/supabkp/assets/vendor/PHPMailer/src/SMTP.php');
+    include __DIR__ . '/../vendor/PHPMailer/src/Exception.php';
+    include __DIR__ . '/../vendor/PHPMailer/src/PHPMailer.php';
+    include __DIR__ . '/../vendor/PHPMailer/src/SMTP.php';
     /* PHPMailer */
 
     function sendEmail($to, $who, $subject, $message) { // RETURNS TRUE OR FALSE

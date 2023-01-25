@@ -1,26 +1,19 @@
 <?php
 
-    session_start();
+        session_start();
 
+    require __DIR__ . '/../../assets/includes/utils.php';
     require __DIR__ . '/../../assets/setup/settings.php'; 
     require __DIR__ . '/../../assets/includes/session_authorization.php';
     require __DIR__ . '/../../assets/includes/security_functions.php';
 
     check_if_its_logged_out(); // If there is any authorization redirects to home. Otherwise, does nothing (stay here).
 
-    function signupErrorExiting($var, $msg) {
-
-        $_SESSION['ERRORS'][$var] = $msg;
-        header("Location: ../");
-        exit();
-
-    }    
-
     if (isset($_POST['dosignup'])) {
 
         if (!_cktoken()) {
 
-            signupErrorExiting('signuperror', 'A solicitação não pode ser validada');
+            errorExiting('signuperror', 'A solicitação não pode ser validada');
 
         }
 
@@ -36,7 +29,7 @@
         /* Looking for brazilian portuguese names here. Additionally, a single quote is allowed. */
         if (strlen($fullname) <= 2 || strlen($fullname) > 40 || !preg_match("/^[a-zA-Z-ÇçÑñÁÉÍÓÚáéíóúÃÕãõÂÊÔâêôÈèöÖ \']*$/", $fullname)) { // Invalid PT BR name
                 
-            signupErrorExiting('fullnameerror','Nome completo inválido');
+            errorExiting('fullnameerror', 'Nome completo inválido');
 
         }
 
@@ -45,29 +38,31 @@
         // Accepted formats are (00) x0000-0000 and (00) 0000-0000
         if (strlen($phone) <= 8 || strlen($phone) > 20 || !preg_match("/^\([0-9]{2}\) [0-9]?[0-9]{4}-[0-9]{4}$/", $phone)) { // Invalid phone number
 
-            signupErrorExiting('phoneerror','Telefone inválido');         
+            errorExiting('phoneerror', 'Telefone inválido');         
         
         }
 
         // At first the Instagram username has to be a string, then it has to match Instagram standards (as of 2022)
         if (!preg_match("/^[\w](?!.*?\.{2})[\w.]{1,28}[\w]$/", $instagram)) { // Invalid Instagram
 
-            signupErrorExiting('instagramerror','Instagram inválido');
+            errorExiting('instagramerror', 'Instagram inválido');
 
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // Invalid email
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) { // Invalid email
 
-            signupErrorExiting('emailerror','Email inválido');
-            
-        } else { // Email domain could not be checked
-            
-            if (!checkdnsrr(substr($email, strpos($email, '@') + 1), 'MX')) {
+            $domain = substr($email, strpos($email, '@') + 1);
 
-                signupErrorExiting('emailerror','Email inválido');
+            if (!checkdnsrr($domain, 'MX')) {
+
+                errorExiting('emailerror', 'Email inválido');
 
             }
-        
+            
+        } else {
+
+            errorExiting('emailerror', 'Email inválido');
+
         }
 
         // Password must have letters, numbers, special characters and be 8 characters long
@@ -75,13 +70,13 @@
         // Password must have letters and numbers and have at least 8 characters and less than 41 characters long
         if (!isset($password) || preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,40})/', $password) ) { // Weak password
 
-            signupErrorExiting('passworderror','A senha deve ter letras, números e no mínimo 8 caracteres');
+            errorExiting('passworderror', 'A senha deve ter letras, números e no mínimo 8 caracteres');
 
         } else { // Passwords dont match
 
             if ($password !== $passwordRepeat) {
 
-                signupErrorExiting('passworderror','As senhas não são iguais');
+                errorExiting('passworderror', 'As senhas não são iguais');
 
             }
 
@@ -103,12 +98,14 @@
 
                 $uid = sqlInsert($C, $usql, 'sssss', $fullname, $phone, $instagram, $email, password_hash($password, PASSWORD_DEFAULT));
 
-                if ($uid !== -1) { //$_SESSION['STATUS']['signupstatus'] = 'Novo usuário gravado';                    
+                if ($uid !== -1) {                     
 
+                    //$_SESSION['STATUS']['signupstatus'] = 'Novo usuário gravado';
+                    
                     $selector = bin2hex(random_bytes(8));
 
-                    $utkn = _urltoken();    // This function generates a pair of a key and a token.
-                    $tkey   = $utkn['key']; // The key will be saved on the database
+                    $utkn = _urltoken();    // This function generates a pair of one key and one token.
+                    $tkey   = $utkn['key']; // The key will be saved on the database. The user never gets to know the key.
                     $ktoken = $utkn['tkn']; // The token will be sent in the URL (also stored on the database just for reference)
             
                     $url = VERIFY_ENDPOINT . "?selector=" . $selector . "&token=" . $ktoken;
@@ -117,11 +114,13 @@
         
                     $tid = sqlInsert($C, $tsql, 'sssss', $email, "signup", $tkey, $ktoken, $selector);
 
-                    if ($tid !== -1) { //$_SESSION['STATUS']['signupstatus'] = 'Novo usuário e token gravados';
+                    if ($tid !== -1) {
 
-                        include($_SERVER['DOCUMENT_ROOT'] . '/supabkp/assets/includes/sendmail.php'); // IS THIS ANY BETTER THAN __DIR__ ?                        
+                        //$_SESSION['STATUS']['signupstatus'] = 'Novo usuário e token gravados';
+
+                        include __DIR__ . '/../../assets/includes/sendmail.php';
        
-                        $subject = 'Shop2pacK | Verifique seu Email';
+                        $subject = APP_NAME . ' | Verifique seu Email';
         
                         $mail_variables = array();
         
@@ -138,7 +137,9 @@
         
                         }
         
-                        if (sendEmail($email, $fullname, $subject, $message)) { //$_SESSION['STATUS']['signupstatus'] = 'Novo usuário e token gravados e email de validação enviado';
+                        if (sendEmail($email, $fullname, $subject, $message)) { 
+
+                            //$_SESSION['STATUS']['signupstatus'] = 'Novo usuário e token gravados e email de validação enviado';
                             
                             $C->autocommit(TRUE); // END TRANSACTION (IMPLICIT COMMIT)
 
@@ -152,7 +153,7 @@
                             $C->rollback(); // ROLLBACK TRANSACTION
                             $C->autocommit(TRUE);                            
         
-                            signupErrorExiting('scripterror','Erro ao enviar email de validação (SENDMAIL ERROR). Sua conta não foi cadastrada');
+                            errorExiting('scripterror', 'Erro ao enviar email de validação (SENDMAIL ERROR). Sua conta não foi cadastrada');
         
                         }
                 
@@ -161,7 +162,7 @@
                         $C->rollback(); // ROLLBACK TRANSACTION
                         $C->autocommit(TRUE);                        
         
-                        signupErrorExiting('scripterror','Erro ao gravar token (DML ERROR). Sua conta não foi cadastrada');
+                        errorExiting('scripterror', 'Erro ao gravar token (DML ERROR). Sua conta não foi cadastrada');
         
                     }
 
@@ -170,7 +171,7 @@
                     $C->rollback(); // ROLLBACK TRANSACTION
                     $C->autocommit(TRUE);                    
 
-                    signupErrorExiting('scripterror','Erro ao cadastrar nova conta (DML ERROR)');
+                    errorExiting('scripterror', 'Erro ao cadastrar nova conta (DML ERROR)');
 
                 }
                 
@@ -179,19 +180,19 @@
 
             } else { // Email taken
 
-                signupErrorExiting('emailerror','Email já cadastrado');
+                errorExiting('emailerror', 'Email já cadastrado');
 
             }
         
         } else { // Conn error
 
-            signupErrorExiting('scripterror','Erro ao tentar conectar (Connection ERROR)');
+            errorExiting('scripterror', 'Erro ao tentar conectar (CONN)');
 
         }
     
     } else { // Form error
 
-        signupErrorExiting('formerror','Erro com o formulário');
+        errorExiting('formerror', 'Erro com o formulário');
 
     }
 

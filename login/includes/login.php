@@ -2,6 +2,7 @@
 
     session_start();
 
+    require __DIR__ . '/../../assets/includes/utils.php';
     require __DIR__ . '/../../assets/setup/settings.php'; 
     require __DIR__ . '/../../assets/includes/session_authorization.php';
     require __DIR__ . '/../../assets/includes/security_functions.php';
@@ -10,13 +11,9 @@
 
     if (isset($_POST['dologin'])) {
 
-        // foreach ($_POST as $key => $value) { $_POST[$key] = _cleaninjections(trim($value)); }
-
         if (!_cktoken()) { // ERRORS, loginstatus
 
-            $_SESSION['ERRORS']['loginerror'] = 'A solicitação não pode ser validada.';
-            header("Location: ../");
-            exit();
+            errorExiting('loginerror', 'A solicitação não pode ser validada');
 
         }
 
@@ -25,40 +22,26 @@
         $email = $_POST['email'];
         $pwd   = $_POST['pwd'];
 
-        // e-Mail has to be validated again
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // Invalid email
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) { // Invalid email
 
-            $_SESSION['ERRORS']['emailerror'] = 'Dados inválidos';
-            header("Location: ../");
-            exit();
-            
-        } else { // Email domain error
-            
-            // and then the domain is checked as well
-            if (!checkdnsrr(substr($email, strpos($email, '@') + 1), 'MX')) {
+            $domain = substr($email, strpos($email, '@') + 1);
 
-                $_SESSION['ERRORS']['emailerror'] = 'Dados inválidos';
-                header("Location: ../");
-                exit();
+            if (!checkdnsrr($domain, 'MX')) {
+
+                errorExiting('emailerror', 'Email inválido');
 
             }
-        
+            
+        } else {
+
+            errorExiting('emailerror', 'Email inválido');
+
         }
 
         if (strlen($pwd) < 8 || strlen($pwd) > 40) { // Length error
                 
-            $_SESSION['ERRORS']['passworderror'] = 'Dados inválidos';
-            header("Location: ../");
-            exit();
+            errorExiting('passworderror', 'Dados inválidos');
 
-        }
-
-        if (empty($email) || empty($pwd)) { // Empty fields
-
-            $_SESSION['ERRORS']['emailerror'] = 'Dados inválidos';
-            header("Location: ../");
-            exit();
-    
         } else {
 
             require __DIR__ . '/../../assets/includes/database_hub.php'; // If everything is fine at this point we can move on and try to login
@@ -71,16 +54,12 @@
                 $ip = getIpAddress();
 
                 // How many times have the user tried to connect?
-                $attempts = sqlSelect($C, 'SELECT 1 FROM user_login_attempts WHERE email=? AND ip=? AND attempt_time>?', 'ssi', $email, $ip, $hourAgo);
+                $attempts = sqlSelect($C, 'SELECT 1 FROM user_login_reset_attempts WHERE email=? AND ip=? AND attempt_time>?', 'ssi', $email, $ip, $hourAgo);
 
-                // To disable MAX_LOGIN_ATTEMPTS_PER_HOUR 
-                // go to settings.php and then change it to a number as high as 99
-                if ($attempts && $attempts->num_rows >= MAX_LOGIN_ATTEMPTS_PER_HOUR) { // IS IT NECESSARY TO CHECK BOTH CONDITIONS?
+                // To disable MAX_LOGIN_ATTEMPTS_PER_HOUR go to settings.php and change it to a number as high as 99
+                if ($attempts && $attempts->num_rows >= MAX_LOGIN_ATTEMPTS_PER_HOUR) {
 
-                    // Something fishy
-                    $_SESSION['ERRORS']['toomanyattempts'] = 'Muitas tentativas incorretas. Volte mais tarde';
-                    header("Location: ../");
-                    exit();
+                    errorExiting('toomanyattempts', 'Muitas tentativas incorretas. Volte mais tarde');
 
                 } else {
 
@@ -115,31 +94,27 @@
 
                             } else { // Could not store information about last login and unsuccessful login attempts could not be erased
 
-                                $_SESSION['ERRORS']['scripterror'] = 'Erro ao tentar gravar informações de login (SQL ERROR)';
-                                header("Location: ../");
-                                exit();
+                                errorExiting('scripterror', 'Erro ao tentar gravar informações de login (SQL ERROR)');
 
                             }
 
                         } else { // PASSWORD NOT OK
 
-                            if (recordLoginAttempt($C, $email, $ip, time())) {
+                            // This part needs improvements.
+                            // If something goes wrong while recording the login attempt it means there's more to it
+                            if (recordLoginAttempt($C, $email, $ip, time(), "L")) { // attempt_type L for Login
                                 echo "Tentativa de login gravada";
                             } else {
                                 echo "Não foi possível gravar a tentativa de login";
                             }
                             
-                            $_SESSION['ERRORS']['passworderror'] = 'Dados inválidos';
-                            header("Location: ../");
-                            exit();
+                            errorExiting('passworderror', 'Dados inválidos');
 
                         }
 
                     } else { // Email not found
 
-                        $_SESSION['ERRORS']['emailerror'] = 'Dados inválidos';
-                        header("Location: ../");
-                        exit();
+                        errorExiting('emailerror', 'Dados inválidos');
 
                     }
 
@@ -147,9 +122,7 @@
 
             } else { // Conn error
 
-                $_SESSION['ERRORS']['scripterror'] = 'Erro ao tentar logar (Connection ERROR)';
-                header("Location: ../");
-                exit();
+                errorExiting('scripterror', 'Erro ao tentar conectar (CONN)');
     
             }
 
@@ -157,9 +130,7 @@
 
     } else { // Form error
 
-        $_SESSION['ERRORS']['formerror'] = 'Use a tela de login para entrar no sistema';
-        header("Location: ../");
-        exit();
+        errorExiting('formerror', 'Erro com o formulário');
 
     }
 

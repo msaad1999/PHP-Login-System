@@ -2,48 +2,41 @@
 
     session_start();
 
+    require __DIR__ . '/../../assets/includes/utils.php';
     require __DIR__ . '/../../assets/setup/settings.php'; 
     require __DIR__ . '/../../assets/includes/session_authorization.php';
     require __DIR__ . '/../../assets/includes/security_functions.php';
 
-    check_if_its_logged_in_but_its_not_verified(); // If $_SESSION['authorization'] is Verified redirect to HOME, 
-                                                   // if it's just loggedIn do nothing (user must verify email in some way)
-                                                   // and if it's not set redirect to LOGIN.
+    check_if_its_logged_in_but_not_verified(); // If $_SESSION['authorization'] is Verified redirect to HOME, 
+                                               // if it's just loggedIn do nothing (user must verify email in some way)
+                                               // and if it's not set redirect to LOGIN.
 
     if (isset($_POST['doverify'])) {
 
-        // foreach ($_POST as $key => $value) { $_POST[$key] = _cleaninjections(trim($value)); }
-
         if (!_cktoken()) { // ERRORS, verifystatus
 
-            $_SESSION['ERRORS']['verifystatus'] = 'A solicitação não pode ser validada.';
-            header("Location: ../");
-            exit();
+            errorExiting('verifyerror', 'A solicitação não pode ser validada');
 
         }
 
-        /* VERIFY VALIDATION */
+        /* SOME VALIDATION */
 
         $email = $_SESSION['email'];
 
-        // e-Mail has to be validated as well
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) { // Invalid email
 
-            $_SESSION['ERRORS']['emailerror'] = 'Email inválido';
-            header("Location: ../");
-            exit();
-            
-        } else {
-            
-            // and then the domain is checked as well
-            if (!checkdnsrr(substr($email, strpos($email, '@') + 1), 'MX')) {
+            $domain = substr($email, strpos($email, '@') + 1);
 
-                $_SESSION['ERRORS']['emailerror'] = 'Email inválido';
-                header("Location: ../");
-                exit();
+            if (!checkdnsrr($domain, 'MX')) {
+
+                errorExiting('emailerror', 'Email inválido');
 
             }
-        
+            
+        } else {
+
+            errorExiting('emailerror', 'Email inválido');
+
         }
 
         require __DIR__ . '/../../assets/includes/database_hub.php'; // If everything is fine at this point we can move on and connect to the database
@@ -75,11 +68,11 @@
 
                 if ($tid !== -1) {
 
-                    include($_SERVER['DOCUMENT_ROOT'] . '/supabkp/assets/includes/sendmail.php'); // IS THIS ANY BETTER THAN __DIR__ ?
+                    include __DIR__ . '/../../assets/includes/sendmail.php';
 
                     //$_SESSION['STATUS']['verifystatus'] = 'Token gravado';
 
-                    $subject = 'Shop2pacK | Verifique seu Email';
+                    $subject = APP_NAME . ' | Verifique seu Email';
 
                     $mail_variables = array();
 
@@ -102,7 +95,7 @@
 
                         $_POST = array(); // Clear form fields
 
-                        $_SESSION['STATUS']['verifystatus'] = 'O email de validação de conta foi enviado';
+                        //$_SESSION['STATUS']['verifystatus'] = 'O email de validação de conta foi enviado';
                         header("Location: ../emailsent.php");
                         exit();
 
@@ -111,9 +104,7 @@
                         $C->rollback(); // ROLLBACK TRANSACTION
                         $C->autocommit(TRUE); 
 
-                        $_SESSION['ERRORS']['verifyerror'] = 'Erro ao enviar email de validação (SQL ERROR)';
-                        header("Location: ../");
-                        exit();
+                        errorExiting('verifyerror', 'Erro ao enviar email de validação (Mail)');
 
                     }
 
@@ -122,9 +113,7 @@
                     $C->rollback(); // ROLLBACK TRANSACTION
                     $C->autocommit(TRUE); 
 
-                    $_SESSION['ERRORS']['verifyerror'] = 'Erro ao gravar token (SQL ERROR)';
-                    header("Location: ../");
-                    exit();
+                    errorExiting('verifyerror', 'Erro ao gravar token (SQL ERROR)');
 
                 }
 
@@ -133,9 +122,7 @@
                 $C->rollback(); // ROLLBACK TRANSACTION
                 $C->autocommit(TRUE); 
 
-                $_SESSION['ERRORS']['verifyerror'] = 'Email não encontrado';
-                header("Location: ../");
-                exit();
+                errorExiting('verifyerror', 'Email inválido');
 
             }
 
@@ -144,17 +131,13 @@
         
         } else {
 
-            $_SESSION['ERRORS']['verifyerror'] = 'Erro ao gravar token (Connection ERROR)';
-            header("Location: ../");
-            exit();
+            errorExiting('verifyerror', 'Erro ao tentar conectar (CONN)');
 
         }
     
     } else {
 
-        // MAYBE HTML FORM ERROR
-        header("Location: ../");
-        exit();
+        errorExiting('verifyerror', 'Erro com o formulário');
 
     }
 

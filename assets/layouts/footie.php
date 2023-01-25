@@ -3,7 +3,7 @@
         
         <?php if (isset($_SESSION['authorization'])) { ?> 
         
-            <script src="../assets/js/isinactive.js"></script>
+            <script src="../assets/js/isitinactive.js"></script>
         
         <?php } ?>
 

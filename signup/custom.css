@@ -4,7 +4,7 @@
 }*/
 
 body {
-    background-color:rgb(244, 232, 253);
+    background-color:rgb(177, 202, 152);
 }
 
 /*.container {
@@ -31,54 +31,67 @@ body {
     border: 0;
     outline: 0;
     background: transparent;
-    border-bottom: 1px solid #e225d2;
+    border-bottom: 1px solid #027725;
 }
 
 #phone {
     border: 0;
     outline: 0;
     background: transparent;
-    border-bottom: 1px solid #e225d2;
+    border-bottom: 1px solid #027725;
 }
 
 #instagram {
     border: 0;
     outline: 0;
     background: transparent;
-    border-bottom: 1px solid #e225d2;
+    border-bottom: 1px solid #027725;
 }
 
 #email {
     border: 0;
     outline: 0;
     background: transparent;
-    border-bottom: 1px solid #e225d2;
+    border-bottom: 1px solid #027725;
 }
 
 #pwd {
     border: 0;
     outline: 0;
     background: transparent;
-    border-bottom: 1px solid #e225d2;
+    border-bottom: 1px solid #027725;
 }
 
 #cpwd {
     border: 0;
     outline: 0;
     background: transparent;
-    border-bottom: 1px solid #e225d2;
+    border-bottom: 1px solid #027725;
 }
 
 .btn-primary {
     color: #ffffff;
-    background-color: #e225d2;
-    border-color: #e225d2;
+    background-color: #027725;
+    border-color: #027725;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus {
     color: #ffffff;
-    background-color: #86107d;
-    border-color: #86107d;
+    background-color: #02aa3a;
+    border-color: #10d351;
+}
+
+.btn-primary:active {
+    color: #ffffff;
+    background-color: #2fd366;
+    border-color: #437453;
+}
+
+.btn-primary:visited {
+    color: #ffffff;
+    background-color: #0cee57;
+    border-color: #254b31;
 }
 
 .btn-lg {
@@ -86,4 +99,28 @@ body {
     font-size: 22px;
     line-height: 1.33;
     border-radius: 6px;
+}
+
+a:link {
+    color: #027725;
+    background-color: transparent;
+    text-decoration: underline;
+}
+  
+a:visited {
+    color: #027725;
+    background-color: transparent;
+    text-decoration: underline;
+}
+  
+a:hover {
+    color: #027725;
+    background-color: transparent;
+    text-decoration: none;
+}
+  
+a:active {
+    color: #027725;
+    background-color: transparent;
+    text-decoration: underline;
 }

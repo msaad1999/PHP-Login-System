@@ -6,8 +6,7 @@
     require __DIR__ . '/../includes/session_authorization.php'; // loggedin, verified and null
     require __DIR__ . '/../includes/security_functions.php'; // plus token functions
 
-    if (isset($_SESSION['authorization']))
-        $_SESSION['expire'] = ALLOWED_INACTIVITY_TIME; //time()+1*60 // ONE HOUR
+    $_SESSION['sess_time'] = time(); // Check IsActive .js and .php files for details
 
     _mktoken();
     //

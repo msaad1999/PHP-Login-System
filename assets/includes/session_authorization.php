@@ -10,7 +10,8 @@
 
         } else { // if there is NOT ANY authorization
 
-            header("Location: ../login/");
+            header("Location: ../login/"); // relative path
+            //header("Location: /login/");
 
             exit();        
 
@@ -26,14 +27,15 @@
 
         } else {
 
-            header("Location: ../home/"); // if there is any aythorization
+            header("Location: ../home/"); // if there is any authorization (also using relative path)
+            //header("Location: /home/");
             exit();
 
         }
 
     }
 
-    function check_if_its_logged_in_but_its_not_verified() {
+    function check_if_its_logged_in_but_not_verified() {
 
         if (isset($_SESSION['authorization'])) { // if there is any authorization check if it's just logged in or if it's verified
 
@@ -43,14 +45,16 @@
 
             } elseif ($_SESSION['authorization'] == 'verified') {
                 
-                header("Location: ../home/");
+                header("Location: ../home/"); // relative path
+                //header("Location: /home/");
                 exit();
 
             }
 
         } else {
 
-            header("Location: ../login/");
+            header("Location: ../login/"); // relative path
+            //header("Location: " . $_SERVER['DOCUMENT_ROOT'] . "/login/");
             exit();
 
         }
@@ -68,14 +72,16 @@
             }
             elseif ($_SESSION['authorization'] == 'loggedin') {
 
-                header("Location: ../verify/");
+                header("Location: ../verify/"); // relative path
+                //header("Location: /verify/");
                 exit(); 
 
             }
 
         } else {
 
-            header("Location: ../login/");
+            header("Location: ../login/"); // relative path
+            //header("Location: /login/");
             exit();
 
         }

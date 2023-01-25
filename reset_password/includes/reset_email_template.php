@@ -148,7 +148,7 @@
 
                                 <div style="line-height: 35px">
 
-                                    Saudações do {{ APP_NAME }}, <span style="color: #5caad2;">{{ fullname }}!</span>
+                                    Saudações do {{ APP_NAME }}, <!--span style="color: #5caad2;">{{ fullname }}!</span-->
 
                                 </div>
                         
@@ -197,8 +197,8 @@
                                         <td align="center" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
 
                                             <div style="line-height: 24px">
-                                                Você solicitou o reset de senha no {{ APP_NAME }} com o Email [{{ email }}]. 
-                                                Por favor, use o botão abaixo para criar uma nova senha. 
+                                                Você solicitou o reset de senha no {{ APP_NAME }} com o email [{{ email }}]. 
+                                                Por favor, use o botão abaixo para prosseguir. 
                                             </div>
 
                                         </td>
@@ -235,7 +235,7 @@
 
                                             <div style="line-height: 26px;">
 
-                                                <a href="{{ url }}" style="color: #ffffff; text-decoration: none;">Validar Email</a>
+                                                <a href="{{ url }}" style="color: #ffffff; text-decoration: none;">Criar nova senha</a>
             
                                             </div>
             

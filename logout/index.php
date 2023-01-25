@@ -2,15 +2,23 @@
 
     session_start();
 
-    require __DIR__ . '/../assets/includes/session_authorization.php'; // loggedin, verified and null
+    $_SESSION = array();
 
-    check_if_its_logged_in();
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+
+    // or just
+    // setcookie(session_name(),'',0,'/');
+    // or maybe
+    // setcookie(session_name(), '', 100);
 
     session_unset();
     session_destroy();
-    //session_write_close(); // not sure about this one
-    //setcookie(session_name(),'',0,'/'); // not sure about this one
-    //session_regenerate_id(true); // not sure about this one
 
     header("Location: ../login/");
     exit();

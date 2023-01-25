@@ -197,8 +197,8 @@
                                         <td align="center" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
 
                                             <div style="line-height: 24px">
-                                                Você solicitou um email de verificação no {{ APP_NAME }} com o Email [{{ email }}]. 
-                                                Por favor, use o botão abaixo para validar seu Email no sistema e ativar sua conta. 
+                                                Você solicitou uma verificação no {{ APP_NAME }} com o email [{{ email }}]. 
+                                                Por favor, use o botão abaixo para validar seu email no sistema e ativar sua conta. 
                                             </div>
 
                                         </td>

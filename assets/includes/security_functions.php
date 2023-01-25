@@ -2,6 +2,7 @@
 
     /* AUXILIARY FUNCTIONS */    
 
+    /* used with the login attempts funcionality */
     function getIpAddress() {
 
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -21,18 +22,21 @@
 
     }
 
-	function urlSafeEncode($m) { // avoid issues with URLs
+	/* helps with token puzzle */
+    function urlSafeEncode($m) { // avoid issues with URLs
 
         return rtrim(strtr(base64_encode($m), '+/', '-_'), '=');
 
     }
     
+    /* helps with token puzzle */
     function urlSafeDecode($m) { // avoid issues with URLs
 
         return base64_decode(strtr($m, '-_', '+/'));
 
     }
         
+    /* not used right now but still present since it might be useful in the future */
     function _cleaninjections($test) {
 
         $find = array(
@@ -54,6 +58,7 @@
 
     }
 
+    /* not used but it might be */
     function _rndstr() { // a random string
     
         $t_ = strval(rand(1462055681,1562055681));
@@ -67,6 +72,7 @@
 
     /* "Anti" CSRF token functions */
 
+    /* MAKE a token */
     function _mktoken() {
 
         /* First version
@@ -97,6 +103,7 @@
     }
 
     /* Second Version */
+    /* checks if the token is valid */
     function _cktoken() {
 
         _mktoken();
@@ -135,6 +142,7 @@
         
     }
 
+    /* insert HTML hidden input with a token */
     function _placetoken() {
 
         _mktoken();
@@ -176,6 +184,7 @@
 
     /* These below help with Signing Up and Reseting Passwords */
     
+    /* builts a stronger token used on the verify process */
     function _urltoken() {
 
         $_key = urlSafeEncode(random_bytes(4));        
@@ -193,6 +202,7 @@
 
     }
 
+    /* validates the token used on the verify process */
     function _ckurltoken($_key, $_tkn) {
 
         if (!empty($_key) && !empty($_tkn)) {

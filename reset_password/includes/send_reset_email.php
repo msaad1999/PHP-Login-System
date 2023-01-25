@@ -2,42 +2,38 @@
 
     session_start();
 
+    require __DIR__ . '/../../assets/includes/utils.php';
     require __DIR__ . '/../../assets/setup/settings.php'; 
     require __DIR__ . '/../../assets/includes/session_authorization.php';
     require __DIR__ . '/../../assets/includes/security_functions.php';
 
-    check_if_its_logged_out();
-
-    function resetErrorExiting($var, $msg) {
-
-        $_SESSION['ERRORS'][$var] = $msg;
-        header("Location: ../");
-        exit();
-
-    }  
+    check_if_its_logged_out(); 
 
     if (isset($_POST['dosend'])) {
 
         if (!_cktoken()) {
 
-            resetErrorExiting('sendresetemailerror', 'A solicitação não pode ser validada');
+            errorExiting('sendresetemailerror', 'A solicitação não pode ser validada');
 
         }
 
         $email = trim($_POST['email']);
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) { // Invalid email
 
-            resetErrorExiting('sendresetemailerror','Email inválido');
-            
-        } else {
-            
-            if (!checkdnsrr(substr($email, strpos($email, '@') + 1), 'MX')) {
+            $prefix = substr($email, 0, strrpos($email, '@'));
+            $domain = substr($email, strpos($email, '@') + 1);
 
-                resetErrorExiting('sendresetemailerror','Email inválido');
+            if (!checkdnsrr($domain, 'MX')) {
+
+                errorExiting('emailerror', 'Email inválido');
 
             }
-        
+            
+        } else {
+
+            errorExiting('emailerror', 'Email inválido');
+
         }
 
         require __DIR__ . '/../../assets/includes/database_hub.php';
@@ -46,96 +42,98 @@
 
         if ($C) {
 
-            $r = sqlSelect($C, 'SELECT fullname FROM users WHERE email=?', 's', $email); // Checking if the email EXISTS
+            if (emailExists($C, $email)) {
 
-            if ($r && $r->num_rows === 1) {
+                $q = 'SELECT 1 FROM user_tokens WHERE email=? AND created_at > ' . EMAIL_REQ_EXPIRY_TIME;
 
-                $usr = $r->fetch_assoc();
-                $fullname = $usr['fullname'];
+                $token_emails = sqlSelect($C, $q, 's', $email);
 
-                $C->autocommit(FALSE);
+                if ($token_emails && $token_emails->num_rows >= MAX_EMAIL_REQS_PER_DAY) {
 
-                $selector = bin2hex(random_bytes(8));
-
-                $utkn = _urltoken();
-                $tkey   = $utkn['key'];
-                $ktoken = $utkn['tkn'];
-                
-                $url = RESET_ENDPOINT . "?selector=" . $selector . "&token=" . $ktoken;
-
-                $tsql = "INSERT INTO user_tokens (email, auth_type, token_key, keyed_token, selector, created_at) VALUES (?, ?, ?, ?, ?, DEFAULT)";
-
-                $tid = sqlInsert($C, $tsql, 'sssss', $email, "reset", $tkey, $ktoken, $selector);
-
-                if ($tid !== -1) {
-
-                    include($_SERVER['DOCUMENT_ROOT'] . '/supabkp/assets/includes/sendmail.php');
-
-                    $subject = 'Shop2pacK | Resetar sua senha';
-
-                    $mail_variables = array();
-
-                    $mail_variables['APP_NAME'] = APP_NAME;
-                    $mail_variables['fullname'] = $fullname;
-                    $mail_variables['email'] = $email;
-                    $mail_variables['url'] = $url;
-
-                    $message = file_get_contents("./reset_email_template.php");
-
-                    foreach($mail_variables as $key => $value) {
-                        
-                        $message = str_replace('{{ '.$key.' }}', $value, $message);
-
-                    }
-
-                    if (sendEmail($email, $fullname, $subject, $message)) {
-
-                        $C->autocommit(TRUE);
-
-                        $_POST = array();
-
-                        $_SESSION['STATUS']['resetstatus'] = 'O email de recuperação de senha foi enviado';
-                        header("Location: ../emailsent.php");
-                        exit();
-
-                    } else {
-
-                        $C->rollback();
-                        $C->autocommit(TRUE); 
-
-                        resetErrorExiting('sendresetemailerror','Erro ao enviar email de recuperação de senha (SQL ERROR)');
-
-                    }
+                    errorExiting('sendresetemailerror', 'Muitos emails enviados. Volte mais tarde');
 
                 } else {
+                    
+                    $C->autocommit(FALSE);
+                    
+                    $selector = bin2hex(random_bytes(8));
 
-                    $C->rollback();
-                    $C->autocommit(TRUE); 
+                    $utkn = _urltoken();
+                    $tkey   = $utkn['key'];
+                    $ktoken = $utkn['tkn'];
+                    
+                    $url = WEB_ADDRESS . WEB_DIR .  "reset_password/index.php?selector=" . $selector . "&token=" . $ktoken;
 
-                    resetErrorExiting('sendresetemailerror','Erro ao gravar token (SQL ERROR)');
+                    $tsql = "INSERT INTO user_tokens (email, auth_type, token_key, keyed_token, selector, created_at) VALUES (?, ?, ?, ?, ?, DEFAULT)";
+
+                    $tid = sqlInsert($C, $tsql, 'sssss', $email, "reset", $tkey, $ktoken, $selector);
+
+                    if ($tid !== -1) {
+
+                        require __DIR__ . '/../../assets/includes/sendmail.php';
+    
+                        $subject = APP_NAME . ' | Resetar sua senha';
+    
+                        $mail_variables = array();
+    
+                        $mail_variables['APP_NAME'] = APP_NAME;
+                        //$mail_variables['fullname'] = $fullname;
+                        $mail_variables['email'] = $email;
+                        $mail_variables['url'] = $url;
+    
+                        $message = file_get_contents("./reset_email_template.php");
+    
+                        foreach($mail_variables as $key => $value) {
+                            
+                            $message = str_replace('{{ '.$key.' }}', $value, $message);
+    
+                        }
+    
+                        if (sendEmail($email, $prefix, $subject, $message)) {
+    
+                            $C->autocommit(TRUE);
+    
+                            $_POST = array();
+    
+                            //$_SESSION['STATUS']['resetstatus'] = 'O email de recuperação de senha foi enviado';
+                            header("Location: ../emailsent.php");
+                            exit();
+    
+                        } else {
+    
+                            $C->rollback();
+                            $C->autocommit(TRUE); 
+    
+                            errorExiting('sendresetemailerror','Erro ao enviar email de recuperação de senha (SQL ERROR)');
+    
+                        }
+    
+                    } else {
+    
+                        $C->rollback();
+                        $C->autocommit(TRUE); 
+    
+                        errorExiting('sendresetemailerror','Erro ao gravar token (SQL ERROR)');
+    
+                    }
 
                 }
 
             } else {
 
-                $C->rollback();
-                $C->autocommit(TRUE); 
-
-                resetErrorExiting('sendresetemailerror','Email não encontrado');
+                errorExiting('sendresetemailerror','Email não encontrado');
 
             }
-
-            $C->autocommit(TRUE);
         
-        } else {
+        } else { // Conn error
 
-            resetErrorExiting('sendresetemailerror','Erro ao gravar token (Connection ERROR)');
+            errorExiting('scripterror', 'Erro ao tentar conectar (CONN)');
 
         }
     
-    } else {
+    } else { // Form error
 
-        signupErrorExiting('sendresetemailerror','Erro com o formulário');
+        errorExiting('formerror', 'Erro com o formulário');
 
     }
 

@@ -17,10 +17,10 @@
                 <div class="col-lg-4">
 
                     <div class="text-center">
-                        <img class="mb-1" src="../assets/images/Shop2pacK_logo1.png" alt="De Orlando para Você!">
+                        <img class="mb-1" src="../assets/images/logo.png" alt="De Orlando para Você!">
                     </div>
 
-                    <h6 class="h1 mb-3 font-weight-normal text-center">Shop2pacK</h6>
+                    <h6 class="h1 mb-3 font-weight-normal text-center"><?php echo APP_NAME; ?></h6>
                     <br>
 
 <?php
@@ -30,6 +30,16 @@
         $uselector = $_GET['selector']; // Extract selector and token from URL
         $utoken = $_GET['token'];
 
+        if (strlen($uselector) > 16 || strlen($utoken) > 116) {
+
+            $_GET = array();
+            header("Location: error.php");
+            exit();
+
+        }
+    
+
+
 ?>
 
                     <h6 class="h4 mb-3 font-weight-normal text-center">Preencha os campos abaixo</h6>
@@ -38,7 +48,7 @@
 
                         <?php _placetoken(); ?>
                         <input type="hidden" name="selector" value="<?php echo $uselector; ?>">
-                        <input type="hidden" name="validator" value="<?php echo $utoken; ?>">
+                        <input type="hidden" name="token" value="<?php echo $utoken; ?>">
 
                         <div class="text-center mb-3">
                             <sub class="text-danger">
