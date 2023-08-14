@@ -2,6 +2,8 @@
   <img src="assets/images/README_cover.png" width="350" align="center"/>
 </p><br>
 
+> **`Project Abandoned`**. This project has been abandoned and might be out of date with current standards and with respect to security and features etc.. I may revamp this project in the future but there is no further development planned at the moment.
+
 > Embeddable and Highly Secure PHP Authentication System with Login, Signup, User Profiles, Profile Editing, Account Verification via Email, Password Reset System, Remember Me Feature, Automatic Logout on Inactivity,  Global ERROR & STATUS variable system, Authentication checks and more.
 
 # Table of Contents
