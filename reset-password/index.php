@@ -25,8 +25,8 @@ check_logged_out();
                             $validator = $_GET['validator'];
                         ?>
 
-                        <input type="hidden" name="selector" value="<?php echo $selector; ?>">
-                        <input type="hidden" name="validator" value="<?php echo $validator; ?>">
+                        <input type="hidden" name="selector" value="<?php echo htmlspecialchars($selector); ?>">
+                        <input type="hidden" name="validator" value="<?php echo htmlspecialchars($validator); ?>">
 
                         <div class="text-center">
                             <img class="mb-1" src="../assets/images/logo.png" alt="" width="130" height="130">
